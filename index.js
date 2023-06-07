@@ -14,10 +14,17 @@ app.set('view engine', 'ejs')
 //Carregamento de arquivos estaticos no express
 app.use(express.static(path.join(__dirname, 'public')))
 
-
+//RENDERIZA
 app.get("/",(req,res)=>{
-    res.render('index')
+    var nome = "<h1>DAVI<h1>"
+    console.log(nome)
+    res.render('index',{nome:nome})
 })
+
+// app.get("/teste",(req,res)=>{
+//     res.render('admin/index')
+// })
+
 
 app.listen(PORT,()=>{
     console.log(`Serviço rodando na porta ${PORT}`)
