@@ -1,3 +1,5 @@
+<%- include("./toast.ejs")%>
+ 
  <!-- Vendor JS Files -->
  <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
  <script src="/vendor/aos/aos.js"></script>
@@ -10,3 +12,29 @@
 
  <!-- Template Main JS File -->
  <script src="/js/main.js"></script>
+ <!-- Alerta de retorno de mensagem -->
+ <script src="/js/toastRetorno.js"></script>
+
+ 
+<script>
+    $(document).ready(() => {
+      const toastErro = document.getElementById('toastErro')
+      if (toastErro != undefined && (toastErro.value == 'true' || toastErro.value == true)) {
+        const toastLiveExample = document.getElementById('liveToastErro')
+        const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastLiveExample, {
+          autohide: false
+        })
+        toastBootstrap.show()
+      }
+  
+      const toastMsm = document.getElementById('toastMsm')
+      if (toastMsm != undefined && (toastMsm.value == 'true' || toastMsm.value == true)) {
+        const toastLiveExampleMsm = document.getElementById('liveToastMsm')
+        const toastBootstrapMsm = bootstrap.Toast.getOrCreateInstance(toastLiveExampleMsm, {
+          autohide: false
+        })
+        toastBootstrapMsm.show()
+      }
+  
+    })
+  </script>
