@@ -14,6 +14,12 @@ app.set('view engine', 'ejs')
 //Carregamento de arquivos estaticos no express
 app.use(express.static(path.join(__dirname, 'public')))
 
+const adminController = require("./controller/routes/adminController")
+const loginController = require("./controller/routes/loginController")
+
+app.use('/admin',adminController)
+app.use('/login',loginController)
+
 //RENDERIZA
 app.get("/",(req,res)=>{
     var nome = "<h1>DAVI<h1>"

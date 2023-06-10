@@ -1,0 +1,50 @@
+<%- include("../partials/head.ejs")%>
+<%#- include("../partials/topbar.ejs")%>
+<%- include("../partials/header.ejs")%>
+
+
+<main>
+  <section id="">
+    <div class="container" data-aos="fade-in">
+
+      <div class="card">
+        <div class="card-header bg-equi">
+          <h2 class="text-center text-dark">Faça seu Login</h2>
+        </div>
+        <div class="card-body py-4">
+          <form action="/login/colaborador" class="needs-validation" novalidate method="post">
+            <div class="row my-4 justify-content-center">
+              <div class="col-md-8 my-2">
+                <label for="email" class="form-label">Informe seu E-mail *</label>
+                <div class="input-group">
+                  <span class="input-group-text" id="addon-email"><i class="bi bi-envelope"></i></span>
+                  <input type="email" name="email" placeholder="Digite seu e-mail" id="email" class="form-control">
+                </div>
+              </div>
+              <div class="col-md-8 my-2">
+                <label for="senha" class="form-label">Informe sua Senha *</label>
+                <div class="input-group">
+                  <span class="input-group-text" id="addon-email"><i class="bi bi-person-fill-lock"></i></span>
+                  <input type="password" name="senha" placeholder="Digite sua senha" id="senha" class="form-control">
+                </div>
+              </div>
+              <div class="col-md-8">
+                <a href="/login/esqueceu/colaborador">Esqueceu Senha?</a>
+              </div>
+            </div>
+            <div class="row justify-content-center my-3">
+              <div class="col-4">
+                <button type="submit" class="btn form-control btn-success btn-lg">Entrar</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+
+<%- include("../partials/footer.ejs")%>
+<%- include("../partials/script.ejs")%>
+<%- include("../partials/end.ejs")%>
