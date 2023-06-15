@@ -1,0 +1,15 @@
+{
+    "rotas":[
+        {"rota":"/","file":"index.ejs","descricao":"Rota principal","status":false},
+        {"rota":"/login","file":"login/login.ejs","descricao":"Rota de login","status":false},
+        {"rota":"/admin","file":"admin/index.ejs","descricao":"Rota principal administrativa","status":false},
+        {"rota":"/admin/usuarios","file":"admin/usuarios/usuarios.ejs","descricao":"Rota adminstativa de listagem dos usuarios","status":false}
+    ],
+
+    "api":[
+        {"rota":"/api/usuarios/:id","file":"controller/api/admin/usuariosController.js","type":"get","descricao":"Retorna dados de um unico usuario passado nos parametros","status":false},
+        {"rota":"/api/usuarios/","file":"controller/api/admin/usuariosController.js","type":"post","descricao":"Adicionar um novo usuario","status":false},
+        {"rota":"/api/usuarios/","file":"controller/api/admin/usuariosController.js","type":"put","descricao":"Atualiza dados de um usuario","status":false},
+        {"rota":"/api/usuarios/status","file":"controller/api/admin/usuariosController.js","type":"put","descricao":"Atualiza status ou reseta a senha de um unico usuario","status":false}
+    ]
+}
