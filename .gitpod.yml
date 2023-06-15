@@ -6,8 +6,7 @@
 
 tasks:
   - init: npm install 
-  - before: docker-compose up -d
-  - before: node index
+  - before: docker-compose up -d && node index
 
 
 
