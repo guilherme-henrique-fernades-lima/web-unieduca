@@ -15,11 +15,12 @@ router.get('/:id', async (req, res) => {
 
 router.post('/', async (req, res) => {
     try {
-        let { status, nome, descricao,img,html } = req.body
+        let { status, nome, descricao,img,html,cor } = req.body
         status = (status == true || status == 'true') ? true : false
         if (nome == '' || nome == undefined || html == undefined || html == '' || descricao == undefined || descricao == '') {
             return res.status(500).json({ erro: 'Dados importantes como "nome", "imagem","descricao" ou "texto" estão vazios, gentileza verifique e tente novamente!' })
         }
+        cor = (cor == undefined || cor == '')?'#01126c':cor
         const exist = await Servico.findOne({ where: { nome: nome } })
         if (exist != undefined) return res.status(500).json({ erro: 'Já existe um outro Serviço com os mesmos dados, gentileza tente novamente!' })
 
@@ -28,7 +29,8 @@ router.post('/', async (req, res) => {
             nome: nome,
             img, img,
             descricao:descricao,
-            html:html
+            html:html,
+            cor:cor
         })
         res.json({ resp: "Serviço cadastrado com sucesso!", servico: newServico })
     } catch (error) {
@@ -38,7 +40,7 @@ router.post('/', async (req, res) => {
 
 router.put('/', async (req, res) => {
     try {
-        let { status, nome, descricao,img,html,servicoId } = req.body
+        let { status, nome, descricao,img,html,servicoId,cor } = req.body
         status = (status == true || status == 'true') ? true : false
         const servico = await Servico.findByPk(servicoId)
         if (servico == undefined) return res.status(500).json({ erro: 'Não foi possível identificar cadastro do serviço na base de dados!' })
@@ -46,6 +48,8 @@ router.put('/', async (req, res) => {
         if (nome == '' || nome == undefined || html == undefined || html == '' || descricao == undefined || descricao == '') {
             return res.status(500).json({ erro: 'Dados importantes como "nome", "imagem","descricao" ou "texto" estão vazios, gentileza verifique e tente novamente!' })
         }
+        cor = (cor == undefined || cor == '')?'#01126c':cor
+
         const exist = await Servico.findOne({ where: { nome: nome } })
         if (exist != undefined && exist.id != servico.id) return res.status(500).json({ erro: 'Já existe um outro Serviço com os mesmos dados, gentileza tente novamente!' })
 
@@ -54,7 +58,8 @@ router.put('/', async (req, res) => {
             nome: nome,
             img, img,
             descricao:descricao,
-            html:html
+            html:html,
+            cor:cor
         },{id:servico.id})
 
         res.json({ resp: "Serviço cadastrado com sucesso!"})

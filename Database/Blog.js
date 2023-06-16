@@ -2,37 +2,45 @@ const Sequelize = require("sequelize")
 const connection = require('../database')
 
 
-const Servico = connection.define('ag_servico',{
+const Blog = connection.define('ag_blog',{
     status:{
         type:Sequelize.BOOLEAN,
         allowNull:false,
         defaultValue:true
     },
-    nome:{
+    categoria:{
         type:Sequelize.STRING,
         allowNull:false
     },
-    descricao:{
+    titulo:{
         type:Sequelize.STRING,
         allowNull:false
     },
-    img:{
-        type:Sequelize.TEXT,
+    userId:{
+        type:Sequelize.INTEGER,
         allowNull:true
+    },
+    autor:{
+        type:Sequelize.STRING,
+        allowNull:false
+    },
+    autor_foto:{
+        type:Sequelize.TEXT,
+        allowNull:false
     },
     html:{
         type:Sequelize.TEXT,
         allowNull:false
     },
-    cor:{
-        type:Sequelize.STRING,
+    capa:{
+        type:Sequelize.TEXT,
         allowNull:false
     }
 },
 {freezeTableName:true})
 
-Servico.sync({alter: true}).then(()=>{
-    console.log("Tabela Servico criada")
+Blog.sync({alter: true}).then(()=>{
+    console.log("Tabela Blog criada")
 })
 
-module.exports = Servico
+module.exports = Blog
