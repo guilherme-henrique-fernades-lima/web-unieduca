@@ -17,7 +17,7 @@ app.use(session({
 }))
 
 
-app.use(bodyParser.urlencoded({ extended: false}))
+app.use(bodyParser.urlencoded({ limit: '5mb', extended: true }));
 app.use(bodyParser.json())
 
 const PORT = process.env.PORT || 7070

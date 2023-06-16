@@ -48,11 +48,14 @@ router.post('/', async (req, res) => {
             const salt = bcrypt.genSaltSync(10);
             const hash = bcrypt.hashSync(senha, salt);
 
+            const existUser = await User.findOne({where:{status:true}})
+            status = (existUser == undefined)?true:status
+
             const adm = await User.create({
                 nome: nome,
                 status: status,
                 email: email,
-                senha: hash
+                senha: hash,
             })
             res.json({ resp: 'Ok', senha: senha })
         } else {
