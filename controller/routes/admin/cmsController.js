@@ -3,9 +3,11 @@ const router = express.Router()
 const Sobre = require('../../../Database/cms/Sobre')
 
 // /admin/cms/sobre
-router.get('/sobre',(req,res)=>{
+router.get('/sobre',async(req,res)=>{
     try {
-        res.render('admin/cms/sobre')
+        const sobre = await Sobre.findOne()
+        // sobre.titulo = 'AVD'
+        res.render('admin/cms/sobre',{sobre:sobre})
     } catch (error) {
         console.log(error)
         req.flash('erro','Ocorreu um erro ao acessar, gentileza tente novamente! Caso o erro persista entre em contato com o suporte.')
