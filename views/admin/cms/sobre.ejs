@@ -1,0 +1,36 @@
+<%- include("../../partials/admin/head.ejs")%>
+<%- include("../../partials/admin/header.ejs")%>
+<div class="container-fluid">
+    <div class="row">
+    <%- include("../../partials/admin/nav.ejs")%>
+    <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+        <section id="">
+            <div class="container" data-aos="fade">
+                <div class="my-1 border-bottom">
+                    <h1>CSM - SOBRE NÓS</h1>
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                          <li class="breadcrumb-item"><a href="/admin">Admin</a></li>
+                          <li class="breadcrumb-item"><a href="/admin/cms">CMS</a></li>
+                          <li class="breadcrumb-item active" aria-current="page">Sobre</li>
+                        </ol>
+                    </nav>
+                </div>
+                <p>ROTA: PUT - '/api/cms/sobre'</p>
+                <p>{
+                    titulo:titulo,
+                    subtitulo:subtitulo,
+                    subtitulo:subtitulo,
+                    img1:img1,
+                    texto1:texto1,
+                    texto2:texto2,
+                    img2:img2,
+                    video:video,
+                }</p>
+            <div>
+        </section>
+    </main>
+    </div>
+</div>
+<%- include("../../partials/script.ejs")%>
+<%- include("../../partials/end.ejs")%>
