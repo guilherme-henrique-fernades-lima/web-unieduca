@@ -1,6 +1,20 @@
 const express = require('express')
 const router = express.Router()
 const Sobre = require('../../../../Database/cms/Sobre')
+const multer = require('multer')
+const moment = require('moment')
+
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+      cb(null, './public/upload/cms/sobre')
+    },
+    filename: function (req, file, cb) {
+        cb(null,  `sobre_ft_${moment().format('YYYYMMDDHHmmSS')}.${file.originalname.split('.').pop()}` )
+    }
+  })
+  
+  const upload = multer({ storage: storage })
+
 
 router.get('/',async(req,res)=>{
     try {
@@ -12,9 +26,18 @@ router.get('/',async(req,res)=>{
     }
 })
 
-router.put('/',async(req,res)=>{
+router.put('/',upload.any(),async(req,res)=>{
     try {
+        const files = req.files
         req.body.status = (req.body.status == undefined || req.body.status == true || req.body.status == 'true')?true:false
+        for (let index = 0; index < files.length; index++) {
+            const file = files[index];
+            if (file.fieldname == 'img1') {
+                req.body.img1 = `${file.path.replace('public','')}`
+            } else if(file.fieldname == 'img2') {
+                req.body.img2 = `${file.path.replace('public','')}`
+            }
+        }
         const exist = await Sobre.findOne()
         if (exist != undefined) {
             await Sobre.update(req.body,{where:{id:exist.id}})

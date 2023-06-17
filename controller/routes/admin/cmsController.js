@@ -6,6 +6,7 @@ const Sobre = require('../../../Database/cms/Sobre')
 router.get('/sobre',async(req,res)=>{
     try {
         const sobre = await Sobre.findOne()
+        console.log(sobre)
         // sobre.titulo = 'AVD'
         res.render('admin/cms/sobre',{sobre:sobre})
     } catch (error) {
