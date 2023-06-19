@@ -61,6 +61,8 @@ router.post('/',upload.single('img'),async (req, res) => {
 router.put('/',upload.single('img'), async (req, res) => {
     try {
         let { status, nome, competencia,funcionarioId } = req.body
+        const file = req.file
+
         status = (status == true || status == 'true') ? true : false
         const funcionario = await Funcionario.findByPk(funcionarioId)
         if (funcionario == undefined) return res.status(500).json({ erro: 'Não foi possível identificar cadastro da funcionario na base de dados!' })
@@ -74,7 +76,6 @@ router.put('/',upload.single('img'), async (req, res) => {
 
         let img = funcionario.img
         if(file != undefined && file.img != undefined) {
-            const file = req.file
             img = `${file.img.path.replace('public','')}`
         }
 

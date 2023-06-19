@@ -60,6 +60,7 @@ router.post('/',upload.single('img'), async (req, res) => {
 router.put('/',upload.single('img'), async (req, res) => {
     try {
         let { status, nome, descricao,html,servicoId,cor } = req.body
+        const file = req.file
         status = (status == true || status == 'true') ? true : false
         const servico = await Servico.findByPk(servicoId)
         if (servico == undefined) return res.status(500).json({ erro: 'Não foi possível identificar cadastro do serviço na base de dados!' })
@@ -74,7 +75,6 @@ router.put('/',upload.single('img'), async (req, res) => {
 
         let img = servico.img
         if(file != undefined && file.img != undefined) {
-            const file = req.file
             img = `${file.img.path.replace('public','')}`
         }
 

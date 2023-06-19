@@ -36,7 +36,7 @@ router.post('/', async (req, res) => {
     }
 })
 
-router.post('/', async (req, res) => {
+router.put('/', async (req, res) => {
     try {
         let { status, duvida, resposta,duvidaId} = req.body
         status = (status == true || status == 'true') ? true : false

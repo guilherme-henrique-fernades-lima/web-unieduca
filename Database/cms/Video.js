@@ -20,6 +20,10 @@ const Video = connection.define('ag_video',{
         type:Sequelize.STRING,
         allowNull:true
     },
+    img:{
+        type:Sequelize.TEXT,
+        allowNull:true
+    }
 },
 {freezeTableName:true})
 
