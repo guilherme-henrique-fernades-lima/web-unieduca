@@ -3,6 +3,7 @@ const router = express.Router()
 const Sobre = require('../../../../Database/cms/Sobre')
 const multer = require('multer')
 const moment = require('moment')
+const fs = require('fs')
 
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
@@ -36,6 +37,8 @@ router.put('/',upload.any(),async(req,res)=>{
                 req.body.img1 = `${file.path.replace('public','')}`
             } else if(file.fieldname == 'img2') {
                 req.body.img2 = `${file.path.replace('public','')}`
+            }else{
+                fs.unlink(file.path, (err) => {if (err) {console.error(err)}});
             }
         }
         const exist = await Sobre.findOne()
@@ -47,6 +50,11 @@ router.put('/',upload.any(),async(req,res)=>{
         res.json({resp:'Dados do campo "Sobre nós" foram atualizados com sucesso'})
     } catch (error) {
         res.status(500).json({ erro: 'Ocorreu um erro durante o processamento dos dados, gentileza tente novamente!' })
+        for (let index = 0; index < req.files.length; index++) {
+            const file = req.files[index];
+            fs.unlink(file.path, (err) => {if (err) {console.error(err)}});
+        }
+        
     }
 })
 

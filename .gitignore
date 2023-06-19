@@ -107,3 +107,14 @@ dist
 public/upload/cms/sobre/*
 !public/upload/cms/sobre/.gitkeep
 
+public/upload/cms/funcionario/*
+!public/upload/cms/funcionario/.gitkeep
+
+public/upload/cms/parceiro/*
+!public/upload/cms/parceiro/.gitkeep
+
+public/upload/cms/servico/*
+!public/upload/cms/servico/.gitkeep
+
+
+

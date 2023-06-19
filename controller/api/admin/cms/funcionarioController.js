@@ -2,6 +2,21 @@ const express = require('express')
 const Funcionario = require('../../../../Database/cms/Funcionario')
 const Funcionario_Rede = require('../../../../Database/cms/Funcionario_Rede')
 const router = express.Router()
+const multer = require('multer')
+const moment = require('moment')
+const fs = require('fs')
+
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+      cb(null, './public/upload/cms/funcionario')
+    },
+    filename: function (req, file, cb) {
+        cb(null,  `funcionario_ft_${moment().format('YYYYMMDDHHmmSS')}.${file.originalname.split('.').pop()}` )
+    }
+  })
+  
+const upload = multer({ storage: storage })
+
 
 router.get('/:id', async (req, res) => {
     try {
@@ -15,16 +30,20 @@ router.get('/:id', async (req, res) => {
 })
 
 
-router.post('/', async (req, res) => {
+router.post('/',upload.single('img'),async (req, res) => {
     try {
-        let { status, nome, competencia,img} = req.body
+        let { status, nome, competencia} = req.body
         status = (status == true || status == 'true') ? true : false
 
-        if (nome == '' || nome == undefined || competencia == undefined || competencia == '' || img == undefined || img == '') {
-            return res.status(500).json({ erro: 'Dados importantes como "nome", "imagem" ou "competencia" estão vazios, gentileza verifique e tente novamente!' })
+        if (nome == '' || nome == undefined || competencia == undefined || competencia == '' ) {
+            return res.status(500).json({ erro: 'Dados importantes como "nome" ou "competencia" estão vazios, gentileza verifique e tente novamente!' })
         }
         const exist = await Funcionario.findOne({ where: { nome: nome } })
         if (exist != undefined) return res.status(500).json({ erro: 'Já existe um outro funcionario com os mesmos dados, gentileza tente novamente!' })
+
+        const file = req.file
+        if(file == undefined || file.img == undefined) return res.status(500).json({ erro: 'Dados importantes como "imagem" estão vazios, gentileza verifique e tente novamente!' })
+        const img = `${file.img.path.replace('public','')}`
 
         const newFuncionario = await Funcionario.create({
             status: status,
@@ -35,20 +54,29 @@ router.post('/', async (req, res) => {
         res.json({ resp: "Funcionario cadastrada com sucesso!", funcionario: newFuncionario })
     } catch (error) {
         res.status(500).json({ erro: 'Ocorreu um erro durante o processamento dos dados, gentileza tente novamente!' })
+        fs.unlink(req.file.path, (err) => {if (err) {console.error(err)}});
     }
 })
 
-router.put('/', async (req, res) => {
+router.put('/',upload.single('img'), async (req, res) => {
     try {
-        let { status, nome, competencia,img,funcionarioId } = req.body
+        let { status, nome, competencia,funcionarioId } = req.body
         status = (status == true || status == 'true') ? true : false
         const funcionario = await Funcionario.findByPk(funcionarioId)
         if (funcionario == undefined) return res.status(500).json({ erro: 'Não foi possível identificar cadastro da funcionario na base de dados!' })
+
         if (nome == '' || nome == undefined || competencia == undefined || competencia == '' || img == undefined || img == '') {
             return res.status(500).json({ erro: 'Dados importantes como "nome", "imagem" ou "competencia" estão vazios, gentileza verifique e tente novamente!' })
         }
+
         const exist = await Funcionario.findOne({ where: { nome: nome } })
         if (exist != undefined && exist.id != funcionario.id) return res.status(500).json({ erro: 'Já existe uma outra funcionario com os mesmos dados, gentileza tente novamente!' })
+
+        let img = funcionario.img
+        if(file != undefined && file.img != undefined) {
+            const file = req.file
+            img = `${file.img.path.replace('public','')}`
+        }
 
         await Funcionario.update({
             status: status,
@@ -60,6 +88,7 @@ router.put('/', async (req, res) => {
         res.json({ resp: "Cadasto da funcionario atualizada com sucesso!"})
     } catch (error) {
         res.status(500).json({ erro: 'Ocorreu um erro durante o processamento dos dados, gentileza tente novamente!' })
+        fs.unlink(req.file.path, (err) => {if (err) {console.error(err)}});
     }
 })
 
@@ -76,7 +105,7 @@ router.delete('/:id', async (req, res) => {
     }
 })
 
-router.post('/rede',async(req,res)=>{
+router.post('/rede',upload.single('logo'),async(req,res)=>{
     try {
         let {type,logo,link,funcionarioId} = req.body
         const funcionario = await Funcionario.findByPk(funcionarioId)
@@ -103,7 +132,10 @@ router.post('/rede',async(req,res)=>{
             case 99:
             default:
                 type = 99
-                logo = `<img src="${logo}" height="40px" width="40px" alt="">`
+                const file = req.file
+                if(file == undefined || file.logo == undefined) return res.status(500).json({ erro: 'Dados importantes como "imagem" estão vazios, gentileza verifique e tente novamente!' })
+                const img = `${file.logo.path.replace('public','')}`
+                logo = `<img src="${img}" height="40px" width="40px" alt="">`
                 break;
         }
 
@@ -118,7 +150,7 @@ router.post('/rede',async(req,res)=>{
 
     } catch (error) {
         res.status(500).json({ erro: 'Ocorreu um erro durante o processamento dos dados, gentileza tente novamente!' })
-        
+        fs.unlink(req.file.path, (err) => {if (err) {console.error(err)}});
     }
 })
 

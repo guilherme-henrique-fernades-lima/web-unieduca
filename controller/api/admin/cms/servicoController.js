@@ -1,6 +1,20 @@
 const express = require('express')
 const router = express.Router()
 const Servico = require('../../../../Database/cms/Servico')
+const multer = require('multer')
+const moment = require('moment')
+const fs = require('fs')
+
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+      cb(null, './public/upload/cms/servico')
+    },
+    filename: function (req, file, cb) {
+        cb(null,  `funcionario_ft_${moment().format('YYYYMMDDHHmmSS')}.${file.originalname.split('.').pop()}` )
+    }
+  })
+  
+const upload = multer({ storage: storage })
 
 router.get('/:id', async (req, res) => {
     try {
@@ -13,9 +27,9 @@ router.get('/:id', async (req, res) => {
     }
 })
 
-router.post('/', async (req, res) => {
+router.post('/',upload.single('img'), async (req, res) => {
     try {
-        let { status, nome, descricao,img,html,cor } = req.body
+        let { status, nome, descricao,html,cor } = req.body
         status = (status == true || status == 'true') ? true : false
         if (nome == '' || nome == undefined || html == undefined || html == '' || descricao == undefined || descricao == '') {
             return res.status(500).json({ erro: 'Dados importantes como "nome", "imagem","descricao" ou "texto" estão vazios, gentileza verifique e tente novamente!' })
@@ -23,6 +37,10 @@ router.post('/', async (req, res) => {
         cor = (cor == undefined || cor == '')?'#01126c':cor
         const exist = await Servico.findOne({ where: { nome: nome } })
         if (exist != undefined) return res.status(500).json({ erro: 'Já existe um outro Serviço com os mesmos dados, gentileza tente novamente!' })
+
+        const file = req.file
+        if(file == undefined || file.img == undefined) return res.status(500).json({ erro: 'Dados importantes como "imagem" estão vazios, gentileza verifique e tente novamente!' })
+        const img = `${file.img.path.replace('public','')}`
 
         const newServico = await Servico.create({
             status: status,
@@ -35,12 +53,13 @@ router.post('/', async (req, res) => {
         res.json({ resp: "Serviço cadastrado com sucesso!", servico: newServico })
     } catch (error) {
         res.status(500).json({ erro: 'Ocorreu um erro durante o processamento dos dados, gentileza tente novamente!' })
+        fs.unlink(req.file.path, (err) => {if (err) {console.error(err)}});
     }
 })
 
-router.put('/', async (req, res) => {
+router.put('/',upload.single('img'), async (req, res) => {
     try {
-        let { status, nome, descricao,img,html,servicoId,cor } = req.body
+        let { status, nome, descricao,html,servicoId,cor } = req.body
         status = (status == true || status == 'true') ? true : false
         const servico = await Servico.findByPk(servicoId)
         if (servico == undefined) return res.status(500).json({ erro: 'Não foi possível identificar cadastro do serviço na base de dados!' })
@@ -52,6 +71,12 @@ router.put('/', async (req, res) => {
 
         const exist = await Servico.findOne({ where: { nome: nome } })
         if (exist != undefined && exist.id != servico.id) return res.status(500).json({ erro: 'Já existe um outro Serviço com os mesmos dados, gentileza tente novamente!' })
+
+        let img = servico.img
+        if(file != undefined && file.img != undefined) {
+            const file = req.file
+            img = `${file.img.path.replace('public','')}`
+        }
 
         await Servico.update({
             status: status,
@@ -65,6 +90,7 @@ router.put('/', async (req, res) => {
         res.json({ resp: "Serviço cadastrado com sucesso!"})
     } catch (error) {
         res.status(500).json({ erro: 'Ocorreu um erro durante o processamento dos dados, gentileza tente novamente!' })
+        fs.unlink(req.file.path, (err) => {if (err) {console.error(err)}});
     }
 })
 
