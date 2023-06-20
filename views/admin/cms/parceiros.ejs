@@ -1,0 +1,159 @@
+<%- include("../../partials/admin/head.ejs")%>
+<%- include("../../partials/admin/header.ejs")%>
+<div class="container-fluid">
+    <div class="row">
+    <%- include("../../partials/admin/nav.ejs")%>
+    <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+        <section id="">
+            <div class="container" data-aos="fade">
+                <div class="my-1 border-bottom">
+                    <h1>CSM - PARCEIROS</h1>
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                          <li class="breadcrumb-item"><a href="/admin">Admin</a></li>
+                          <li class="breadcrumb-item"><a href="/admin/cms">CMS</a></li>
+                          <li class="breadcrumb-item active" aria-current="page">Parceiros</li>
+                        </ol>
+                    </nav>
+                </div>
+                <div class="d-flex justify-content-center">
+                <div class="card mb-3 col-12 d-flex">
+                  <div class="card-body">
+                    <h5 class="card-title">Logos</h5>
+
+                    <div class="container">
+                      <div class="row">
+
+                        <div class="col-4">
+                          <div style="text-align: center;">
+                            <img src="https://7070-revondigita-editoraagui-frs1z1x5xxg.ws-us100.gitpod.io/img/clients/client-7.png" class="img-thumbnail" alt="...">
+                            <span style="">
+                              <i class="bi bi-pencil-square" style="cursor:pointer"></i>
+                            </span>
+                            <span>
+                              <i class="bi bi-trash" style="cursor:pointer"></i>
+                            </span>
+                          </div>
+                        </div>
+                        <div class="col-4">
+                          <div style="text-align: center;">
+                            <img src="https://7070-revondigita-editoraagui-frs1z1x5xxg.ws-us100.gitpod.io/img/clients/client-7.png" class="img-thumbnail" alt="...">
+                            <span style="">
+                              <i class="bi bi-pencil-square" style="cursor:pointer"></i>
+                            </span>
+                            <span>
+                              <i class="bi bi-trash" style="cursor:pointer"></i>
+                            </span>
+                          </div>
+                        </div>
+                        <div class="col-4">
+                          <div style="text-align: center;">
+                            <img src="https://7070-revondigita-editoraagui-frs1z1x5xxg.ws-us100.gitpod.io/img/clients/client-7.png" class="img-thumbnail" alt="...">
+                            <span style="">
+                              <i class="bi bi-pencil-square" style="cursor:pointer"></i>
+                            </span>
+                            <span>
+                              <i class="bi bi-trash" style="cursor:pointer"></i>
+                            </span>
+                          </div>
+                        </div>
+                        <div class="col-4">
+                          <div style="text-align: center;">
+                            <img src="https://7070-revondigita-editoraagui-frs1z1x5xxg.ws-us100.gitpod.io/img/clients/client-7.png" class="img-thumbnail" alt="...">
+                            <span style="">
+                              <i class="bi bi-pencil-square" style="cursor:pointer"></i>
+                            </span>
+                            <span>
+                              <i class="bi bi-trash" style="cursor:pointer"></i>
+                            </span>
+                          </div>
+                        </div>
+                        <div class="col-4">
+                          <div style="text-align: center;">
+                            <img src="https://7070-revondigita-editoraagui-frs1z1x5xxg.ws-us100.gitpod.io/img/clients/client-7.png" class="img-thumbnail" alt="...">
+                            <span>
+                              <i class="bi bi-pencil-square pe-auto" style="cursor:pointer"></i>
+                            </span>
+                            <span>
+                              <i class="bi bi-trash pe-auto" style="cursor:pointer"></i>
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div class="d-flex justify-content-center mt-3">
+                          <div class="btn-group btn-group-sm" role="group" aria-label="...">
+                              <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" href="#exampleModalToggle" role="button" title="Adicionar"><i class="bi bi-upload"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                  </div>
+                  </div>
+              
+            <div class="modal fade" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
+                <div class="modal-dialog modal-dialog-centered modal-dialog modal-lg">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalToggleLabel">Editando Parceiros</h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form class="row g-3" style="display: flex;justify-content: center;">
+                            <div class="col-5">
+                                <div class="input-group mt-3 col-md-6">
+                                  <input type="file" class="form-control" id="inputGroupFile02">
+                                  <!-- <label class="input-group-text" for="inputGroupFile02"><img src="https://7070-revondigita-editoraagui-frs1z1x5xxg.ws-us100.gitpod.io/img/clients/client-7.png" class="img-thumbnail" alt="..."></label> -->
+                                </div>
+                              </div>
+                              <!-- <div class="col-5">
+                                <div class="input-group mt-3 col-md-6">
+                                  <input type="file" class="form-control" id="inputGroupFile02">
+                                  <label class="input-group-text" for="inputGroupFile02"><img src="https://7070-revondigita-editoraagui-frs1z1x5xxg.ws-us100.gitpod.io/img/clients/client-7.png" class="img-thumbnail" alt="..."></label>
+                                </div>
+                              </div>
+                              <div class="col-5">
+                                <div class="input-group mt-3 col-md-6">
+                                  <input type="file" class="form-control" id="inputGroupFile02">
+                                  <label class="input-group-text" for="inputGroupFile02"><img src="https://7070-revondigita-editoraagui-frs1z1x5xxg.ws-us100.gitpod.io/img/clients/client-7.png" class="img-thumbnail" alt="..."></label>
+                                </div>
+                              </div>
+                              <div class="col-5">
+                                <div class="input-group mt-3 col-md-6">
+                                  <input type="file" class="form-control" id="inputGroupFile02">
+                                  <label class="input-group-text" for="inputGroupFile02"><img src="https://7070-revondigita-editoraagui-frs1z1x5xxg.ws-us100.gitpod.io/img/clients/client-7.png" class="img-thumbnail" alt="..."></label>
+                                </div>
+                              </div>
+                              <div class="col-5">
+                                <div class="input-group mt-3 col-md-6">
+                                  <input type="file" class="form-control" id="inputGroupFile02">
+                                  <label class="input-group-text" for="inputGroupFile02"><img src="https://7070-revondigita-editoraagui-frs1z1x5xxg.ws-us100.gitpod.io/img/clients/client-7.png" class="img-thumbnail" alt="..."></label>
+                                </div>
+                              </div>
+                              <div class="col-5">
+                                <div class="input-group mt-3 col-md-6">
+                                  <input type="file" class="form-control" id="inputGroupFile02">
+                                  <label class="input-group-text" for="inputGroupFile02"><img src="https://7070-revondigita-editoraagui-frs1z1x5xxg.ws-us100.gitpod.io/img/clients/client-7.png" class="img-thumbnail" alt="..."></label>
+                                </div>
+                              </div> -->
+                            </div>
+                                <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                                  <button class="btn btn-outline-primary me-md-2" type="button"><i class="bi bi-check-lg"></i></button>
+                                  <button class="btn btn-outline-danger" data-bs-dismiss="modal" aria-label="Close" type="button"><i class="bi bi-arrow-return-left"></i></button>
+                            </div>
+                          </form>
+                    </div>
+                    <div class="modal-footer">
+                      <!-- <button class="btn btn-primary" data-bs-target="#exampleModalToggle2" data-bs-toggle="modal" data-bs-dismiss="modal">Open second modal</button> -->
+                    </div>
+                  </div>
+                </div>
+              </div>
+             
+        </section>
+    </main>
+    </div>
+</div>
+<%- include("../../partials/script.ejs")%>
+<%- include("../../partials/end.ejs")%>
