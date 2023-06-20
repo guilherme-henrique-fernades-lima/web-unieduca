@@ -7,10 +7,10 @@ const fs = require('fs')
 
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
-        cb(null, './public/upload/cms/sobre')
+        cb(null, './public/upload/cms/video')
     },
     filename: function (req, file, cb) {
-        cb(null, `sobre_ft_${moment().format('YYYYMMDDHHmmSS')}.${file.originalname.split('.').pop()}`)
+        cb(null, `video_ft_${moment().format('YYYYMMDDHHmmSS')}.${file.originalname.split('.').pop()}`)
     }
 })
 

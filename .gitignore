@@ -116,5 +116,16 @@ public/upload/cms/parceiro/*
 public/upload/cms/servico/*
 !public/upload/cms/servico/.gitkeep
 
+public/upload/cms/testemunha/*
+!public/upload/cms/testemunha/.gitkeep
+
+public/upload/cms/video/*
+!public/upload/cms/video/.gitkeep
+
+public/upload/blog/*
+!public/upload/blog/.gitkeep
+
+public/upload/empresa/*
+!public/upload/empresa/.gitkeep
 
 

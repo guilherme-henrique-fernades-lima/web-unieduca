@@ -32,7 +32,7 @@ router.post('/',upload.single('img'), async (req, res) => {
         let { status, nome, descricao,html,cor } = req.body
         status = (status == true || status == 'true') ? true : false
         if (nome == '' || nome == undefined || html == undefined || html == '' || descricao == undefined || descricao == '') {
-            return res.status(500).json({ erro: 'Dados importantes como "nome", "imagem","descricao" ou "texto" estão vazios, gentileza verifique e tente novamente!' })
+            return res.status(500).json({ erro: 'Dados importantes como "nome", "descricao" ou "texto" estão vazios, gentileza verifique e tente novamente!' })
         }
         cor = (cor == undefined || cor == '')?'#01126c':cor
         const exist = await Servico.findOne({ where: { nome: nome } })
@@ -66,7 +66,7 @@ router.put('/',upload.single('img'), async (req, res) => {
         if (servico == undefined) return res.status(500).json({ erro: 'Não foi possível identificar cadastro do serviço na base de dados!' })
 
         if (nome == '' || nome == undefined || html == undefined || html == '' || descricao == undefined || descricao == '') {
-            return res.status(500).json({ erro: 'Dados importantes como "nome", "imagem","descricao" ou "texto" estão vazios, gentileza verifique e tente novamente!' })
+            return res.status(500).json({ erro: 'Dados importantes como "nome", "descricao" ou "texto" estão vazios, gentileza verifique e tente novamente!' })
         }
         cor = (cor == undefined || cor == '')?'#01126c':cor
 

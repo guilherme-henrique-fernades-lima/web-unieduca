@@ -7,10 +7,10 @@ const fs = require('fs')
 
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
-        cb(null, './public/upload/cms/sobre')
+        cb(null, './public/upload/cms/testemunha')
     },
     filename: function (req, file, cb) {
-        cb(null, `sobre_ft_${moment().format('YYYYMMDDHHmmSS')}.${file.originalname.split('.').pop()}`)
+        cb(null, `testemunha_ft_${moment().format('YYYYMMDDHHmmSS')}.${file.originalname.split('.').pop()}`)
     }
 })
 
@@ -33,8 +33,8 @@ router.post('/', upload.single('img'), async (req, res) => {
         status = (status == true || status == 'true') ? true : false
         star = (isNaN(parseInt(star)) || parseInt(star) >= 5 || parseInt(star) < 1) ? 5 : parseInt(star)
 
-        if (nome == '' || nome == undefined || competencia == undefined || competencia == '' || comentario == undefined || comentario == '' || img == undefined || img == '') {
-            return res.status(500).json({ erro: 'Dados importantes como "nome", "imagem","competencia" ou "comentario" estão vazios, gentileza verifique e tente novamente!' })
+        if (nome == '' || nome == undefined || competencia == undefined || competencia == '' || comentario == undefined || comentario == '' ) {
+            return res.status(500).json({ erro: 'Dados importantes como "nome", "competencia" ou "comentario" estão vazios, gentileza verifique e tente novamente!' })
         }
         const exist = await Testemunha.findOne({ where: { nome: nome } })
         if (exist != undefined) return res.status(500).json({ erro: 'Já existe uma outra testemunha com os mesmos dados, gentileza tente novamente!' })
@@ -66,8 +66,8 @@ router.put('/', upload.single('img'), async (req, res) => {
         star = (isNaN(parseInt(star)) || parseInt(star) >= 5 || parseInt(star) < 1) ? 5 : parseInt(star)
         const testemunha = await Testemunha.findByPk(testemunhaId)
         if (testemunha == undefined) return res.status(500).json({ erro: 'Não foi possível identificar cadastro da testemunha na base de dados!' })
-        if (nome == '' || nome == undefined || competencia == undefined || competencia == '' || comentario == undefined || comentario == '' || img == undefined || img == '') {
-            return res.status(500).json({ erro: 'Dados importantes como "nome", "imagem","competencia" ou "comentario" estão vazios, gentileza verifique e tente novamente!' })
+        if (nome == '' || nome == undefined || competencia == undefined || competencia == '' || comentario == undefined || comentario == '' ) {
+            return res.status(500).json({ erro: 'Dados importantes como "nome", "competencia" ou "comentario" estão vazios, gentileza verifique e tente novamente!' })
         }
         const exist = await Testemunha.findOne({ where: { nome: nome } })
         if (exist != undefined && exist.id != testemunha.id) return res.status(500).json({ erro: 'Já existe uma outra testemunha com os mesmos dados, gentileza tente novamente!' })

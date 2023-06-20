@@ -32,8 +32,8 @@ router.post('/',upload.single('img'), async (req, res) => {
     try {
         let { status, nome } = req.body
         status = (status == true || status == 'true') ? true : false
-        if (nome == '' || nome == undefined || img == undefined || img == '') {
-            return res.status(500).json({ erro: 'Dados importantes como "nome" ou "imagem" estão vazios, gentileza verifique e tente novamente!' })
+        if (nome == '' || nome == undefined ) {
+            return res.status(500).json({ erro: 'Dados importantes como "nome" estão vazios, gentileza verifique e tente novamente!' })
         }
 
         const exist = await Parceiro.findOne({ where: { nome: nome } })
@@ -63,8 +63,8 @@ router.put('/',upload.single('img'), async (req, res) => {
         status = (status == true || status == 'true') ? true : false
         const parceiro = await Parceiro.findByPk(parceiroId)
         if (parceiro == undefined) return res.status(500).json({ erro: 'Não foi possível identificar cadastro do parceiro na base de dados!' })
-        if (nome == '' || nome == undefined || img == undefined || img == '') {
-            return res.status(500).json({ erro: 'Dados importantes como "nome" ou "imagem" estão vazios, gentileza verifique e tente novamente!' })
+        if (nome == '' || nome == undefined ) {
+            return res.status(500).json({ erro: 'Dados importantes como "nome"  estão vazios, gentileza verifique e tente novamente!' })
         }
         const exist = await Parceiro.findOne({ where: { nome: nome } })
         if (exist != undefined && exist.id != parceiro.id) return res.status(500).json({ erro: 'Já existe um outro Parceiro com os mesmos dados, gentileza tente novamente!' })
