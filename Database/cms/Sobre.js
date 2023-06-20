@@ -3,6 +3,10 @@ const connection = require('../database')
 
 
 const Sobre = connection.define('ag_sobre',{
+    status:{
+        type:Sequelize.BOOLEAN,
+        allowNull:false
+    },
     titulo:{
         type:Sequelize.STRING,
         allowNull:true

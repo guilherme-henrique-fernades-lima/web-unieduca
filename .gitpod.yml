@@ -5,9 +5,8 @@
 # Learn more from ready-to-use templates: https://www.gitpod.io/docs/introduction/getting-started/quickstart
 
 tasks:
-  - before: npm install
-  - init: docker-compose up -d
-  - command: npx nodemon index
+  - init: node index 
+  - before: docker-compose up -d && npm install 
 
 
 

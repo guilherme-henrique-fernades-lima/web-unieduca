@@ -18,7 +18,7 @@ const Funcionario_Rede = connection.define('ag_funcionario_rede',{
 },
 {freezeTableName:true})
 
-Funcionario_Rede.hasOne(Funcionario, {
+Funcionario_Rede.belongsTo(Funcionario, {
     foreignKey: 'funcionarioId'
 });
 

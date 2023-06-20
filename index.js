@@ -46,15 +46,69 @@ const adminController = require("./controller/routes/adminController")
 const loginController = require("./controller/routes/loginController")
 const apiController = require("./controller/api/apiController")
 
+const Sobre = require('./Database/cms/Sobre')
+const Servico = require('./Database/cms/Servico')
+const Parceiro = require('./Database/cms/Parceiro')
+const Video = require('./Database/cms/Video')
+const Testemunha = require('./Database/cms/Testemunha')
+const Funcionario = require('./Database/cms/Funcionario')
+const Duvida = require('./Database/cms/Duvida')
+const Funcionario_Rede = require('./Database/cms/Funcionario_Rede')
+const { Op } = require('sequelize')
+const Empresa = require('./Database/Empresa')
+const Blog = require('./Database/Blog')
+
 app.use('/admin',adminController)
 app.use('/login',loginController)
 app.use('/api',apiController)
 
 //RENDERIZA
-app.get("/",(req,res)=>{
-    var nome = "<h1>DAVI<h1>"
-    console.log(nome)
-    res.render('index',{nome:nome})
+app.get("/",async (req,res)=>{
+    try {
+        const whereSt = { status: true }
+        const [sobre, servicos, parceiros, video, testemunhas, duvidas,emp,bl] = await Promise.allSettled([
+            Sobre.findOne({ where: whereSt }),
+            Servico.findAll({ where: whereSt }),
+            Parceiro.findAll({ where: whereSt }),
+            Video.findOne({ where: whereSt }),
+            Testemunha.findAll({ where: whereSt }),
+            Duvida.findAll({ where: whereSt }),
+            Empresa.findOne(),
+            Blog.findAll({where:whereSt})
+        ])
+        const cms = {
+            sobre: sobre.status === 'fulfilled' ? sobre.value : undefined,
+            servicos: servicos.status === 'fulfilled' ? servicos.value : [],
+            parceiros: parceiros.status === 'fulfilled' ? parceiros.value : [],
+            video: video.status === 'fulfilled' ? video.value : undefined,
+            testemunhas: testemunhas.status === 'fulfilled' ? testemunhas.value : [],
+            duvidas: duvidas.status === 'fulfilled' ? duvidas.value : []
+        }
+        const empresa = emp.status === 'fulfilled'?emp.value:undefined
+        const blog = bl.status === 'fulfilled'?bl.value:[]
+
+        try {
+            cms.funcionarios = await Funcionario.findAll({where:{status:true}})
+            if (cms.funcionarios.length > 0) {
+                const redes = await Funcionario_Rede.findAll({where:{funcionarioId:{[Op.in]:cms.funcionarios.map(cf => cf.id)}}})
+                cms.funcionarios = cms.funcionarios.map(funcionario => ({
+                    ...funcionario,
+                    redes: redes.filter(rede => rede.funcionarioId === funcionario.id)
+                }));
+                
+            }
+        } catch (error) {
+            console.log(error)
+            console.log('Erro ao consultar dados do funcionarios')
+        }
+        console.log(cms)
+        res.render('index',{cms:cms,empresa:empresa,blog:blog})
+    } catch (error) {
+        console.log(error)
+        req.flash("erro",'Ocorreu um erro ao acessar página, gentileza entre em contato com o suporte')
+        res.redirect('/login')
+    }
+    
 })
 
 // app.get("/teste",(req,res)=>{
