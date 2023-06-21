@@ -1,43 +1,47 @@
 <%- include("../../partials/admin/head.ejs")%>
-<%- include("../../partials/admin/header.ejs")%>
-<div class="container-fluid">
-    <div class="row">
-    <%- include("../../partials/admin/nav.ejs")%>
-    <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
-        <section id="">
-            <div class="container" data-aos="fade">
+  <%- include("../../partials/admin/header.ejs")%>
+    <div class="container-fluid">
+      <div class="row">
+        <%- include("../../partials/admin/nav.ejs")%>
+          <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+            <section id="">
+              <div class="container" data-aos="fade">
                 <div class="my-1 border-bottom">
-                    <h1>CSM - SOBRE NÓS</h1>
-                    <nav aria-label="breadcrumb">
-                        <ol class="breadcrumb">
-                          <li class="breadcrumb-item"><a href="/admin">Admin</a></li>
-                          <li class="breadcrumb-item"><a href="/admin/cms">CMS</a></li>
-                          <li class="breadcrumb-item active" aria-current="page">Sobre</li>
-                        </ol>
-                    </nav>
+                  <h1>CSM - SOBRE NÓS</h1>
+                  <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                      <li class="breadcrumb-item"><a href="/admin">Admin</a></li>
+                      <li class="breadcrumb-item"><a href="/admin/cms">CMS</a></li>
+                      <li class="breadcrumb-item active" aria-current="page">Sobre</li>
+                    </ol>
+                  </nav>
                 </div>
                 <div class="d-flex justify-content-center">
-                <div class="card mb-3 col-10 d-flex">
-                  <div class="card-body">
-                    <h5 class="card-title">Titulo</h5>
-                    <h6 class="card-title">Subtitulo</h6>
-                    <img src="https://7070-revondigita-editoraagui-3dah8m82ltk.ws-us100.gitpod.io/img/about.jpg" class="card-img-top" alt="Imagem 1">
-                    <p class="card-text">Texto 1</p>
-                    <p class="card-text">Texto 2</p>
-                    <!-- <p class="card-text"><small class="text-muted">Ultima atualização:</small></p> -->
-                    <img src="https://7070-revondigita-editoraagui-3dah8m82ltk.ws-us100.gitpod.io/img/about-2.jpg" class="card-img-bottom" alt="Imagem 2">
+                  <div class="card mb-3 col-10 d-flex">
+                    <div class="card-body">
+                      <h5 class="card-title">Titulo</h5>
+                      <h6 class="card-title">Subtitulo</h6>
+                      <img src="https://7070-revondigita-editoraagui-3dah8m82ltk.ws-us100.gitpod.io/img/about.jpg"
+                        class="card-img-top" alt="Imagem 1">
+                      <p class="card-text">Texto 1</p>
+                      <p class="card-text">Texto 2</p>
+                      <!-- <p class="card-text"><small class="text-muted">Ultima atualização:</small></p> -->
+                      <img src="https://7070-revondigita-editoraagui-3dah8m82ltk.ws-us100.gitpod.io/img/about-2.jpg"
+                        class="card-img-bottom" alt="Imagem 2">
 
 
-                    <div class="d-flex justify-content-center mt-3">
-                          <div class="btn-group btn-group-sm" role="group" aria-label="...">
-                              <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" href="#exampleModalToggle" role="button" title="Editar"><i class="bi bi-pencil-square"></i></button>
-                            </div>
+                      <div class="d-flex justify-content-center mt-3">
+                        <div class="btn-group btn-group-sm" role="group" aria-label="...">
+                          <button type="button" onclick="loadModal(false)" class="btn btn-outline-primary" data-bs-toggle="modal"
+                            href="#exampleModalToggle" role="button" title="Editar"><i
+                              class="bi bi-pencil-square"></i></button>
                         </div>
+                      </div>
                     </div>
-                    
+
                   </div>
-                  </div>
-                  <!-- <div class="d-flex justify-content-center">
+                </div>
+                <!-- <div class="d-flex justify-content-center">
 
                       <div class="card col-8">
                           <div class="card-body">
@@ -53,7 +57,7 @@
                             <img src="..." class="card-img-bottom" alt="Imagem 2">
                         </div>   
                     </div> -->
-             <!-- <p>ROTA: PUT - '/api/cms/sobre'</p>
+                <!-- <p>ROTA: PUT - '/api/cms/sobre'</p>
                 <p>{
                     titulo:titulo,
                     subtitulo:subtitulo,
@@ -70,94 +74,137 @@
                 <input type="text" value="<%=(sobre != undefined)?sobre.titulo:''%>" class="form-control">
                 
             </div> -->
-            <div class="modal fade" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
-                <div class="modal-dialog modal-dialog-centered modal-dialog modal-lg">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <h5 class="modal-title" id="exampleModalToggleLabel">Editando pagina Sobre</h5>
-                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <div class="modal fade" id="exampleModalToggle" aria-hidden="true"
+                  aria-labelledby="exampleModalToggleLabel" tabindex="-1">
+                  <div class="modal-dialog modal-dialog-centered modal-dialog modal-lg">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalToggleLabel">Editando pagina Sobre</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <div class="modal-body">
+                        <div class="loadModal">
+                          <div class="d-flex justify-content-center">
+                            <div class="spinner-border" role="status">
+                              <span class="visually-hidden">Loading...</span>
+                            </div>
+                          </div>
+                        </div>
+                        <section class="row g-3 bodyModal">
+                          <div class="col-12">
+                            <label for="titulo" class="form-label">Titulo</label>
+                            <input type="text" class="form-control" id="titulo">
+                          </div>
+                          <div class="col-12">
+                            <label for="subtitulo" class="form-label">Subtiutlo</label>
+                            <input type="text" class="form-control" id="subtitulo">
+                          </div>
+                          <div class="col-12">
+                            <label for="img1" class="form-label">Foto 1:</label>
+                            <div class="input-group mt-3 col-md-6">
+                              <input type="file" class="form-control" id="img1">
+                              <label class="input-group-text" for="img1"><i class="bi bi-card-image"></i></label>
+                            </div>
+                          </div>
+                          <div class="col-12">
+                            <label for="texto1" class="form-label">Texto 1</label>
+                            <textarea class="form-control" id="texto1" rows="5"></textarea>
+                          </div>
+                          <div class="col-12">
+                            <label for="texto2" class="form-label">Texto 2</label>
+                            <textarea class="form-control" id="texto2" rows="5"></textarea>
+                          </div>
+                          <div class="col-12">
+                            <label for="video" class="form-label">Vídeo <span class="text-muted">(Youtube ou
+                                Vimeo)</span></label>
+                            <input type="text" name="video" id="video" class="form-control">
+                          </div>
+                          <div class="col-12">
+                            <label for="img2" class="form-label">Foto 2</label>
+                            <div class="input-group mt-3 col-md-6">
+                              <input type="file" class="form-control" id="img2">
+                              <label class="input-group-text" for="img2"><i class="bi bi-card-image"></i></label>
+                            </div>
+                          </div>
+                          <div class="col-md-12">
+                            <label for="status" class="form-label">Status</label>
+                            <select id="status" class="form-select">
+                              <option value="true" selected>Habilitar</option>
+                              <option value="false">Desabilitar</option>
+                            </select>
+                          </div>
+                        </section>
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                        <button type="button" class="btn btn-success btnModal" onclick="salvar()">Salvar</button>
+                      </div>
                     </div>
-                    <div class="modal-body">
-                        <form class="row g-3">
-                            <div class="col-md-12">
-                              <label for="inputEmail4" class="form-label">Titulo</label>
-                              <input type="text" class="form-control" id="inputEmail4">
-                            </div>
-                            <div class="col-md-12">
-                              <label for="inputEmail4" class="form-label">Subtiutlo</label>
-                              <input type="text" class="form-control" id="inputEmail4">
-                            </div>
-                            <div class="col-12">
-                              <label for="inputAddress" class="form-label">Texto 1</label>
-                              <textarea class="form-control" rows="5"></textarea>
-                            </div>
-                            <div class="col-12">
-                              <label for="inputAddress" class="form-label">Texto 2</label>
-                              <textarea class="form-control" rows="5"></textarea>
-                            </div>
-                            <div class="col-md-12">
-                              <label for="inputState" class="form-label">Status</label>
-                              <select id="inputState" class="form-select">
-                                <option selected>Habilitar</option>
-                                <option>Desabilitar</option>
-                              </select>
-                            </div>
-                            <div class="row">
+                  </div>
+                </div>
 
-                              <div class="col-6">
-                                
-                                <div class="mt-3 col-md-6">  
-                                <label for="inputState" class="form-label">Foto 1:</label>
-                              </div> 
-                              <div class="input-group mt-3 col-md-6">
-                                <input type="file" class="form-control" id="inputGroupFile02">
-                                <label class="input-group-text" for="inputGroupFile02"><i class="bi bi-card-image"></i></label>
-                              </div>
-                            </div>
-                            
-                            <div class="col-6">
-                              
-                                <div class="mt-3 col-md-6">  
-                                  <label for="inputState" class="form-label">Foto 2:</label>
-                                </div> 
-                                <div class="input-group mt-3 col-md-6">
-                                  <input type="file" class="form-control" id="inputGroupFile02">
-                                  <label class="input-group-text" for="inputGroupFile02"><i class="bi bi-card-image"></i></label>
-                                </div>
-                              </div>
-                            </div>
-                                <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                                  <button class="btn btn-outline-primary me-md-2" type="button"><i class="bi bi-check-lg"></i></button>
-                                  <button class="btn btn-outline-danger" data-bs-dismiss="modal" aria-label="Close" type="button"><i class="bi bi-arrow-return-left"></i></button>
-                            </div>
-                          </form>
-                    </div>
-                    <div class="modal-footer">
-                      <!-- <button class="btn btn-primary" data-bs-target="#exampleModalToggle2" data-bs-toggle="modal" data-bs-dismiss="modal">Open second modal</button> -->
+                <div class="modal fade" id="exampleModalToggle2" aria-hidden="true"
+                  aria-labelledby="exampleModalToggleLabel2" tabindex="-1">
+                  <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalToggleLabel2">Modal 2</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <div class="modal-body">
+                        Hide this modal and show the first with the button below.
+                      </div>
+                      <div class="modal-footer">
+                        <button class="btn btn-primary" data-bs-target="#exampleModalToggle" data-bs-toggle="modal"
+                          data-bs-dismiss="modal">Back to first</button>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-              <div class="modal fade" id="exampleModalToggle2" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2" tabindex="-1">
-                <div class="modal-dialog modal-dialog-centered">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <h5 class="modal-title" id="exampleModalToggleLabel2">Modal 2</h5>
-                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                      Hide this modal and show the first with the button below.
-                    </div>
-                    <div class="modal-footer">
-                      <button class="btn btn-primary" data-bs-target="#exampleModalToggle" data-bs-toggle="modal" data-bs-dismiss="modal">Back to first</button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-             
-        </section>
-    </main>
+
+            </section>
+          </main>
+      </div>
     </div>
-</div>
-<%- include("../../partials/script.ejs")%>
-<%- include("../../partials/end.ejs")%>
+    <%- include("../../partials/script.ejs")%>
+      <script>
+        async function salvar() {
+          try {
+            //Ao iniciar a função ele da o loop no modal
+            loadModal(true)
+            const titulo = $('#titulo').val()
+            const subtitulo = $('#subtitulo').val()
+            const texto1 = $('#texto1').val()
+            const texto2 = $('#texto2').val()
+            const status = $('#status').val()
+            const img1 = $('#img1')[0].files[0]
+            const img2 = $('#img2')[0].files[0]
+            const video = $('#video').val()
+
+            const formData = new FormData()
+            formData.append('img1', img1)
+            formData.append('img2', img2)
+            formData.append('titulo', titulo)
+            formData.append('subtitulo', subtitulo)
+            formData.append('video', video)
+            formData.append('status', status)
+            formData.append('texto1', texto1)
+            formData.append('texto2', texto2)
+
+            const request = await axios.put('/api/cms/sobre',formData)
+            toastMsm(request.data.resp)
+
+          } catch (error) {
+            console.log(error)
+            if (error.response != undefined && error.response.data.erro != undefined) {
+              console.log(error.response)
+              toastErro(error.response.data.erro)
+            } else {
+              toastErro('Ocorreu um erro durante o processamento de dados, verifique sua rede e tente novamente')
+            }
+          }finally{
+            loadModal(false)
+          }
+        }
+      </script>
+      <%- include("../../partials/end.ejs")%>
