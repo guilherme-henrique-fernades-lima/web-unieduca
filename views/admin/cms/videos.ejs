@@ -26,7 +26,7 @@
         <section id="">
             <div class="container" data-aos="fade">
                 <div class="my-1 border-bottom">
-                    <h1>CSM - VIDEOS</h1>
+                    <h1>CSM - VIDEOS <button type="button" class="btn btn-outline-primary" title="Cadastrar"  data-bs-toggle="modal" href="#exampleModalToggle" role="button" onclick="loadModal(false)"><i class="bi bi-plus-circle"></i></button></h1>
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb">
                           <li class="breadcrumb-item"><a href="/admin">Admin</a></li>
@@ -46,7 +46,7 @@
                     
                     <div class="d-flex justify-content-center mt-3">
                           <div class="btn-group btn-group-sm" role="group" aria-label="...">
-                              <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" href="#exampleModalToggle" role="button" title="Alterar"><i class="bi bi-upload"></i></button>
+                              <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" href="#exampleModalToggle" role="button" title="Alterar" onclick="loadModal(false)"><i class="bi bi-upload"></i></button>
                             </div>
                         </div>
                     </div>
@@ -62,53 +62,29 @@
                       <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
+                      <div class="loadModal">
+                        <div class="d-flex justify-content-center">
+                          <div class="spinner-border" role="status">
+                            <span class="visually-hidden">Loading...</span>
+                          </div>
+                        </div>
+                      </div>
                         <form class="row g-3" style="display: flex;justify-content: center;">
                             <div class="col-12">
                                 <div class="input-group mt-3 col-md-6">
                                   <input type="text" class="form-control" id="inputGroupFile02" placeholder="Link do Youtube">
-                                  <!-- <label class="input-group-text" for="inputGroupFile02"><img src="https://7070-revondigita-editoraagui-frs1z1x5xxg.ws-us100.gitpod.io/img/clients/client-7.png" class="img-thumbnail" alt="..."></label> -->
+                                 
                                 </div>
                               </div>
-                              <!-- <div class="col-5">
-                                <div class="input-group mt-3 col-md-6">
-                                  <input type="file" class="form-control" id="inputGroupFile02">
-                                  <label class="input-group-text" for="inputGroupFile02"><img src="https://7070-revondigita-editoraagui-frs1z1x5xxg.ws-us100.gitpod.io/img/clients/client-7.png" class="img-thumbnail" alt="..."></label>
-                                </div>
-                              </div>
-                              <div class="col-5">
-                                <div class="input-group mt-3 col-md-6">
-                                  <input type="file" class="form-control" id="inputGroupFile02">
-                                  <label class="input-group-text" for="inputGroupFile02"><img src="https://7070-revondigita-editoraagui-frs1z1x5xxg.ws-us100.gitpod.io/img/clients/client-7.png" class="img-thumbnail" alt="..."></label>
-                                </div>
-                              </div>
-                              <div class="col-5">
-                                <div class="input-group mt-3 col-md-6">
-                                  <input type="file" class="form-control" id="inputGroupFile02">
-                                  <label class="input-group-text" for="inputGroupFile02"><img src="https://7070-revondigita-editoraagui-frs1z1x5xxg.ws-us100.gitpod.io/img/clients/client-7.png" class="img-thumbnail" alt="..."></label>
-                                </div>
-                              </div>
-                              <div class="col-5">
-                                <div class="input-group mt-3 col-md-6">
-                                  <input type="file" class="form-control" id="inputGroupFile02">
-                                  <label class="input-group-text" for="inputGroupFile02"><img src="https://7070-revondigita-editoraagui-frs1z1x5xxg.ws-us100.gitpod.io/img/clients/client-7.png" class="img-thumbnail" alt="..."></label>
-                                </div>
-                              </div>
-                              <div class="col-5">
-                                <div class="input-group mt-3 col-md-6">
-                                  <input type="file" class="form-control" id="inputGroupFile02">
-                                  <label class="input-group-text" for="inputGroupFile02"><img src="https://7070-revondigita-editoraagui-frs1z1x5xxg.ws-us100.gitpod.io/img/clients/client-7.png" class="img-thumbnail" alt="..."></label>
-                                </div>
-                              </div> -->
-                            </div>
-                                <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                                  <button class="btn btn-outline-primary me-md-2" type="button"><i class="bi bi-check-lg"></i></button>
-                                  <button class="btn btn-outline-danger" data-bs-dismiss="modal" aria-label="Close" type="button"><i class="bi bi-arrow-return-left"></i></button>
-                            </div>
-                          </form>
-                    </div>
-                    <div class="modal-footer">
-                      <!-- <button class="btn btn-primary" data-bs-target="#exampleModalToggle2" data-bs-toggle="modal" data-bs-dismiss="modal">Open second modal</button> -->
-                    </div>
+                            
+                            
+                            </form>
+                          </div>
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                            <button type="button" class="btn btn-success btnModal" onclick="salvar()">Salvar</button>
+                          </div>
+                        </div>
                   </div>
                 </div>
               </div>
@@ -116,6 +92,35 @@
         </section>
     </main>
     </div>
+    <script>
+      async function salvar() {
+        try {
+          //Ao iniciar a função ele da o loop no modal
+          loadModal(true)
+          const video1 = $('#video1').val()
+          const video2 = $('#video2').val()
+         
+          const formData = new FormData()
+          formData.append('video1', video1)
+          formData.append('video2', video2)
+
+          const request = await axios.put('/api/cms/video',formData)
+          toastMsm(request.data.resp)
+
+        } catch (error) {
+          console.log(error)
+          if (error.response != undefined && error.response.data.erro != undefined) {
+            console.log(error.response)
+            toastErro(error.response.data.erro)
+          } else {
+            toastErro('Ocorreu um erro durante o processamento de dados, verifique sua rede e tente novamente')
+          }
+        }finally{
+          loadModal(false)
+        }
+      }
+
+    </script>
 </div>
 
 <%- include("../../partials/script.ejs")%>
