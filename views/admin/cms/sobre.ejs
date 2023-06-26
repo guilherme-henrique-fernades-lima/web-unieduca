@@ -19,61 +19,25 @@
                 <div class="d-flex justify-content-center">
                   <div class="card mb-3 col-10 d-flex">
                     <div class="card-body">
-                      <h5 class="card-title"></h5>
-                      <h6 class="card-title">Subtitulo</h6>
-                      <img src="https://7070-revondigita-editoraagui-3dah8m82ltk.ws-us100.gitpod.io/img/about.jpg"
+                      <h5 class="card-title"><%=(sobre != undefined && sobre.titulo != null)?sobre.titulo:"Insira o Título dessa sessão"%></h5>
+                      <h6 class="card-title"><%=(sobre != undefined && sobre.subtitulo != '')?sobre.subtitulo:"Insira o Subtítulo dessa sessão"%></h6>
+                      <img src="<%=(sobre != undefined && sobre.img1 != null)?sobre.img1:''%>"
                         class="card-img-top" alt="Imagem 1">
-                      <p class="card-text">Texto 1</p>
-                      <p class="card-text">Texto 2</p>
-                      <!-- <p class="card-text"><small class="text-muted">Ultima atualização:</small></p> -->
-                      <img src="https://7070-revondigita-editoraagui-3dah8m82ltk.ws-us100.gitpod.io/img/about-2.jpg"
+                      <p class="card-text"><%=(sobre != undefined && sobre.texto1 != '')?sobre.texto1:"Insira o TEXTO1 dessa sessão"%></p>
+                      <p class="card-text"><%=(sobre != undefined && sobre.texto2 != '')?sobre.texto2:"Insira o TEXTO2 dessa sessão"%></p>
+                      <img src="<%=(sobre != undefined && sobre.img2 != '')?sobre.img2:''%>"
                         class="card-img-bottom" alt="Imagem 2">
-
+                      <p class="card-text"><a href="<%=(sobre != undefined && sobre.video != '')?sobre.video:'#'%>"><%=(sobre != undefined && sobre.video != '')?sobre.video:'Insira o vídeo dessa sessão'%></a></p>
 
                       <div class="d-flex justify-content-center mt-3">
-                        <div class="btn-group btn-group-sm" role="group" aria-label="...">
-                          <button type="button" onclick="loadModal(false)" class="btn btn-outline-primary" data-bs-toggle="modal"
-                            href="#exampleModalToggle" role="button" title="Editar"><i
-                              class="bi bi-pencil-square"></i></button>
-                        </div>
+                          <button type="button" onclick="editar()" class="btn btn-outline-primary" data-bs-toggle="modal"
+                            href="#exampleModalToggle" role="button" title="Editar">Editar</button>
                       </div>
                     </div>
 
                   </div>
                 </div>
-                <!-- <div class="d-flex justify-content-center">
-
-                      <div class="card col-8">
-                          <div class="card-body">
-                              <h5 class="card-title">Titulo</h5>
-                              <p class="card-text">Texto 2</p>
-                              <p class="card-text"><small class="text-muted">Ultima atualização:</small></p>
-                              <div class="d-flex justify-content-center">
-                                <div class="btn-group btn-group-sm" role="group" aria-label="...">
-                                    <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" href="#exampleModalToggle" role="button" title="Editar"><i class="bi bi-pencil-square"></i></button>
-                                  </div>
-                              </div>
-                            </div>
-                            <img src="..." class="card-img-bottom" alt="Imagem 2">
-                        </div>   
-                    </div> -->
-                <!-- <p>ROTA: PUT - '/api/cms/sobre'</p>
-                <p>{
-                    titulo:titulo,
-                    subtitulo:subtitulo,
-                    subtitulo:subtitulo,
-                    img1:img1,
-                    texto1:texto1,
-                    texto2:texto2,
-                    img2:img2,
-                    video:video,
-                }</p>
-            <div>
-
-            <div>
-                <input type="text" value="<%=(sobre != undefined)?sobre.titulo:''%>" class="form-control">
                 
-            </div> -->
                 <div class="modal fade" id="exampleModalToggle" aria-hidden="true"
                   aria-labelledby="exampleModalToggleLabel" tabindex="-1">
                   <div class="modal-dialog modal-dialog-centered modal-dialog modal-lg">
@@ -149,6 +113,41 @@
     </div>
     <%- include("../../partials/script.ejs")%>
       <script>
+         async function editar() {
+          try {
+            //Ao iniciar a função ele da o loop no modal
+            loadModal(true)
+            const titulo = $('#titulo')
+            const subtitulo = $('#subtitulo')
+            const texto1 = $('#texto1')
+            const texto2 = $('#texto2')
+            const status = $('#status')
+            const video = $('#video')
+
+
+            const request = await axios.get('/api/cms/sobre')
+            const sobre = request.data.sobre
+            console.log(sobre)
+            titulo.val(sobre.titulo)
+            subtitulo.val(sobre.subtitulo)
+            texto1.val(sobre.texto1)
+            texto2.val(sobre.texto2)
+            status.val(sobre.status)
+            video.val(sobre.video)
+
+          } catch (error) {
+            console.log(error)
+            if (error.response != undefined && error.response.data.erro != undefined) {
+              console.log(error.response)
+              toastErro(error.response.data.erro)
+            } else {
+              toastErro('Ocorreu um erro durante o processamento de dados, verifique sua rede e tente novamente')
+            }
+          } finally {
+            loadModal(false)
+          }
+        }
+
         async function salvar() {
           try {
             //Ao iniciar a função ele da o loop no modal

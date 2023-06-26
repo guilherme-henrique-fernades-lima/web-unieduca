@@ -492,7 +492,7 @@ section {
     /* max-width: 400px; */
     bottom: 0;
     transition: 0.3s;
-    z-index: 9997;
+    /* z-index: 9997; */
   }
 
   .navbar ul {

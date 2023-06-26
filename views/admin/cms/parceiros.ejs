@@ -3,128 +3,80 @@
 <div class="container-fluid">
     <div class="row">
     <%- include("../../partials/admin/nav.ejs")%>
-    <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
-        <section id="">
-            <div class="container" data-aos="fade">
-                <div class="my-1 border-bottom">
-                    <h1>CSM - PARCEIROS</h1>
-                    <nav aria-label="breadcrumb">
-                        <ol class="breadcrumb">
-                          <li class="breadcrumb-item"><a href="/admin">Admin</a></li>
-                          <li class="breadcrumb-item"><a href="/admin/cms">CMS</a></li>
-                          <li class="breadcrumb-item active" aria-current="page">Parceiros</li>
-                        </ol>
-                    </nav>
-                </div>
-                <div class="d-flex justify-content-center">
-                <div class="card mb-3 col-12 d-flex">
-                  <div class="card-body">
-                    <h5 class="card-title">Logos</h5>
-
-                    <div class="container">
-                      <div class="row">
-
-                        <div class="col-4">
-                          <div style="text-align: center;">
-                            <img src="https://7070-revondigita-editoraagui-frs1z1x5xxg.ws-us100.gitpod.io/img/clients/client-7.png" class="img-thumbnail" alt="...">
-                            <span style="">
-                              <i class="bi bi-pencil-square" style="cursor:pointer"></i>
-                            </span>
-                            <span>
-                              <i class="bi bi-trash" style="cursor:pointer"></i>
-                            </span>
-                          </div>
-                        </div>
-                        <div class="col-4">
-                          <div style="text-align: center;">
-                            <img src="https://7070-revondigita-editoraagui-frs1z1x5xxg.ws-us100.gitpod.io/img/clients/client-7.png" class="img-thumbnail" alt="...">
-                            <span style="">
-                              <i class="bi bi-pencil-square" style="cursor:pointer"></i>
-                            </span>
-                            <span>
-                              <i class="bi bi-trash" style="cursor:pointer"></i>
-                            </span>
-                          </div>
-                        </div>
-                        <div class="col-4">
-                          <div style="text-align: center;">
-                            <img src="https://7070-revondigita-editoraagui-frs1z1x5xxg.ws-us100.gitpod.io/img/clients/client-7.png" class="img-thumbnail" alt="...">
-                            <span style="">
-                              <i class="bi bi-pencil-square" style="cursor:pointer"></i>
-                            </span>
-                            <span>
-                              <i class="bi bi-trash" style="cursor:pointer"></i>
-                            </span>
-                          </div>
-                        </div>
-                        <div class="col-4">
-                          <div style="text-align: center;">
-                            <img src="https://7070-revondigita-editoraagui-frs1z1x5xxg.ws-us100.gitpod.io/img/clients/client-7.png" class="img-thumbnail" alt="...">
-                            <span style="">
-                              <i class="bi bi-pencil-square" style="cursor:pointer"></i>
-                            </span>
-                            <span>
-                              <i class="bi bi-trash" style="cursor:pointer"></i>
-                            </span>
-                          </div>
-                        </div>
-                        <div class="col-4">
-                          <div style="text-align: center;">
-                            <img src="https://7070-revondigita-editoraagui-frs1z1x5xxg.ws-us100.gitpod.io/img/clients/client-7.png" class="img-thumbnail" alt="...">
-                            <span>
-                              <i class="bi bi-pencil-square pe-auto" style="cursor:pointer"></i>
-                            </span>
-                            <span>
-                              <i class="bi bi-trash pe-auto" style="cursor:pointer"></i>
-                            </span>
-                          </div>
-                        </div>
+      <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+        <section class="container" data-aos="fade">
+          <div class="my-1 border-bottom">
+            <h1>CSM - PARCEIROS</h1>
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                  <li class="breadcrumb-item"><a href="/admin">Admin</a></li>
+                  <li class="breadcrumb-item"><a href="/admin/cms">CMS</a></li>
+                  <li class="breadcrumb-item active" aria-current="page">Parceiros</li>
+                </ol>
+            </nav>
+          </div>
+          <div class="d-flex justify-content-center">
+            <div class="card mb-3 col-12 d-flex">
+              <div class="card-body">
+                <h5 class="card-title">Parceiros</h5>
+                <div class="row">
+                  <%parceiros.forEach(parceiro =>{%>
+                    <div class="col-4 text-center">
+                      <h6><%=parceiro.nome%></h6>
+                      <img src="<%=parceiro.img%>" class="img-thumbnail">
+                      <div class="btn-group" role="group" aria-label="Basic example">
+                        <button type="button" class="btn btn-primary mx-1">Editar <i class="bi bi-pencil-square" style="cursor:pointer"></i></button>
+                        <button type="button" class="btn btn-danger mx-1">Remover <i class="bi bi-trash" style="cursor:pointer"></i></button>
                       </div>
                     </div>
-                    
-                    <div class="d-flex justify-content-center mt-3">
-                          <div class="btn-group btn-group-sm" role="group" aria-label="...">
-                              <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" href="#exampleModalToggle" onclick="loadModal(false)"  role="button" title="Adicionar">Cadastrar <i class="bi bi-upload"></i></button>
-                            </div>
-                        </div>
-                    </div>
-                    
-                  </div>
-                  </div>
+                  <%})%>
+                </div>   
+              </div>
+              <div class="card-footer text-center">
+                  <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" href="#exampleModalToggle" onclick="loadModal(false)"  role="button" title="Adicionar">Cadastrar <i class="bi bi-upload"></i></button>
+              </div>
+            </div>
+          </div>
               
-            <div class="modal fade" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
-                <div class="modal-dialog modal-dialog-centered modal-dialog modal-lg">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <h5 class="modal-title" id="exampleModalToggleLabel">Editando Parceiros</h5>
-                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          <div class="modal fade" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
+            <div class="modal-dialog modal-dialog-centered modal-dialog modal-lg">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalToggleLabel">Editando Parceiros</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  <div class="loadModal">
+                    <div class="d-flex justify-content-center">
+                      <div class="spinner-border" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                      </div>
                     </div>
-                    <div class="modal-body">
-                        <form class="row g-3" style="display: flex;justify-content: center;">
-                            <div class="col-5">
-                                <div class="input-group mt-3 col-md-6">
-                                  <input type="file" class="form-control" id="img1">
-                                  <!-- <label class="input-group-text" for="inputGroupFile02"><img src="https://7070-revondigita-editoraagui-frs1z1x5xxg.ws-us100.gitpod.io/img/clients/client-7.png" class="img-thumbnail" alt="..."></label> -->
-                                </div>
-                              </div>
-                              
-                              
-                            </form>
-                          </div>
-                          <div class="modal-footer">
-                            <div class="modal-footer">
-                              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
-                              <button type="button" class="btn btn-success btnModal"  onclick="salvar()">Salvar</button>
-                            </div>
-                          </div>
-                        </div>
-                        </div>
+                  </div>
+                  <section class="row justify-content-centerg-3 bodyModal">
+                    <div class="col-5">
+                      <div class="input-group mt-3 col-md-6">
+                        <input type="file" class="form-control" id="img1">
+                        <!-- <label class="input-group-text" for="inputGroupFile02"><img src="https://7070-revondigita-editoraagui-frs1z1x5xxg.ws-us100.gitpod.io/img/clients/client-7.png" class="img-thumbnail" alt="..."></label> -->
+                      </div>
+                    </div>
+                  </section>
+                </div>
+                <div class="modal-footer">
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                    <button type="button" class="btn btn-success btnModal"  onclick="salvar()">Salvar</button>
+                  </div>
                 </div>
               </div>
-             
+            </div>
+          </div>
+          
         </section>
-    </main>
+      </main>
     </div>
+</div>
+
     <script>
       async function salvar() {
         try {
@@ -151,6 +103,5 @@
         }
       }
     </script>
-</div>
 <%- include("../../partials/script.ejs")%>
 <%- include("../../partials/end.ejs")%>
