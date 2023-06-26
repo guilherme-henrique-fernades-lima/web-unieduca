@@ -40,8 +40,8 @@ router.post('/',upload.single('img'), async (req, res) => {
         if (exist != undefined) return res.status(500).json({ erro: 'Já existe um outro Parceiro com os mesmos dados, gentileza tente novamente!' })
 
         const file = req.file
-        if(file == undefined || file.img == undefined) return res.status(500).json({ erro: 'Dados importantes como "imagem" estão vazios, gentileza verifique e tente novamente!' })
-        const img = `${file.img.path.replace('public','')}`
+        if(file == undefined) return res.status(500).json({ erro: 'Dados importantes como "imagem" estão vazios, gentileza verifique e tente novamente!' })
+        const img = `${file.path.replace('public','')}`
 
         const newParceiro = await Parceiro.create({
             status: status,
@@ -50,6 +50,7 @@ router.post('/',upload.single('img'), async (req, res) => {
         })
         res.json({ resp: "Parceiro cadastrado com sucesso!", parceiro: newParceiro })
     } catch (error) {
+        console.log(error)
         res.status(500).json({ erro: 'Ocorreu um erro durante o processamento dos dados, gentileza tente novamente!' })
         fs.unlink(req.file.path, (err) => {if (err) {console.error(err)}});
     }
@@ -59,7 +60,6 @@ router.put('/',upload.single('img'), async (req, res) => {
     try {
         let { status, nome, parceiroId } = req.body
         const file = req.file
-        
         status = (status == true || status == 'true') ? true : false
         const parceiro = await Parceiro.findByPk(parceiroId)
         if (parceiro == undefined) return res.status(500).json({ erro: 'Não foi possível identificar cadastro do parceiro na base de dados!' })
@@ -70,8 +70,8 @@ router.put('/',upload.single('img'), async (req, res) => {
         if (exist != undefined && exist.id != parceiro.id) return res.status(500).json({ erro: 'Já existe um outro Parceiro com os mesmos dados, gentileza tente novamente!' })
 
         let img = parceiro.img
-        if(file != undefined && file.img != undefined) {
-            img = `${file.img.path.replace('public','')}`
+        if(file != undefined) {
+            img = `${file.path.replace('public','')}`
         }
 
         await Parceiro.update({

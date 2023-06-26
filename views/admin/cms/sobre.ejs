@@ -21,11 +21,11 @@
                     <div class="card-body">
                       <h5 class="card-title"><%=(sobre != undefined && sobre.titulo != null)?sobre.titulo:"Insira o Título dessa sessão"%></h5>
                       <h6 class="card-title"><%=(sobre != undefined && sobre.subtitulo != '')?sobre.subtitulo:"Insira o Subtítulo dessa sessão"%></h6>
-                      <img src="<%=(sobre != undefined && sobre.img1 != null)?sobre.img1:''%>"
+                      <img class="img-fluid w-25" src="<%=(sobre != undefined && sobre.img1 != null)?sobre.img1:''%>"
                         class="card-img-top" alt="Imagem 1">
                       <p class="card-text"><%=(sobre != undefined && sobre.texto1 != '')?sobre.texto1:"Insira o TEXTO1 dessa sessão"%></p>
                       <p class="card-text"><%=(sobre != undefined && sobre.texto2 != '')?sobre.texto2:"Insira o TEXTO2 dessa sessão"%></p>
-                      <img src="<%=(sobre != undefined && sobre.img2 != '')?sobre.img2:''%>"
+                      <img class="img-fluid w-25" src="<%=(sobre != undefined && sobre.img2 != '')?sobre.img2:''%>"
                         class="card-img-bottom" alt="Imagem 2">
                       <p class="card-text"><a href="<%=(sobre != undefined && sobre.video != '')?sobre.video:'#'%>"><%=(sobre != undefined && sobre.video != '')?sobre.video:'Insira o vídeo dessa sessão'%></a></p>
 
@@ -65,8 +65,11 @@
                           </div>
                           <div class="col-12">
                             <label for="img1" class="form-label">Foto 1:</label>
+                            <div class="d-flex text-center justify-content-center">
+                              <img src="" id="preimg1" class="img-fluid w-25"  alt="" srcset="">
+                            </div>
                             <div class="input-group mt-3 col-md-6">
-                              <input type="file" class="form-control" id="img1">
+                              <input type="file" onchange="previewImg($(this)[0].id,'preimg1')" class="form-control" id="img1">
                               <label class="input-group-text" for="img1"><i class="bi bi-card-image"></i></label>
                             </div>
                           </div>
@@ -85,8 +88,11 @@
                           </div>
                           <div class="col-12">
                             <label for="img2" class="form-label">Foto 2</label>
+                            <div class="d-flex text-center justify-content-center">
+                              <img src="" id="preimg2" class="img-fluid w-25"  alt="" srcset="">
+                            </div>
                             <div class="input-group mt-3 col-md-6">
-                              <input type="file" class="form-control" id="img2">
+                              <input type="file" onchange="previewImg($(this)[0].id,'preimg2')" class="form-control" id="img2">
                               <label class="input-group-text" for="img2"><i class="bi bi-card-image"></i></label>
                             </div>
                           </div>
@@ -123,6 +129,8 @@
             const texto2 = $('#texto2')
             const status = $('#status')
             const video = $('#video')
+            const preimg1 = $('#preimg1')
+            const preimg2 = $('#preimg2')
 
 
             const request = await axios.get('/api/cms/sobre')
@@ -134,6 +142,8 @@
             texto2.val(sobre.texto2)
             status.val(sobre.status)
             video.val(sobre.video)
+            preimg1[0].src = sobre.img1
+            preimg2[0].src = sobre.img2
 
           } catch (error) {
             console.log(error)
@@ -173,7 +183,7 @@
 
             const request = await axios.put('/api/cms/sobre',formData)
             toastMsm(request.data.resp)
-
+            document.location.reload()
           } catch (error) {
             console.log(error)
             if (error.response != undefined && error.response.data.erro != undefined) {

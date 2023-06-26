@@ -21,28 +21,30 @@
                 <h5 class="card-title">Parceiros</h5>
                 <div class="row">
                   <%parceiros.forEach(parceiro =>{%>
-                    <div class="col-4 text-center">
+                    <div class="col-lg-4 my-2 col-md-6 border p-2 text-center">
                       <h6><%=parceiro.nome%></h6>
-                      <img src="<%=parceiro.img%>" class="img-thumbnail">
+                      <div class="text-center my-4">
+                        <img src="<%=parceiro.img%>" class="img-thumbnail w-25 rounded-pill">
+                      </div>
                       <div class="btn-group" role="group" aria-label="Basic example">
-                        <button type="button" class="btn btn-primary mx-1">Editar <i class="bi bi-pencil-square" style="cursor:pointer"></i></button>
-                        <button type="button" class="btn btn-danger mx-1">Remover <i class="bi bi-trash" style="cursor:pointer"></i></button>
+                        <button type="button" value="<%=parceiro.id%>" class="btn btn-sm btn-primary mx-1" onclick="editar(this.value)" data-bs-toggle="modal" href="#modalParceiro">Editar <i class="bi bi-pencil-square" style="cursor:pointer"></i></button>
+                        <button type="button" value="<%=parceiro.id%>" onclick="remover(this.value)" class="btn btn-sm btn-danger mx-1">Remover <i class="bi bi-trash" style="cursor:pointer"></i></button>
                       </div>
                     </div>
                   <%})%>
                 </div>   
               </div>
               <div class="card-footer text-center">
-                  <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" href="#exampleModalToggle" onclick="loadModal(false)"  role="button" title="Adicionar">Cadastrar <i class="bi bi-upload"></i></button>
+                  <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" href="#modalParceiro" onclick="editar()"  role="button" title="Adicionar">Cadastrar <i class="bi bi-upload"></i></button>
               </div>
             </div>
           </div>
               
-          <div class="modal fade" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
+          <div class="modal fade" id="modalParceiro" aria-hidden="true" aria-labelledby="modalParceiroLabel" tabindex="-1">
             <div class="modal-dialog modal-dialog-centered modal-dialog modal-lg">
               <div class="modal-content">
                 <div class="modal-header">
-                  <h5 class="modal-title" id="exampleModalToggleLabel">Editando Parceiros</h5>
+                  <h5 class="modal-title" id="modalParceiroLabel">Editando Parceiros</h5>
                   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -53,20 +55,31 @@
                       </div>
                     </div>
                   </div>
-                  <section class="row justify-content-centerg-3 bodyModal">
-                    <div class="col-5">
-                      <div class="input-group mt-3 col-md-6">
-                        <input type="file" class="form-control" id="img1">
-                        <!-- <label class="input-group-text" for="inputGroupFile02"><img src="https://7070-revondigita-editoraagui-frs1z1x5xxg.ws-us100.gitpod.io/img/clients/client-7.png" class="img-thumbnail" alt="..."></label> -->
+                  <section class="row g-3 bodyModal">
+                    <input type="hidden" name="parceiroId" id="parceiroId">
+                    <div class="col-12">
+                      <label for="nome" class="form-label">Insira o nome do parceiro</label>
+                      <input type="text" class="form-control" id="nome">
+                    </div>
+                    <div class="col-12">
+                      <label for="img" class="form-label">Imagem</label>
+                      <div class="d-flex text-center py-2 my-2 justify-content-center">
+                        <img src="" id="preimg" class="img-fluid w-25"  alt="" srcset="">
                       </div>
+                      <input type="file" onchange="previewImg($(this)[0].id,'preimg')" class="form-control" id="img">
+                    </div>
+                    <div class="col-12">
+                      <label for="status" class="form-label">Status</label>
+                      <select name="status" class="form-select" id="status">
+                        <option value="true">Ativo</option>
+                        <option value="false">Inativo</option>
+                      </select>
                     </div>
                   </section>
                 </div>
                 <div class="modal-footer">
-                  <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
-                    <button type="button" class="btn btn-success btnModal"  onclick="salvar()">Salvar</button>
-                  </div>
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                  <button type="button" class="btn btn-success btnModal"  onclick="salvar()">Salvar</button>
                 </div>
               </div>
             </div>
@@ -78,18 +91,81 @@
 </div>
 
     <script>
+      async function remover(id) {
+        if (confirm("Deseja realmente remover cadastro do parceiro?")) {
+          try {
+            const request = await axios.delete(`/api/cms/parceiro/${id}`)
+            toastMsm(request.data.resp)
+            document.location.reload()
+          } catch (error) {
+            if (error.response != undefined && error.response.data.erro != undefined) {
+              console.log(error.response)
+              toastErro(error.response.data.erro)
+            } else {
+              toastErro('Ocorreu um erro durante o processamento de dados, verifique sua rede e tente novamente')
+            }
+          }
+        }
+      }
+
+      async function editar(id) {
+        try {
+          //Ao iniciar a função ele da o loop no modal
+          loadModal(true)
+          const preimg = $('#preimg')
+          const nome = $('#nome')
+          const status = $('#status')
+          const parceiroId = $('#parceiroId')
+
+          preimg[0].src = ''
+          nome.val('')
+          status.val('true')
+          parceiroId.val('')
+          if (id != undefined) {
+            const request = await axios.get(`/api/cms/parceiro/${id}`)
+            const parceiro = request.data.parceiro
+            nome.val(parceiro.nome)
+            status.val(`${parceiro.status}`)
+            preimg[0].src = parceiro.img
+            parceiroId.val(parceiro.id)
+          }
+
+        } catch (error) {
+          console.log(error)
+          if (error.response != undefined && error.response.data.erro != undefined) {
+            console.log(error.response)
+            toastErro(error.response.data.erro)
+          } else {
+            toastErro('Ocorreu um erro durante o processamento de dados, verifique sua rede e tente novamente')
+          }
+        }finally{
+          loadModal(false)
+        }
+      }
+
       async function salvar() {
         try {
           //Ao iniciar a função ele da o loop no modal
           loadModal(true)
-          const img1 = $('#img1').val()
-         
+          const img = $('#img')[0].files[0]
+          const nome = $('#nome').val()
+          const status = $('#status').val()
+          const parceiroId = $('#parceiroId').val()
+
+          if (nome == '') {
+            return toastErro("Dados inválidos. Gentileza preencher nome")
+          } 
           const formData = new FormData()
-          formData.append('img1', img1)
+          formData.append('img', img)
+          formData.append('nome', nome)
+          formData.append('status', status)
+          if (parceiroId != '') {
+            formData.append('parceiroId', parceiroId)
+          }
 
-          const request = await axios.put('/api/cms/parceiro',formData)
+          const request = (parceiroId == '')? await axios.post('/api/cms/parceiro',formData):await axios.put('/api/cms/parceiro',formData)
           toastMsm(request.data.resp)
-
+          document.location.reload()
         } catch (error) {
           console.log(error)
           if (error.response != undefined && error.response.data.erro != undefined) {
