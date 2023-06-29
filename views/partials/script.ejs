@@ -9,6 +9,7 @@
  <script src="/vendor/isotope-layout/isotope.pkgd.min.js"></script>
  <script src="/vendor/jquery-datatable/jquery-datatable.min.js"></script>
  <script src="/vendor/axios/axios.min.js"></script>
+ <script src="/vendor/ckeditor/ckeditor.min.js"></script>
 
 
  <!-- Template Main JS File -->
@@ -18,7 +19,6 @@
  <script src="/js/loadModal.js"></script>
  <script src="/js/previewImg.js"></script>
 
- 
 <script>
     $(document).ready(() => {
       const toastErro = document.getElementById('toastErro')
@@ -38,6 +38,13 @@
         })
         toastBootstrapMsm.show()
       }
-  
+
+      $('.table.table-data').DataTable({
+        paging: false,
+        ordering: false,
+        info: false,
+      });
+
+
     })
   </script>

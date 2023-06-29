@@ -39,8 +39,8 @@ router.post('/',upload.single('img'), async (req, res) => {
         if (exist != undefined) return res.status(500).json({ erro: 'Já existe um outro Serviço com os mesmos dados, gentileza tente novamente!' })
 
         const file = req.file
-        if(file == undefined || file.img == undefined) return res.status(500).json({ erro: 'Dados importantes como "imagem" estão vazios, gentileza verifique e tente novamente!' })
-        const img = `${file.img.path.replace('public','')}`
+        if(file == undefined) return res.status(500).json({ erro: 'Dados importantes como "imagem" estão vazios, gentileza verifique e tente novamente!' })
+        const img = `${file.path.replace('public','')}`
 
         const newServico = await Servico.create({
             status: status,
@@ -74,8 +74,8 @@ router.put('/',upload.single('img'), async (req, res) => {
         if (exist != undefined && exist.id != servico.id) return res.status(500).json({ erro: 'Já existe um outro Serviço com os mesmos dados, gentileza tente novamente!' })
 
         let img = servico.img
-        if(file != undefined && file.img != undefined) {
-            img = `${file.img.path.replace('public','')}`
+        if(file != undefined) {
+            img = `${file.path.replace('public','')}`
         }
 
         await Servico.update({

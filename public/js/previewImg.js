@@ -6,6 +6,7 @@ function previewImg(file,preview) {
         fileReader.onload = function (fileLoadedEvent) {
             var srcData = fileLoadedEvent.target.result; // <--- data: base64
             $(`#${preview}`)[0].src = srcData
+            $(`#${preview}`).removeClass('d-none')
         }
         fileReader.readAsDataURL(fileToLoad);
     }

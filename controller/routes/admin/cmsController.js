@@ -3,8 +3,10 @@ const router = express.Router()
 const Sobre = require('../../../Database/cms/Sobre')
 const Parceiro = require('../../../Database/cms/Parceiro')
 const Video = require('../../../Database/cms/Video')
-const Servico = require('../../../Database/cms/Servico')
 const Funcionario = require('../../../Database/cms/Funcionario')
+const servicoController = require('./cms/servicosController')
+
+router.use('/servicos',servicoController)
 
 // /admin/cms/sobre
 router.get('/sobre',async(req,res)=>{
@@ -40,16 +42,6 @@ router.get('/video',async(req,res)=>{
     }
 })
 
-router.get('/servicos',async(req,res)=>{
-    try {
-        const servicos = await Servico.findAll()
-        res.render('admin/cms/servicos',{servicos:servicos})
-    } catch (error) {
-        console.log(error)
-        req.flash('erro','Ocorreu um erro ao acessar, gentileza tente novamente! Caso o erro persista entre em contato com o suporte.')
-        res.redirect('/admin')
-    }
-})
 
 router.get('/funcionario',async(req,res)=>{
     try {
