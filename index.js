@@ -101,7 +101,6 @@ app.get("/",async (req,res)=>{
             console.log(error)
             console.log('Erro ao consultar dados do funcionarios')
         }
-        console.log(cms)
         res.render('index',{cms:cms,empresa:empresa,blog:blog})
     } catch (error) {
         console.log(error)
