@@ -38,15 +38,15 @@
                 <div class="d-flex justify-content-center">
                 <div class="card mb-3 col-8 d-flex">
                   <div class="card-body">
-                    <h5 class="card-title">Video</h5>
+                    <h5 class="card-title">title dina</h5>
 
                     <div class="iframe">
-                        <iframe class="responsive-iframe" src="https://www.youtube.com/embed/tgbNymZ7vqY"></iframe>
+                        <iframe class="responsive-iframe" src=""></iframe>
                     </div>
                     
                     <div class="d-flex justify-content-center mt-3">
                           <div class="btn-group btn-group-sm" role="group" aria-label="...">
-                              <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" href="#exampleModalToggle" role="button" title="Alterar" onclick="loadModal(false)"><i class="bi bi-upload"></i></button>
+                              <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" href="#exampleModalToggle" role="button" title="Editar" onclick="loadModal(false)">Editar<i class="bi bi-pencil-square"></i></button>
                             </div>
                         </div>
                     </div>
@@ -55,7 +55,7 @@
                   </div>
               
             <div class="modal fade" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
-                <div class="modal-dialog modal-dialog-centered modal-dialog modal-sm">
+                <div class="modal-dialog modal-dialog-centered modal-dialog">
                   <div class="modal-content">
                     <div class="modal-header">
                       <h5 class="modal-title" id="exampleModalToggleLabel">Alterando video</h5>
@@ -71,16 +71,40 @@
                       </div>
                         <form class="row g-3" style="display: flex;justify-content: center;">
                             <div class="col-12">
-                              Video 1:
+                              Video (Link youtube):
                                 <div class="input-group mt-3 col-md-6">
-                                  <input type="text" class="form-control" id="video1" placeholder="Link do Youtube">
+                                  <input type="text" class="form-control" id="video" placeholder="Link do Youtube">
                                 </div>
                                 <div class="col-12">
-                                  Video 2:
+                                  Titulo:
                                   <div class="input-group mt-3 col-md-6">
-                                  <input type="text" class="form-control" id="video2" placeholder="Link do Youtube">
+                                  <input type="text" class="form-control" id="titulo">
                                  
                                 </div>
+                              </div>
+                                <div class="col-12">
+                                  Texto:
+                                  <div class="input-group mt-3 col-md-6">
+                                  <input type="text" class="form-control" id="texto">
+                                 
+                                </div>
+                              </div>
+                                <div class="col-12">
+                                  Imagem:
+                                  <div class="d-flex text-center py-2 my-2 justify-content-center">
+                                    <img src="" id="preimg" class="img-fluid w-25"  alt="" srcset="">
+                                  </div>
+                                  <div class="input-group mt-3 col-md-6">
+                                  <input type="file" class="form-control" onchange="previewImg($(this)[0].id,'preimg')" id="imagem">
+                                 
+                                </div>
+                              </div>
+                              <div class="col-12">
+                                <label for="status" class="form-label">Status</label>
+                                <select name="status" class="form-select" id="status">
+                                  <option value="true">Ativo</option>
+                                  <option value="false">Inativo</option>
+                                </select>
                               </div>
                             
                             
@@ -103,12 +127,16 @@
         try {
           //Ao iniciar a função ele da o loop no modal
           loadModal(true)
-          const video1 = $('#video1').val()
-          const video2 = $('#video2').val()
+          const video = $('#video').val()
+          const texto = $('#texto').val()
+          const imagem = $('#imagem').val()
+          const status = $('#status').val()
          
           const formData = new FormData()
-          formData.append('video1', video1)
-          formData.append('video2', video2)
+          formData.append('video', video)
+          formData.append('texto', texto)
+          formData.append('imagem', imagem)
+          formData.append('texto', status)
 
           const request = await axios.put('/api/cms/video',formData)
           toastMsm(request.data.resp)
