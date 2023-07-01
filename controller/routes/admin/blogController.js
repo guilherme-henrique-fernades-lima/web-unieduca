@@ -50,7 +50,9 @@ router.get('/:id',async(req,res)=>{
                 req.flash('erro','Não foi possível encontrar cadastro do serviço na base de dados!')
                 return res.redirect('/admin/blog')
             }
-            body_blog.blogId = blog.id
+            if (body_blog != undefined) {
+                body_blog.id = blog.id
+            }
             res.render('admin/blog/form',{blog:(body_blog == undefined)?blog:body_blog})
         }
     } catch (error) {
@@ -109,8 +111,8 @@ router.post('/',upload.any(), async (req, res) => {
                 autor_foto:req.body.autor_foto
             })
         }else{
-            req.body.capa = (req.body.capa == undefined)?exist.capa:req.body.capa
-            req.body.autor_foto = (req.body.autor_foto == undefined)?exist.autor_foto:req.body.autor_foto
+            req.body.capa = (req.body.capa == undefined)?blog.capa:req.body.capa
+            req.body.autor_foto = (req.body.autor_foto == undefined)?blog.autor_foto:req.body.autor_foto
             await Blog.update({
                 status: status,
                 titulo: titulo,
