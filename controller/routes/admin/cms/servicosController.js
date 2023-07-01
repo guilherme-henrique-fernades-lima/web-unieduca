@@ -20,6 +20,10 @@ const upload = multer({ storage: storage })
 router.get('/',async(req,res)=>{
     try {
         const servicos = await Servico.findAll()
+        for (let index = 0; index < servicos.length; index++) {
+            const servico = servicos[index];
+            servico.ultAtu = moment(servico.updatedAt).format('DD/MM/YYYY HH:mm:SS')
+        }
         res.render('admin/cms/servicos',{servicos:servicos})
     } catch (error) {
         console.log(error)
@@ -55,7 +59,6 @@ router.get('/:id',async(req,res)=>{
 router.post('/',upload.single('img'), async (req, res) => {
     try {
         let { status, nome, descricao,html,cor,servicoId } = req.body
-        console.log(req.body)
         status = (status == true || status == 'true') ? true : false
 
         const servico = (servicoId == '')?{id:0}:await Servico.findByPk(servicoId)

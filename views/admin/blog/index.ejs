@@ -1,0 +1,68 @@
+<%- include("../../partials/admin/head.ejs")%>
+<%- include("../../partials/admin/header.ejs")%>
+<div class="container-fluid">
+    <div class="row">
+    <%- include("../../partials/admin/nav.ejs")%>
+    <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+        <section id="">
+            <div class="container" data-aos="fade">
+                <div class="my-1 border-bottom">
+                    <h1>Gestão de conteúdo</h1>
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                          <li class="breadcrumb-item"><a href="/admin">Admin</a></li>
+                          <li class="breadcrumb-item active" aria-current="page">Conteúdos</li>
+                        </ol>
+                    </nav>
+                </div>
+                <div class="table-responsive my-3">
+                    <a class="btn btn-outline-primary" href="/admin/blog/adicionar"  ><i class="bi bi-plus-circle">Cadastrar</i></a>
+                    <table class="table table-data" id="table">
+                      <thead>
+                        <tr>
+                          <th>#</th>
+                          <th>Serviço</th>
+                          <th>Ult. Atu.</th>
+                          <th>Ação</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <%blogs.forEach(blog =>{%>
+                          <tr>
+                            <th><%=blog.id%></th>
+                            <th><%=blog.titulo%></th>
+                            <th><%=blog.ultAtu%></th>
+                            <th>
+                                <a class="btn btn-sm btn-info" href="/admin/blog/<%=blog.id%>" value="<%=blog.id%>">Editar</a>
+                                <button class="btn btn-sm btn-danger" value="<%=blog.id%>" onclick="remover(this.value)">Deletar</button>
+                            </th>
+                          </tr>
+                        <%})%>
+                      </tbody>
+                    </table>
+                  </div>
+            <div>
+        </section>
+    </main>
+    </div>
+</div>
+<script>
+  async function remover(id) {
+    if (confirm("Deseja realmente remover cadastro do conteúdo?")) {
+      try {
+        const request = await axios.delete(`/api/blog/${id}`)
+        toastMsm(request.data.resp)
+        document.location.reload()
+      } catch (error) {
+        if (error.response != undefined && error.response.data.erro != undefined) {
+          console.log(error.response)
+          toastErro(error.response.data.erro)
+        } else {
+          toastErro('Ocorreu um erro durante o processamento de dados, verifique sua rede e tente novamente')
+        }
+      }
+    }
+  }
+</script>
+<%- include("../../partials/script.ejs")%>
+<%- include("../../partials/end.ejs")%>

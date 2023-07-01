@@ -22,11 +22,11 @@ const Blog = connection.define('ag_blog',{
     },
     autor:{
         type:Sequelize.STRING,
-        allowNull:false
+        allowNull:true
     },
     autor_foto:{
         type:Sequelize.TEXT,
-        allowNull:false
+        allowNull:true
     },
     html:{
         type:Sequelize.TEXT,
