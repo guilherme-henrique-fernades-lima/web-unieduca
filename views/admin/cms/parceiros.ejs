@@ -163,7 +163,7 @@
             formData.append('parceiroId', parceiroId)
           }
 
-          const request = (parceiroId == '')? await axios.post('/api/cms/parceiro',formData):await axios.put('/api/cms/parceiro',formData)
+          const request = (parceiroId == '' || parceiroId == undefined)? await axios.post('/api/cms/parceiro',formData):await axios.put('/api/cms/parceiro',formData)
           toastMsm(request.data.resp)
           document.location.reload()
         } catch (error) {

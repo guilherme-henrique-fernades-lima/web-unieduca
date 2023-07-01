@@ -34,8 +34,8 @@ router.get('/parceiros',async(req,res)=>{
 
 router.get('/video',async(req,res)=>{
     try {
-        const videos = await Video.findAll()
-        res.render('admin/cms/videos',{videos:videos})
+        const video = await Video.findOne()
+        res.render('admin/cms/videos',{video:video})
     } catch (error) {
         console.log(error)
         req.flash('erro','Ocorreu um erro ao acessar, gentileza tente novamente! Caso o erro persista entre em contato com o suporte.')

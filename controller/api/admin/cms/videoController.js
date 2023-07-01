@@ -30,11 +30,12 @@ router.put('/',upload.single('img'),async(req,res)=>{
     try {
         const file = req.file
         req.body.status = ((req.body.status == undefined || req.body.status == true || req.body.status == 'true') && req.body.video != undefined)?true:false
+        console.log(req.body)
         if(req.body.video != undefined && !req.body.video.toString().toLowerCase().includes('youtube') )return res.status(500).json({ erro: 'Ocorreu um erro durante o processamento dos dados, gentileza informe um vídeo do YOUTUBE!' })
         const exist = await Video.findOne()
 
-        if (file != undefined && file.img != undefined) {
-            req.body.img = `${file.img.path.replace('public', '')}`
+        if (file != undefined) {
+            req.body.img = `${file.path.replace('public', '')}`
         }
 
         if (exist != undefined) {
@@ -45,6 +46,7 @@ router.put('/',upload.single('img'),async(req,res)=>{
         }
         res.json({resp:'Dados do video foram atualizados com sucesso'})
     } catch (error) {
+        console.log(error)
         res.status(500).json({ erro: 'Ocorreu um erro durante o processamento dos dados, gentileza tente novamente!' })
     }
 })

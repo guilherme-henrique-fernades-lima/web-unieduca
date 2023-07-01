@@ -73,8 +73,8 @@ router.put('/', upload.single('img'), async (req, res) => {
         const exist = await Testemunha.findOne({ where: { nome: nome } })
         if (exist != undefined && exist.id != testemunha.id) return res.status(500).json({ erro: 'Já existe uma outra testemunha com os mesmos dados, gentileza tente novamente!' })
         let img = testemunha.img
-        if (file != undefined && file.img != undefined) {
-            img = `${file.img.path.replace('public', '')}`
+        if (file != undefined ) {
+            img = `${file.path.replace('public', '')}`
         }
 
         await Testemunha.update({

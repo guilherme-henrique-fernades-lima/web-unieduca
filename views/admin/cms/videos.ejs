@@ -25,8 +25,8 @@
     <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
         <section id="">
             <div class="container" data-aos="fade">
-                <div class="my-1 border-bottom">
-                    <h1>CMS - VIDEOS <button type="button" class="btn btn-outline-primary" title="Cadastrar"  data-bs-toggle="modal" href="#exampleModalToggle" role="button" onclick="loadModal(false)">Cadastrar<i class="bi bi-plus-circle"></i></button></h1>
+                <div class="my-4 border-bottom">
+                    <h1>CMS - VIDEOS </h1>
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb">
                           <li class="breadcrumb-item"><a href="/admin">Admin</a></li>
@@ -35,10 +35,11 @@
                         </ol>
                     </nav>
                 </div>
+                <button type="button" class="btn btn-outline-primary" title="Cadastrar"  data-bs-toggle="modal" href="#exampleModalToggle" role="button" onclick="loadModal(false)">Cadastrar<i class="bi bi-plus-circle"></i></button>
                 <div class="d-flex justify-content-center">
                 <div class="card mb-3 col-8 d-flex">
                   <div class="card-body">
-                    <h5 class="card-title">title dina</h5>
+                    <h5 class="card-title"><%=(video != undefined)?video.titulo:'Insira o Vídeo'%></h5>
 
                     <div class="iframe">
                         <iframe class="responsive-iframe" src=""></iframe>
@@ -131,16 +132,18 @@
           const texto = $('#texto').val()
           const imagem = $('#imagem').val()
           const status = $('#status').val()
+          const titulo = $('#titulo').val()
          
           const formData = new FormData()
           formData.append('video', video)
+          formData.append('titulo', titulo)
           formData.append('texto', texto)
           formData.append('imagem', imagem)
-          formData.append('texto', status)
+          formData.append('status', status)
 
           const request = await axios.put('/api/cms/video',formData)
           toastMsm(request.data.resp)
-
+          document.location.reload()
         } catch (error) {
           console.log(error)
           if (error.response != undefined && error.response.data.erro != undefined) {
