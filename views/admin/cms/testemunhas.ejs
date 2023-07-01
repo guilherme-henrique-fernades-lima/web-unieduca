@@ -179,11 +179,10 @@
           formData.append('competencia', competencia)
           formData.append('comentario', comentario)
           
-          if (testemunhaId != '') {
+          if (testemunhaId != '' && testemunhaId != undefined) {
             formData.append('testemunhaId', testemunhaId)
           }
-
-          const request = (testemunhaId == '')? await axios.post('/api/cms/testemunha',formData):await axios.put('/api/cms/testemunha',formData)
+          const request = (testemunhaId == '' || testemunhaId == undefined )? await axios.post('/api/cms/testemunha',formData):await axios.put('/api/cms/testemunha',formData)
           toastMsm(request.data.resp)
           document.location.reload()
         } catch (error) {

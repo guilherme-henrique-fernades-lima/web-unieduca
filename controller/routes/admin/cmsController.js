@@ -57,7 +57,8 @@ router.get('/funcionario',async(req,res)=>{
 
 router.get('/testemunhas',async(req,res)=>{
     try {
-        const testemunhas = await Funcionario.findAll()
+        const testemunhas = await Testemunhas.findAll()
+        console.log(testemunhas)
         res.render('admin/cms/testemunhas',{testemunhas:testemunhas})
     } catch (error) {
         console.log(error)

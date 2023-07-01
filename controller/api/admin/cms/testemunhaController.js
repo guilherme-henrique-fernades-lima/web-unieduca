@@ -40,8 +40,8 @@ router.post('/', upload.single('img'), async (req, res) => {
         if (exist != undefined) return res.status(500).json({ erro: 'Já existe uma outra testemunha com os mesmos dados, gentileza tente novamente!' })
 
         const file = req.file
-        if (file == undefined || file.img == undefined) return res.status(500).json({ erro: 'Dados importantes como "imagem" estão vazios, gentileza verifique e tente novamente!' })
-        const img = `${file.img.path.replace('public', '')}`
+        if (file == undefined) return res.status(500).json({ erro: 'Dados importantes como "imagem" estão vazios, gentileza verifique e tente novamente!' })
+        const img = `${file.path.replace('public', '')}`
 
         const newTestemunha = await Testemunha.create({
             status: status,
@@ -53,6 +53,7 @@ router.post('/', upload.single('img'), async (req, res) => {
         })
         res.json({ resp: "Testemunha cadastrada com sucesso!", testemunha: newTestemunha })
     } catch (error) {
+        console.log(error)
         res.status(500).json({ erro: 'Ocorreu um erro durante o processamento dos dados, gentileza tente novamente!' })
         fs.unlink(req.file.path, (err) => { if (err) { console.error(err) } });
     }
@@ -87,6 +88,7 @@ router.put('/', upload.single('img'), async (req, res) => {
 
         res.json({ resp: "Cadasto da Testemunha atualizada com sucesso!" })
     } catch (error) {
+        console.log(error)
         res.status(500).json({ erro: 'Ocorreu um erro durante o processamento dos dados, gentileza tente novamente!' })
         fs.unlink(req.file.path, (err) => { if (err) { console.error(err) } });
     }
