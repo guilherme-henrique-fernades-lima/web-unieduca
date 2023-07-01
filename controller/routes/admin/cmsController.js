@@ -5,6 +5,7 @@ const Parceiro = require('../../../Database/cms/Parceiro')
 const Video = require('../../../Database/cms/Video')
 const Funcionario = require('../../../Database/cms/Funcionario')
 const servicoController = require('./cms/servicosController')
+const Testemunhas = require('../../../Database/cms/Testemunha')
 
 router.use('/servicos',servicoController)
 
@@ -47,6 +48,17 @@ router.get('/funcionario',async(req,res)=>{
     try {
         const funcionario = await Funcionario.findAll()
         res.render('admin/cms/funcionario',{funcionario:funcionario})
+    } catch (error) {
+        console.log(error)
+        req.flash('erro','Ocorreu um erro ao acessar, gentileza tente novamente! Caso o erro persista entre em contato com o suporte.')
+        res.redirect('/admin')
+    }
+})
+
+router.get('/testemunhas',async(req,res)=>{
+    try {
+        const testemunhas = await Funcionario.findAll()
+        res.render('admin/cms/testemunhas',{testemunhas:testemunhas})
     } catch (error) {
         console.log(error)
         req.flash('erro','Ocorreu um erro ao acessar, gentileza tente novamente! Caso o erro persista entre em contato com o suporte.')
