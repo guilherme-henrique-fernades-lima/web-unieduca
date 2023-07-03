@@ -10,7 +10,7 @@
     <div class="container position-relative">
       <div class="row gy-5" data-aos="fade-in">
         <div class="col-lg-6 order-2 order-lg-1 d-flex flex-column justify-content-center text-center text-lg-start">
-          <h2>Welcome to <span>Impact</span></h2>
+          <h2>Seja Bem Vindo</h2>
           <p>Sed autem laudantium dolores. Voluptatem itaque ea consequatur eveniet. Eum quas beatae cumque eum quaerat.</p>
           <div class="d-flex justify-content-center justify-content-lg-start">
             <a href="#contact" class="btn-get-started">Contato</a>
@@ -25,40 +25,21 @@
 
     <div class="icon-boxes position-relative">
       <div class="container position-relative">
-        <div class="row gy-4 mt-5">
-
-          <div class="col-xl-3 col-md-6" data-aos="fade-up" data-aos-delay="100">
-            <div class="icon-box">
-              <div class="icon"><i class="bi bi-easel"></i></div>
-              <h4 class="title"><a href="" class="stretched-link">Lorem Ipsum</a></h4>
-            </div>
-          </div><!--End Icon Box -->
-
-          <div class="col-xl-3 col-md-6" data-aos="fade-up" data-aos-delay="200">
-            <div class="icon-box">
-              <div class="icon"><i class="bi bi-gem"></i></div>
-              <h4 class="title"><a href="" class="stretched-link">Sed ut perspiciatis</a></h4>
-            </div>
-          </div><!--End Icon Box -->
-
-          <div class="col-xl-3 col-md-6" data-aos="fade-up" data-aos-delay="300">
-            <div class="icon-box">
-              <div class="icon"><i class="bi bi-geo-alt"></i></div>
-              <h4 class="title"><a href="" class="stretched-link">Magni Dolores</a></h4>
-            </div>
-          </div><!--End Icon Box -->
-
-          <div class="col-xl-3 col-md-6" data-aos="fade-up" data-aos-delay="500">
-            <div class="icon-box">
-              <div class="icon"><i class="bi bi-command"></i></div>
-              <h4 class="title"><a href="" class="stretched-link">Nemo Enim</a></h4>
-            </div>
-          </div><!--End Icon Box -->
-
+        <div class="row justify-content-center gy-4 mt-5">
+          <%if(cms.servicos.length > 0){%>
+            <%cms.servicos.forEach((servico,index)=>{%>
+              <%if(index < 4){%>
+                <div class="col-xl-3 col-md-6" data-aos="fade-up" data-aos-delay="100">
+                  <div class="icon-box" <%-`style="background-color: ${servico.cor};"`%>>
+                    <div class="icon"><img src="<%=servico.img%>" class="w-25" alt=""></div>
+                    <h4 class="title"><a href="/servicos/<%=servico.id%>" class="stretched-link"><%=servico.nome%></a></h4>
+                  </div>
+                </div>
+              <%}%>
+            <%})%>
+          <%}%>
         </div>
       </div>
-    </div>
-
     </div>
   </section>
   <!-- End Hero Section -->
@@ -71,36 +52,24 @@
       <div class="container" data-aos="fade-up">
 
         <div class="section-header">
-          <h2>Sobre nós</h2>
-          <p>Aperiam dolorum et et wuia molestias qui eveniet numquam nihil porro incidunt dolores placeat sunt id nobis omnis tiledo stran delop</p>
+          <h2>Sobre Nós</h2>
+          <p><%=cms.sobre.titulo%></p>
         </div>
 
         <div class="row gy-4">
           <div class="col-lg-6">
-            <h3>Voluptatem dignissimos provident quasi corporis</h3>
-            <img src="/img/about.jpg" class="img-fluid rounded-4 mb-4" alt="">
-            <p>Ut fugiat ut sunt quia veniam. Voluptate perferendis perspiciatis quod nisi et. Placeat debitis quia recusandae odit et consequatur voluptatem. Dignissimos pariatur consectetur fugiat voluptas ea.</p>
-            <p>Temporibus nihil enim deserunt sed ea. Provident sit expedita aut cupiditate nihil vitae quo officia vel. Blanditiis eligendi possimus et in cum. Quidem eos ut sint rem veniam qui. Ut ut repellendus nobis tempore doloribus debitis explicabo similique sit. Accusantium sed ut omnis beatae neque deleniti repellendus.</p>
+            <h3><%=cms.sobre.subtitulo%></h3>
+            <img src="<%=cms.sobre.img1%>" class="img-fluid rounded-4 mb-4" alt="">
+            <p><%=cms.sobre.texto1%></p>
           </div>
           <div class="col-lg-6">
             <div class="content ps-0 ps-lg-5">
-              <p class="fst-italic">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
-                magna aliqua.
-              </p>
-              <ul>
-                <li><i class="bi bi-check-circle-fill"></i> Ullamco laboris nisi ut aliquip ex ea commodo consequat.</li>
-                <li><i class="bi bi-check-circle-fill"></i> Duis aute irure dolor in reprehenderit in voluptate velit.</li>
-                <li><i class="bi bi-check-circle-fill"></i> Ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate trideta storacalaperda mastiro dolore eu fugiat nulla pariatur.</li>
-              </ul>
-              <p>
-                Ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
-                velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident
-              </p>
-
+              <p><%=cms.sobre.texto2%></p>
               <div class="position-relative mt-4">
-                <img src="/img/about-2.jpg" class="img-fluid rounded-4" alt="">
-                <a href="https://www.youtube.com/watch?v=LXb3EKWsInQ" class="glightbox play-btn"></a>
+                <img src="<%=cms.sobre.img2%>" class="img-fluid rounded-4" alt="">
+                <%if(cms.sobre.video != ''){%>
+                  <a href="<%=cms.sobre.video%>" class="glightbox play-btn"></a>
+                <%}%>
               </div>
             </div>
           </div>
@@ -111,35 +80,32 @@
     <%}%>
 
     <!-- ======= Clients Section ======= -->
+    <%if(cms.parceiros.length > 0){%>
     <section id="clients" class="clients">
       <div class="container" data-aos="zoom-out">
-
         <div class="clients-slider swiper">
           <div class="swiper-wrapper align-items-center">
-            <div class="swiper-slide"><img src="/img/clients/client-1.png" class="img-fluid" alt=""></div>
-            <div class="swiper-slide"><img src="/img/clients/client-2.png" class="img-fluid" alt=""></div>
-            <div class="swiper-slide"><img src="/img/clients/client-3.png" class="img-fluid" alt=""></div>
-            <div class="swiper-slide"><img src="/img/clients/client-4.png" class="img-fluid" alt=""></div>
-            <div class="swiper-slide"><img src="/img/clients/client-5.png" class="img-fluid" alt=""></div>
-            <div class="swiper-slide"><img src="/img/clients/client-6.png" class="img-fluid" alt=""></div>
-            <div class="swiper-slide"><img src="/img/clients/client-7.png" class="img-fluid" alt=""></div>
-            <div class="swiper-slide"><img src="/img/clients/client-8.png" class="img-fluid" alt=""></div>
+            <%cms.parceiros.forEach(parceiro =>{%>
+            <div class="swiper-slide"><img src="<%=parceiro.img%>" class="img-fluid" alt=""></div>
+            <%})%>
           </div>
         </div>
 
       </div>
     </section><!-- End Clients Section -->
+    <%}%>
 
-
+    <%if(cms.video != undefined && cms.video.status ==true){%>
     <!-- ======= Call To Action Section ======= -->
     <section id="call-to-action" class="call-to-action">
-      <div class="container text-center" data-aos="zoom-out">
-        <a href="https://www.youtube.com/watch?v=LXb3EKWsInQ" class="glightbox play-btn"></a>
-        <h3>Call To Action</h3>
-        <p> Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+      <div class="container text-center" <%-`style="background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('${cms.video.img}') center center;"`%> data-aos="zoom-out">
+        <a href="<%=cms.video.video%>" class="glightbox play-btn"></a>
+        <h3><%=cms.video.titulo%></h3>
+        <p><%=cms.video.texto%></p>
         <a class="cta-btn" href="#contact">Entrar em Contato</a>
       </div>
     </section><!-- End Call To Action Section -->
+    <%}%>
 
     <!-- ======= Our Services Section ======= -->
     <section id="services" class="services sections-bg">

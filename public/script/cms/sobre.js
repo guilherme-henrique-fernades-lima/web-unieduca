@@ -19,7 +19,7 @@ async function editar() {
         subtitulo.val(sobre.subtitulo)
         texto1.val(sobre.texto1)
         texto2.val(sobre.texto2)
-        status.val(sobre.status)
+        status.val(`${sobre.status}`)
         video.val(sobre.video)
         preimg1[0].src = sobre.img1
         preimg2[0].src = sobre.img2
@@ -51,8 +51,9 @@ async function salvar() {
         const video = $('#video').val()
 
         const formData = new FormData()
-        formData.append('img1', img1)
-        formData.append('img2', img2)
+        if (img1 != undefined) formData.append('img1', img1)
+        if (img2 != undefined) formData.append('img2', img2)
+        
         formData.append('titulo', titulo)
         formData.append('subtitulo', subtitulo)
         formData.append('video', video)

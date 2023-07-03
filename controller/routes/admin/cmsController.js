@@ -7,6 +7,7 @@ const Funcionario = require('../../../Database/cms/Funcionario')
 const servicoController = require('./cms/servicosController')
 const Testemunhas = require('../../../Database/cms/Testemunha')
 const Duvida = require('../../../Database/cms/Duvida')
+const moment = require('moment')
 
 router.use('/servicos',servicoController)
 
@@ -72,7 +73,10 @@ router.get('/testemunhas',async(req,res)=>{
 router.get('/duvidas',async(req,res)=>{
     try {
         const duvidas = await Duvida.findAll()
-        console.log(duvidas)
+        for (let index = 0; index < duvidas.length; index++) {
+            const duvida = duvidas[index];
+            duvida.ultAtu = moment(duvida.updatedAt).format('DD/MM/YYYY HH:mm:SS')
+        }
         res.render('admin/cms/duvidas',{duvidas:duvidas})
     } catch (error) {
         console.log(error)

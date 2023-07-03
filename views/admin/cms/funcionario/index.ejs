@@ -1,13 +1,13 @@
-<%- include("../../partials/admin/head.ejs")%>
-<%- include("../../partials/admin/header.ejs")%>
+<%- include("../../../partials/admin/head.ejs")%>
+<%- include("../../../partials/admin/header.ejs")%>
 <div class="container-fluid">
     <div class="row">
-    <%- include("../../partials/admin/nav.ejs")%>
+    <%- include("../../../partials/admin/nav.ejs")%>
     <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
         <section id="">
             <div class="container" data-aos="fade">
                 <div class="my-1 border-bottom">
-                    <h1>CMS - FUNCIONÁRIOS <button type="button" class="btn btn-outline-primary" title="Cadastrar"  data-bs-toggle="modal" onclick="loadModal(false)" href="#exampleModalToggle" role="button">Cadastrar <i class="bi bi-plus-circle"></i></button></h1>
+                    <h1>CMS - FUNCIONÁRIOS </h1>
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb">
                           <li class="breadcrumb-item"><a href="/admin">Admin</a></li>
@@ -17,6 +17,7 @@
                     </nav>
                 </div>
                 <div class="container">
+                    <button type="button" class="btn btn-outline-primary" title="Cadastrar"  data-bs-toggle="modal" onclick="editar()" href="#modaFuncionario" role="button">Cadastrar <i class="bi bi-plus-circle"></i></button>
                     <div class="row">
                         <div class="col-6">
                             <div class="card text-center">
@@ -42,6 +43,39 @@
     </main>
     </div>
 </div>
-<%- include("../../partials/script.ejs")%>
-<script src="/script/cms/funcionario.js"></script>
-<%- include("../../partials/end.ejs")%>
+<%- include("../../../partials/script.ejs")%>
+<script>
+    async function salvar() {
+    try {
+        //Ao iniciar a função ele da o loop no modal
+        loadModal(true)
+        const nome = $('#nome').val()
+        const competencia = $('#competencia').val()
+        const foto = $('#foto').val()
+        const status = $('#status').val()
+
+
+        const formData = new FormData()
+        formData.append('nome', nome)
+        formData.append('competencia', competencia)
+        formData.append('foto', foto)
+        formData.append('status', status)
+
+
+        const request = await axios.put('/api/cms/funcionario', formData)
+        toastMsm(request.data.resp)
+
+    } catch (error) {
+        console.log(error)
+        if (error.response != undefined && error.response.data.erro != undefined) {
+            console.log(error.response)
+            toastErro(error.response.data.erro)
+        } else {
+            toastErro('Ocorreu um erro durante o processamento de dados, verifique sua rede e tente novamente')
+        }
+    } finally {
+        loadModal(false)
+    }
+}
+</script>
+<%- include("../../../partials/end.ejs")%>

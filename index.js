@@ -86,7 +86,7 @@ app.get("/",async (req,res)=>{
         }
         const empresa = emp.status === 'fulfilled'?emp.value:undefined
         const blog = bl.status === 'fulfilled'?bl.value:[]
-
+        console.log(cms.servicos)
         try {
             cms.funcionarios = await Funcionario.findAll({where:{status:true}})
             if (cms.funcionarios.length > 0) {

@@ -1,9 +1,9 @@
-<div class="modal fade" id="modaFuncionario" aria-hidden="true" aria-labelledby="modaFuncionarioLabel"
+<div class="modal fade" id="modalDuvida" aria-hidden="true" aria-labelledby="modalDuvidaLabel"
     tabindex="-1">
     <div class="modal-dialog modal-dialog-centered modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="modaFuncionarioLabel">Editando Funcionario</h5>
+                <h5 class="modal-title" id="modalDuvidaLabel">Editando Dúvidas</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -15,23 +15,20 @@
                     </div>
                 </div>
                 <div class="row g-3 bodyModal">
-                    <div class="col-md-6">
-                        <label for="nome" class="form-label">Nome</label>
-                        <input type="text" class="form-control" id="nome">
+                    <input type="hidden" name="duvidaId" id="duvidaId">
+                    <div class="col-12">
+                        <label for="duvida" class="form-label">Dúvida</label>
+                        <input type="text" class="form-control" id="duvida">
                     </div>
-                    <div class="col-md-6">
-                        <label for="competencia" class="form-label">Competência</label>
-                        <input type="text" class="form-control" id="competencia">
+                    <div class="col-12">
+                        <label for="resposta" class="form-label">Resposta</label>
+                        <textarea id="resposta" class="form-control"></textarea>
                     </div>
-                    <div class="col-md-6">
-                        <label for="foto" class="form-label">Foto</label>
-                        <input type="file" accept="image/*" class="form-control" id="foto">
-                    </div>
-                    <div class="col-md-6">
+                    <div class="col-12">
                         <label for="status" class="form-label">Status</label>
                         <select id="status" class="form-select">
-                            <option selected>Habilitar</option>
-                            <option>Desabilitar</option>
+                            <option value="true">Ativo</option>
+                            <option value="false">Inativo</option>
                         </select>
                     </div>
                 </div>

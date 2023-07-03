@@ -43,6 +43,9 @@ router.put('/', upload.any(), async (req, res) => {
         }
         const exist = await Sobre.findOne()
         if (exist != undefined) {
+            console.log(req.body)
+            req.body.img1 = (req.body.img1 == undefined)?exist.img1:req.body.img1
+            req.body.img2 = (req.body.img2 == undefined)?exist.img2:req.body.img2
             await Sobre.update(req.body, { where: { id: exist.id } })
         } else {
             await Sobre.create(req.body)

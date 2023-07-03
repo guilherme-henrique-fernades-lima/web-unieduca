@@ -16,6 +16,7 @@ router.get('/:id', async (req, res) => {
 
 router.post('/', async (req, res) => {
     try {
+        console.log('post')
         let { status, duvida, resposta} = req.body
         status = (status == true || status == 'true') ? true : false
 
@@ -38,6 +39,7 @@ router.post('/', async (req, res) => {
 
 router.put('/', async (req, res) => {
     try {
+        console.log('put')
         let { status, duvida, resposta,duvidaId} = req.body
         status = (status == true || status == 'true') ? true : false
         const duvida_cad = await Duvida.findByPk(duvidaId)
