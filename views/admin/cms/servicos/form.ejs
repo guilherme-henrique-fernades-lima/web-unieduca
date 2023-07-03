@@ -25,7 +25,7 @@
                       <img src="<%=servico == undefined?'':servico.img%>" id="imgPre" class="img-fluid my-3 <%=servico == undefined?'d-none':''%> w-25" alt="">
                       <br>
                       <label for="img" class="form-label">Imagem do serviço</label>
-                      <input type="file" name="img" id="img" onchange="previewImg(this.id,'imgPre')" class="form-control">
+                      <input type="file" accept="image/*" name="img" id="img" onchange="previewImg(this.id,'imgPre')" class="form-control">
                     </div>
                     <div class="my-3 col-md-8">
                       <label for="nome" class="form-label">Nome do Serviço</label>

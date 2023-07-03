@@ -1,0 +1,49 @@
+<%- include("../../../partials/admin/head.ejs")%>
+<%- include("../../../partials/admin/header.ejs")%>
+<div class="container-fluid">
+    <div class="row">
+    <%- include("../../../partials/admin/nav.ejs")%>
+      <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+        <section class="container" data-aos="fade">
+          <div class="my-1 border-bottom">
+            <h1>CMS - TESTEMUNHAS</h1>
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                  <li class="breadcrumb-item"><a href="/admin">Admin</a></li>
+                  <li class="breadcrumb-item"><a href="/admin/cms">CMS</a></li>
+                  <li class="breadcrumb-item active" aria-current="page">Testemunhas</li>
+                </ol>
+            </nav>
+          </div>
+          <div class="d-flex justify-content-center">
+            <div class="card mb-3 col-12 d-flex">
+              <div class="card-body">
+                <h5 class="card-title">Testemunhas</h5>
+                <div class="row">
+                  <%testemunhas.forEach(testemunha =>{%>
+                    <div class="col-lg-4 my-2 col-md-6 border p-2 text-center">
+                      <h6><%=testemunha.nome%></h6>
+                      <div class="text-center my-4">
+                        <img src="<%=testemunha.img%>" class="img-thumbnail w-25 rounded-pill">
+                      </div>
+                      <div class="btn-group" role="group" aria-label="Basic example">
+                        <button type="button" value="<%=testemunha.id%>" class="btn btn-sm btn-primary mx-1" onclick="editar(this.value)" data-bs-toggle="modal" href="#modalParceiro">Editar <i class="bi bi-pencil-square" style="cursor:pointer"></i></button>
+                        <button type="button" value="<%=testemunha.id%>" onclick="remover(this.value)" class="btn btn-sm btn-danger mx-1">Remover <i class="bi bi-trash" style="cursor:pointer"></i></button>
+                      </div>
+                    </div>
+                  <%})%>
+                </div>   
+              </div>
+              <div class="card-footer text-center">
+                  <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" href="#modalParceiro" onclick="editar()"  role="button" title="Adicionar">Cadastrar <i class="bi bi-upload"></i></button>
+              </div>
+            </div>
+          </div>
+          <%- include("./modal.ejs")%>
+        </section>
+      </main>
+    </div>
+</div>
+<%- include("../../../partials/script.ejs")%>
+<script src="/script/cms/testemunhas.js"></script>
+<%- include("../../../partials/end.ejs")%>

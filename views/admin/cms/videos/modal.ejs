@@ -1,0 +1,55 @@
+<div class="modal fade" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel"
+    tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalToggleLabel">Alterando video</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="loadModal">
+                    <div class="d-flex justify-content-center">
+                        <div class="spinner-border" role="status">
+                            <span class="visually-hidden">Loading...</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row g-3 bodyModal">
+                    <div class="col-12">
+                        <label for="video" class="form-label">Video (Link youtube):</label>
+                        <input type="text" class="form-control" id="video" placeholder="Link do Youtube">
+                    </div>
+
+                    <div class="col-12">
+                        <label for="titulo" class="form-label">Titulo:</label>
+                        <input type="text" class="form-control" id="titulo">
+                    </div>
+
+                    <div class="col-12">
+                        <label for="titulo" class="form-label">Texto:</label>
+                        <input type="text" class="form-control" id="texto">
+                    </div>
+                    <div class="col-12">
+                        <label for="imagem" class="form-label">Imagem:</label>
+                        <div class="d-flex text-center py-2 my-2 justify-content-center">
+                            <img src="" id="preimg" class="img-fluid w-25 d-none" alt="" srcset="">
+                        </div>
+                        <input type="file" accept="image/*" class="form-control"
+                            onchange="previewImg($(this)[0].id,'preimg')" id="imagem">
+                    </div>
+                    <div class="col-12">
+                        <label for="status" class="form-label">Status</label>
+                        <select name="status" class="form-select" id="status">
+                            <option value="true">Ativo</option>
+                            <option value="false">Inativo</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                <button type="button" class="btn btn-success btnModal" onclick="salvar()">Salvar</button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,47 @@
+<%- include("../../../partials/admin/head.ejs")%>
+  <%- include("../../../partials/admin/header.ejs")%>
+    <div class="container-fluid">
+      <div class="row">
+        <%- include("../../../partials/admin/nav.ejs")%>
+          <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+            <section id="">
+              <div class="container" data-aos="fade">
+                <div class="my-1 border-bottom">
+                  <h1>CMS - SOBRE NÓS</h1>
+                  <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                      <li class="breadcrumb-item"><a href="/admin">Admin</a></li>
+                      <li class="breadcrumb-item"><a href="/admin/cms">CMS</a></li>
+                      <li class="breadcrumb-item active" aria-current="page">Sobre</li>
+                    </ol>
+                  </nav>
+                </div>
+                <div class="d-flex justify-content-center">
+                  <div class="card mb-3 col-10 d-flex">
+                    <div class="card-body">
+                      <h5 class="card-title"><%=(sobre != undefined && sobre.titulo != null)?sobre.titulo:"Insira o Título dessa sessão"%></h5>
+                      <h6 class="card-title"><%=(sobre != undefined && sobre.subtitulo != '')?sobre.subtitulo:"Insira o Subtítulo dessa sessão"%></h6>
+                      <img class="img-fluid w-25" src="<%=(sobre != undefined && sobre.img1 != null)?sobre.img1:''%>"
+                        class="card-img-top" alt="Imagem 1">
+                      <p class="card-text"><%=(sobre != undefined && sobre.texto1 != '')?sobre.texto1:"Insira o TEXTO1 dessa sessão"%></p>
+                      <p class="card-text"><%=(sobre != undefined && sobre.texto2 != '')?sobre.texto2:"Insira o TEXTO2 dessa sessão"%></p>
+                      <img class="img-fluid w-25" src="<%=(sobre != undefined && sobre.img2 != '')?sobre.img2:''%>"
+                        class="card-img-bottom" alt="Imagem 2">
+                      <p class="card-text"><a href="<%=(sobre != undefined && sobre.video != '')?sobre.video:'#'%>"><%=(sobre != undefined && sobre.video != '')?sobre.video:'Insira o vídeo dessa sessão'%></a></p>
+
+                      <div class="d-flex justify-content-center mt-3">
+                          <button type="button" onclick="editar()" class="btn btn-outline-primary" data-bs-toggle="modal"
+                            href="#exampleModalToggle" role="button" title="Editar">Editar</button>
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+                <%- include("./modal.ejs")%>
+            </section>
+          </main>
+      </div>
+    </div>
+<%- include("../../../partials/script.ejs")%>
+<script src="/script/cms/sobre.js"></script>
+<%- include("../../../partials/end.ejs")%>

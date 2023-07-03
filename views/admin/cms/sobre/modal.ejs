@@ -1,0 +1,76 @@
+<div class="modal fade" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel"
+    tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalToggleLabel">Editando pagina Sobre</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="loadModal">
+                    <div class="d-flex justify-content-center">
+                        <div class="spinner-border" role="status">
+                            <span class="visually-hidden">Loading...</span>
+                        </div>
+                    </div>
+                </div>
+                <section class="row g-3 bodyModal">
+                    <div class="col-12">
+                        <label for="titulo" class="form-label">Titulo</label>
+                        <input type="text" class="form-control" id="titulo">
+                    </div>
+                    <div class="col-12">
+                        <label for="subtitulo" class="form-label">Subtiutlo</label>
+                        <input type="text" class="form-control" id="subtitulo">
+                    </div>
+                    <div class="col-12">
+                        <label for="img1" class="form-label">Foto 1:</label>
+                        <div class="d-flex text-center justify-content-center">
+                            <img src="" id="preimg1" class="img-fluid w-25" alt="" srcset="">
+                        </div>
+                        <div class="input-group mt-3 col-md-6">
+                            <input type="file" accept="image/*" onchange="previewImg($(this)[0].id,'preimg1')"
+                                class="form-control" id="img1">
+                            <label class="input-group-text" for="img1"><i class="bi bi-card-image"></i></label>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <label for="texto1" class="form-label">Texto 1</label>
+                        <textarea class="form-control" id="texto1" rows="5"></textarea>
+                    </div>
+                    <div class="col-12">
+                        <label for="texto2" class="form-label">Texto 2</label>
+                        <textarea class="form-control" id="texto2" rows="5"></textarea>
+                    </div>
+                    <div class="col-12">
+                        <label for="video" class="form-label">Vídeo <span class="text-muted">(Youtube ou
+                                Vimeo)</span></label>
+                        <input type="text" name="video" id="video" class="form-control">
+                    </div>
+                    <div class="col-12">
+                        <label for="img2" class="form-label">Foto 2</label>
+                        <div class="d-flex text-center justify-content-center">
+                            <img src="" id="preimg2" class="img-fluid w-25" alt="" srcset="">
+                        </div>
+                        <div class="input-group mt-3 col-md-6">
+                            <input type="file" accept="image/*" onchange="previewImg($(this)[0].id,'preimg2')"
+                                class="form-control" id="img2">
+                            <label class="input-group-text" for="img2"><i class="bi bi-card-image"></i></label>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <label for="status" class="form-label">Status</label>
+                        <select id="status" class="form-select">
+                            <option value="true" selected>Habilitar</option>
+                            <option value="false">Desabilitar</option>
+                        </select>
+                    </div>
+                </section>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                <button type="button" class="btn btn-success btnModal" onclick="salvar()">Salvar</button>
+            </div>
+        </div>
+    </div>
+</div>

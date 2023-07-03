@@ -6,6 +6,7 @@ const Video = require('../../../Database/cms/Video')
 const Funcionario = require('../../../Database/cms/Funcionario')
 const servicoController = require('./cms/servicosController')
 const Testemunhas = require('../../../Database/cms/Testemunha')
+const Duvida = require('../../../Database/cms/Duvida')
 
 router.use('/servicos',servicoController)
 
@@ -67,5 +68,17 @@ router.get('/testemunhas',async(req,res)=>{
     }
 })
 
+
+router.get('/duvidas',async(req,res)=>{
+    try {
+        const duvidas = await Duvida.findAll()
+        console.log(duvidas)
+        res.render('admin/cms/duvidas',{duvidas:duvidas})
+    } catch (error) {
+        console.log(error)
+        req.flash('erro','Ocorreu um erro ao acessar, gentileza tente novamente! Caso o erro persista entre em contato com o suporte.')
+        res.redirect('/admin')
+    }
+})
 
 module.exports = router

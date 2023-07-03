@@ -1,0 +1,57 @@
+<div class="modal fade" id="modalParceiro" aria-hidden="true" aria-labelledby="modalParceiroLabel" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalParceiroLabel">Editando Testemunhas</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="loadModal">
+                    <div class="d-flex justify-content-center">
+                        <div class="spinner-border" role="status">
+                            <span class="visually-hidden">Loading...</span>
+                        </div>
+                    </div>
+                </div>
+                <section class="row g-3 bodyModal">
+                    <input type="hidden" name="parceiroId" id="parceiroId">
+                    <div class="col-6">
+                        <label for="nome" class="form-label">Insira o nome da Testemunha</label>
+                        <input type="text" class="form-control" id="nome">
+                    </div>
+                    <div class="col-6">
+                        <label for="competencia" class="form-label">Insira a competencia da Testemunha</label>
+                        <input type="text" class="form-control" id="competencia">
+                    </div>
+                    <div class="col-12">
+                        <label for="img" class="form-label">Imagem</label>
+                        <div class="d-flex text-center py-2 my-2 justify-content-center">
+                            <img src="" id="preimg" class="img-fluid w-25" alt="" srcset="">
+                        </div>
+                        <input type="file" accept="image/*" onchange="previewImg($(this)[0].id,'preimg')"
+                            class="form-control" id="img">
+                    </div>
+                    <div class="col-6">
+                        <label for="quantity">Quantidade de estrelas (entre 1 e 5):</label>
+                        <input type="number" class="form-control" id="star" name="star" min="1" max="5">
+                    </div>
+                    <div class="col-6">
+                        <label for="status" class="form-label">Status</label>
+                        <select name="status" class="form-select" id="status">
+                            <option value="true">Ativo</option>
+                            <option value="false">Inativo</option>
+                        </select>
+                    </div>
+                    <div class="col-12">
+                        <label for="comentario" class="form-label">Insira o comentário da Testemunha</label>
+                        <textarea type="text" class="form-control" id="comentario"></textarea>
+                    </div>
+                </section>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                <button type="button" class="btn btn-success btnModal" onclick="salvar()">Salvar</button>
+            </div>
+        </div>
+    </div>
+</div>

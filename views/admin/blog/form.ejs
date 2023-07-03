@@ -24,7 +24,7 @@
                       <img src="<%=blog == undefined?'':blog.capa%>" id="imgPre1" class="img-fluid my-3 <%=blog == undefined?'d-none':''%> w-25" alt="">
                       <br>
                       <label for="capa" class="form-label">Capa do Conteúdo</label>
-                      <input type="file" name="capa" id="capa" onchange="previewImg(this.id,'imgPre1')" class="form-control">
+                      <input type="file" accept="image/*" name="capa" id="capa" onchange="previewImg(this.id,'imgPre1')" class="form-control">
                     </div>
                     <div class="my-3 col-md-8">
                       <label for="titulo" class="form-label">Título</label>
@@ -49,7 +49,7 @@
                         <img src="<%=blog == undefined?'':blog.autor_foto%>" id="imgPre2" class="img-fluid my-3 <%=blog == undefined?'d-none':''%> w-25" alt="">
                         <br>
                         <label for="autor_foto" class="form-label">Foto do autor</label>
-                        <input type="file" name="autor_foto" id="autor_foto" onchange="previewImg(this.id,'imgPre2')" class="form-control">
+                        <input type="file" accept="image/*" name="autor_foto" id="autor_foto" onchange="previewImg(this.id,'imgPre2')" class="form-control">
                       </div>
 
                     <div class="col-12">

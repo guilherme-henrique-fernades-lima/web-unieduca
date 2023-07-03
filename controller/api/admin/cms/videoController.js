@@ -30,16 +30,15 @@ router.put('/',upload.single('img'),async(req,res)=>{
     try {
         const file = req.file
         req.body.status = ((req.body.status == undefined || req.body.status == true || req.body.status == 'true') && req.body.video != undefined)?true:false
-        console.log(req.body)
         if(req.body.video != undefined && !req.body.video.toString().toLowerCase().includes('youtube') )return res.status(500).json({ erro: 'Ocorreu um erro durante o processamento dos dados, gentileza informe um vídeo do YOUTUBE!' })
         const exist = await Video.findOne()
-
+        console.log(file)
         if (file != undefined) {
             req.body.img = `${file.path.replace('public', '')}`
         }
 
         if (exist != undefined) {
-            req.body.img = ( req.body.img == undefined)?exist.img:req.body.img
+            req.body.img = ( file == undefined)?exist.img:req.body.img
             await Video.update(req.body,{where:{id:exist.id}})
         } else {
             await Video.create(req.body)

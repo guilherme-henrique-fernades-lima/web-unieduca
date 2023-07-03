@@ -1,0 +1,68 @@
+<%- include("../../../partials/admin/head.ejs")%>
+  <%- include("../../../partials/admin/header.ejs")%>
+    <style>
+      .iframe {
+        position: relative;
+        overflow: hidden;
+        width: 100%;
+        padding-top: 56.25%;
+        /* 16:9 Aspect Ratio (divide 9 by 16 = 0.5625) */
+      }
+
+      /* Then style the iframe to fit in the container div with full height and width */
+      .responsive-iframe {
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        width: 100%;
+        height: 100%;
+      }
+    </style>
+    <div class="container-fluid">
+      <div class="row">
+        <%- include("../../../partials/admin/nav.ejs")%>
+          <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+            <section id="">
+              <div class="container" data-aos="fade">
+                <div class="my-4 border-bottom">
+                  <h1>CMS - VIDEOS </h1>
+                  <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                      <li class="breadcrumb-item"><a href="/admin">Admin</a></li>
+                      <li class="breadcrumb-item"><a href="/admin/cms">CMS</a></li>
+                      <li class="breadcrumb-item active" aria-current="page">Videos</li>
+                    </ol>
+                  </nav>
+                </div>
+                <div class="d-flex justify-content-center">
+                  <div class="card mb-3 col-8 d-flex">
+                    <div class="card-body">
+                      <h5 class="card-title">
+                        <%=(video !=undefined)?video.titulo:'Insira o Vídeo'%>
+                      </h5>
+
+                      <div class="iframe">
+                        <iframe class="responsive-iframe" src="<%=(video !=undefined)?video.video:''%>"></iframe>
+                      </div>
+
+                      <div class="d-flex justify-content-center mt-3">
+                        <div class="btn-group btn-group-sm" role="group" aria-label="...">
+                          <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal"
+                            href="#exampleModalToggle" role="button" title="Editar" onclick="editar()">Editar<i
+                              class="bi bi-pencil-square"></i></button>
+                        </div>
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+            <%- include("./modal.ejs")%>
+            </section>
+          </main>
+      </div>
+    </div>
+    <%- include("../../../partials/script.ejs")%>
+    <script src="/script/cms/videos.js"></script>
+    <%- include("../../../partials/end.ejs")%>
