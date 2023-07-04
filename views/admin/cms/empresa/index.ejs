@@ -1,5 +1,5 @@
 <%- include("../../../partials/admin/head.ejs")%>
-  <%- include("../../../partials/admin/header.ejs")%>
+<%- include("../../../partials/admin/header.ejs")%>
 <div class="container-fluid">
     <div class="row">
         <%- include("../../../partials/admin/nav.ejs")%>
@@ -21,51 +21,51 @@
                 <div class="row justify-content-center my-3">
                     <input type="hidden" name="empresaId" id="empresaId" value="<%=empresa == undefined?'':empresa.id%>">
                     <div class="my-3 col-12">
-                      <img src="<%=empresa.logo == undefined?'':empresa.logo%>" id="imgPre1" class="img-fluid my-3 <%=empresa == undefined?'d-none':''%> w-25" alt="">
+                      <img src="<%= empresa == undefined || empresa.logo == undefined?'':empresa.logo%>" id="imgPre1" class="img-fluid my-3 <%=empresa == undefined?'d-none':''%> w-25" alt="">
                       <br>
                       <label for="capa" class="form-label">Logo da empresa</label>
                       <input type="file" accept="image/*" name="logo" id="logo" onchange="previewImg(this.id,'imgPre1')" class="form-control">
                     </div>
                     <div class="my-3 col-6">
                         <label for="capa" class="form-label">Nome da empresa</label>
-                        <input type="text" id="nome" value="<%=empresa.nome == undefined?'':empresa.nome%>" class="form-control">
+                        <input type="text" id="nome" value="<%= empresa == undefined || empresa.nome == undefined?'':empresa.nome%>" class="form-control">
                     </div>
                     <div class="my-3 col-6">
                         <label for="capa" class="form-label">Descrição</label>
-                        <input type="text" id="descricao" value="<%=empresa.descricao == undefined?'':empresa.descricao%>" class="form-control">
+                        <input type="text" id="descricao" value="<%= empresa == undefined || empresa.descricao == undefined?'':empresa.descricao%>" class="form-control">
                     </div>
 
                     <div class="my-3 col-4">
                         <label for="capa" class="form-label">Likedin</label>
-                        <input type="text" id="likedin" value="<%=empresa.likedin == undefined?'':empresa.likedin%>" class="form-control">
+                        <input type="text" id="likedin" value="<%=empresa == undefined || empresa.likedin == undefined?'':empresa.likedin%>" class="form-control">
                     </div>
                     <div class="my-3 col-4">
                         <label for="capa" class="form-label">Facebook</label>
-                        <input type="text" id="facebook" value="<%=empresa.facebook == undefined?'':empresa.facebook%>" class="form-control">
+                        <input type="text" id="facebook" value="<%= empresa == undefined || empresa.facebook == undefined?'':empresa.facebook%>" class="form-control">
                     </div>
                     <div class="my-3 col-4">
                         <label for="capa" class="form-label">Instagram</label>
-                        <input type="text" id="instagram" value="<%=empresa.instagram == undefined?'':empresa.instagram%>" class="form-control">
+                        <input type="text" id="instagram" value="<%=empresa == undefined || empresa.instagram == undefined?'':empresa.instagram%>" class="form-control">
                     </div>
                     <div class="my-3 col-4">
                         <label for="capa" class="form-label">Whatsapp</label>
-                        <input type="text" class="form-control" id="whatsapp" value="<%=empresa.whatsapp == undefined?'':empresa.whatsapp%>" name="whatsapp" maxlength="15" pattern="\(\d{2}\)\s*\d{5}-\d{4}" required>
+                        <input type="text" class="form-control" id="whatsapp" value="<%= empresa == undefined || empresa.whatsapp == undefined?'':empresa.whatsapp%>" name="whatsapp" maxlength="15" pattern="\(\d{2}\)\s*\d{5}-\d{4}" required>
                     </div>
                     <div class="my-3 col-4">
                         <label for="capa" class="form-label">Telefone</label>
-                        <input type="text" class="form-control" id="telefone" value="<%=empresa.telefone == undefined?'':empresa.telefone%>" name="telefone" maxlength="15" pattern="\(\d{2}\)\s*\d{5}-\d{4}" required>
+                        <input type="text" class="form-control" id="telefone" value="<%= empresa == undefined || empresa.telefone == undefined?'':empresa.telefone%>" name="telefone" maxlength="15" pattern="\(\d{2}\)\s*\d{5}-\d{4}" required>
                     </div>
                     <div class="my-3 col-4">
                         <label for="capa" class="form-label">Twitter</label>
-                        <input type="text" class="form-control" id="twitter"  value="<%=empresa.twitter == undefined?'':empresa.twitter%>" name="twitter" required>
+                        <input type="text" class="form-control" id="twitter"  value="<%= empresa == undefined || empresa.twitter == undefined?'':empresa.twitter%>" name="twitter" required>
                     </div>
                     <div class="my-3 col-6">
                         <label for="capa" class="form-label">Email</label>
-                        <input type="mail" class="form-control" id="email"  value="<%=empresa.email == undefined?'':empresa.email%>" name="email" required>
+                        <input type="mail" class="form-control" id="email"  value="<%= empresa == undefined || empresa.email == undefined?'':empresa.email%>" name="email" required>
                     </div>
                     <div class="my-3 col-6">
                         <label for="capa" class="form-label">Horário de abertura</label>
-                        <input type="text" class="form-control" id="horario_abertura" value="<%=empresa.horario_abertura == undefined?'':empresa.horario_abertura%>" name="horario_abertura" required>
+                        <input type="text" class="form-control" id="horario_abertura" value="<%= empresa == undefined || empresa.horario_abertura == undefined?'':empresa.horario_abertura%>" name="horario_abertura" required>
                     </div>
                     
                     
@@ -74,7 +74,7 @@
 
                     <div class="col-12">
                       <label for="conteudo" class="form-label">Endereço</label>
-                      <textarea name="endereco" id="endereco" class="form-control"><%-empresa == undefined?'':empresa.endereco%></textarea>
+                      <textarea name="endereco" id="endereco" class="form-control"><%=empresa == undefined?'':empresa.endereco%></textarea>
                     </div>
 
                     <div class="col-12 my-4 border-top py-2 text-center"><button class="btn btn-success" type="button" onclick="salvar()">Salvar</button></div>

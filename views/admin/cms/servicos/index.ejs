@@ -21,22 +21,24 @@
               <table class="table table-data" id="table">
                 <thead>
                   <tr>
-                    <th>#</th>
-                    <th>Serviço</th>
-                    <th>Ult. Atu.</th>
-                    <th>Ação</th>
+                    <th class="text-center">#</th>
+                    <th class="text-center">Serviço</th>
+                    <th class="text-center">Status</th>
+                    <th class="text-center">Ult. Atu.</th>
+                    <th class="text-center">Ação</th>
                   </tr>
                 </thead>
                 <tbody>
                   <%servicos.forEach(servico =>{%>
-                    <tr>
-                      <th><%=servico.id%></th>
-                      <th><%=servico.nome%></th>
-                      <th><%=servico.ultAtu%></th>
-                      <th>
+                    <tr class="text-center">
+                      <th class="text-center"><%=servico.id%></th>
+                      <td><%=servico.nome%></td>
+                      <td><%=(servico.status)?'Ativo':'Inativo'%></td>
+                      <td><%=servico.ultAtu%></td>
+                      <td>
                         <a href="/admin/cms/servicos/<%=servico.id%>" class="btn btn-sm btn-warning">Editar</a>
                         <button class="btn btn-sm btn-danger" value="<%-servico.id%>" onclick="remover(this.value)">Deletar</button>
-                      </th>
+                      </td>
                     </tr>
                   <%})%>
                 </tbody>

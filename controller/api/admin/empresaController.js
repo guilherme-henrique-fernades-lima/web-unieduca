@@ -33,24 +33,20 @@ router.put('/', upload.single('logo'), async (req, res) => {
         const exist = await Empresa.findOne()
         if (exist != undefined) {
             req.body.logo = exist.logo
-            if (file != undefined && file.logo != undefined) {
-                req.body.logo = `${file.logo.path.replace('public', '')}`
+            if (file != undefined) {
+                req.body.logo = `${file.path.replace('public', '')}`
             }
             await Empresa.update(req.body, { where: { id: exist.id } })
         } else {
-            if (file != undefined && file.logo != undefined) {
-                req.body.logo = `${file.logo.path.replace('public', '')}`
+            if (file != undefined) {
+                req.body.logo = `${file.path.replace('public', '')}`
             }
             await Empresa.create(req.body)
         }
         res.json({ resp: 'Dados da empresa foram atualizados com sucesso' })
     } catch (error) {
         res.status(500).json({ erro: 'Ocorreu um erro durante o processamento dos dados, gentileza tente novamente!' })
-        for (let index = 0; index < req.files.length; index++) {
-            const file = req.files[index];
-            fs.unlink(file.path, (err) => { if (err) { console.error(err) } });
-        }
-
+        fs.unlinkSync(req.file.path, (err) => { if (err) { console.error(err) } });
     }
 })
 
