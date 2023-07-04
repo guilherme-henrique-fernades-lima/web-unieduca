@@ -7,6 +7,7 @@ const Funcionario = require('../../../Database/cms/Funcionario')
 const servicoController = require('./cms/servicosController')
 const Testemunhas = require('../../../Database/cms/Testemunha')
 const Duvida = require('../../../Database/cms/Duvida')
+const Empresa = require('../../../Database/Empresa')
 const moment = require('moment')
 
 router.use('/servicos',servicoController)
@@ -16,6 +17,17 @@ router.get('/sobre',async(req,res)=>{
     try {
         const sobre = await Sobre.findOne()
         res.render('admin/cms/sobre',{sobre:sobre})
+    } catch (error) {
+        console.log(error)
+        req.flash('erro','Ocorreu um erro ao acessar, gentileza tente novamente! Caso o erro persista entre em contato com o suporte.')
+        res.redirect('/admin')
+    }
+})
+
+router.get('/empresa',async(req,res)=>{
+    try {
+        const empresa = await Empresa.findOne()
+        res.render('admin/cms/empresa',{empresa:empresa})
     } catch (error) {
         console.log(error)
         req.flash('erro','Ocorreu um erro ao acessar, gentileza tente novamente! Caso o erro persista entre em contato com o suporte.')
