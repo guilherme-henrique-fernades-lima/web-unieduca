@@ -1,0 +1,42 @@
+<%- include("../../../partials/admin/head.ejs")%>
+  <%- include("../../../partials/admin/header.ejs")%>
+    <div class="container-fluid">
+      <div class="row">
+        <%- include("../../../partials/admin/nav.ejs")%>
+          <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+            <section id="">
+              <div class="container" data-aos="fade">
+                <div class="my-1 border-bottom">
+                  <h1>CMS - Banner</h1>
+                  <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                      <li class="breadcrumb-item"><a href="/admin">Admin</a></li>
+                      <li class="breadcrumb-item"><a href="/admin/cms">CMS</a></li>
+                      <li class="breadcrumb-item active" aria-current="page">Banner</li>
+                    </ol>
+                  </nav>
+                </div>
+                <div class="d-flex justify-content-center">
+                  <div class="card mb-3 col-10 d-flex">
+                    <div class="card-body">
+                      <h5 class="card-title"><%=(banner != undefined && banner.titulo != null)?banner.titulo:"Insira o Título dessa sessão"%></h5>
+                      <h6 class="card-title"><%=(banner != undefined && banner.texto != '')?banner.texto:"Insira o texto dessa sessão"%></h6>
+                      <img class="img-fluid w-25 <%=banner?'':'d-none'%>" src="<%=(banner != undefined && banner.img != null)?banner.img:''%>"
+                        class="card-img-top" alt="Imagem 1">
+
+                      <div class="d-flex justify-content-center mt-3">
+                          <button type="button" onclick="editar()" class="btn btn-outline-primary" data-bs-toggle="modal"
+                            href="#exampleModalToggle" role="button" title="Editar">Editar</button>
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+                <%- include("./modal.ejs")%>
+            </section>
+          </main>
+      </div>
+    </div>
+<%- include("../../../partials/script.ejs")%>
+<script src="/script/cms/banner.js"></script>
+<%- include("../../../partials/end.ejs")%>

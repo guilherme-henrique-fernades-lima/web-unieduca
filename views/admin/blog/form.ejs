@@ -11,7 +11,7 @@
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb">
                       <li class="breadcrumb-item"><a href="/admin">Admin</a></li>
-                      <li class="breadcrumb-item"><a href="/admin/blog">Blog</a></li>
+                      <li class="breadcrumb-item"><a href="/admin/blog">Conteúdos</a></li>
                       <li class="breadcrumb-item active" aria-current="page">Formulário</li>
                     </ol>
                 </nav>
@@ -24,7 +24,7 @@
                       <img src="<%=blog == undefined?'':blog.capa%>" id="imgPre1" class="img-fluid my-3 <%=blog == undefined?'d-none':''%> w-25" alt="">
                       <br>
                       <label for="capa" class="form-label">Capa do Conteúdo</label>
-                      <input type="file" accept="image/*" name="capa" id="capa" onchange="previewImg(this.id,'imgPre1')" class="form-control">
+                      <input type="file" name="capa" id="capa" onchange="previewImg(this.id,'imgPre1')" class="form-control">
                     </div>
                     <div class="my-3 col-md-8">
                       <label for="titulo" class="form-label">Título</label>
@@ -45,12 +45,23 @@
                         <label for="autor" class="form-label">Autor</label>
                         <input type="text" name="autor" value="<%=blog == undefined?'':blog.autor%>" placeholder="Insira o nome do autor" id="autor" class="form-control">
                     </div>
-                    <div class="my-3 col-12">
+                    <div class="my-3 col-md-6">
                         <img src="<%=blog == undefined?'':blog.autor_foto%>" id="imgPre2" class="img-fluid my-3 <%=blog == undefined?'d-none':''%> w-25" alt="">
                         <br>
                         <label for="autor_foto" class="form-label">Foto do autor</label>
-                        <input type="file" accept="image/*" name="autor_foto" id="autor_foto" onchange="previewImg(this.id,'imgPre2')" class="form-control">
-                      </div>
+                        <input type="file" name="autor_foto" id="autor_foto" onchange="previewImg(this.id,'imgPre2')" class="form-control">
+                    </div>
+                    <div class="col-md-6 align-middle">
+                        <label for="typeExibicao" class="form-label">Tipo de Exibição</label>
+                        <select name="typeExibicao" id="typeExibicao" class="form-select">
+                            <option value="0" <%-blog == undefined || blog.typeExibicao == 0?'selected':''%>>Todos</option>
+                            <option value="1" <%-blog != undefined && blog.typeExibicao == 1?'selected':''%>>Público</option>
+                            <option value="2" <%-blog != undefined && blog.typeExibicao == 2?'selected':''%>>Colaboradores</option>
+                            <option value="3" <%-blog != undefined && blog.typeExibicao == 3?'selected':''%>>Especialistas</option>
+                            <option value="4" <%-blog != undefined && blog.typeExibicao == 4?'selected':''%>>Empresa</option>
+                            <option value="5" <%-blog != undefined && blog.typeExibicao == 5?'selected':''%>>Direcionados</option>
+                        </select>
+                    </div>
 
                     <div class="col-12">
                       <label for="conteudo" class="form-label">Conteúdo</label>
@@ -210,6 +221,8 @@
           console.error( error );
       } );
 </script>
+
+
 
 <%- include("../../partials/script.ejs")%>
 <%- include("../../partials/end.ejs")%>

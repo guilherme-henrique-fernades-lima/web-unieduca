@@ -1,7 +1,7 @@
 <%- include("../../partials/admin/head.ejs")%>
 <%- include("../../partials/admin/header.ejs")%>
 <div class="container-fluid">
-    <div class="row">
+  <div class="row">
     <%- include("../../partials/admin/nav.ejs")%>
     <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
         <section id="">
@@ -20,22 +20,24 @@
                     <table class="table table-data" id="table">
                       <thead>
                         <tr>
-                          <th>#</th>
-                          <th>Serviço</th>
-                          <th>Ult. Atu.</th>
-                          <th>Ação</th>
+                          <th class="text-center">#</th>
+                          <th class="text-center">Conteúdo</th>
+                          <th class="text-center">Status</th>
+                          <th class="text-center">Ult. Atu.</th>
+                          <th class="text-center">Ação</th>
                         </tr>
                       </thead>
                       <tbody>
                         <%blogs.forEach(blog =>{%>
-                          <tr>
-                            <th><%=blog.id%></th>
-                            <th><%=blog.titulo%></th>
-                            <th><%=blog.ultAtu%></th>
-                            <th>
+                          <tr class="text-center">
+                            <th class="text-center"><%=blog.id%></th>
+                            <td><%=blog.titulo%></td>
+                            <td><%=blog.status?'Ativo':'Inativo'%></td>
+                            <td><%=blog.ultAtu%></td>
+                            <td>
                                 <a class="btn btn-sm btn-info" href="/admin/blog/<%=blog.id%>" value="<%=blog.id%>">Editar</a>
                                 <button class="btn btn-sm btn-danger" value="<%=blog.id%>" onclick="remover(this.value)">Deletar</button>
-                            </th>
+                            </td>
                           </tr>
                         <%})%>
                       </tbody>

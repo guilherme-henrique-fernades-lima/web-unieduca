@@ -128,4 +128,6 @@ public/upload/blog/*
 public/upload/empresa/*
 !public/upload/empresa/.gitkeep
 
+public/upload/banner/*
+!public/upload/banner/.gitkeep
 

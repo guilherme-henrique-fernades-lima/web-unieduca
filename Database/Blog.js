@@ -1,5 +1,5 @@
 const Sequelize = require("sequelize")
-const connection = require('./database')
+const connection = require('./database.js')
 
 
 const Blog = connection.define('ag_blog',{
@@ -35,6 +35,11 @@ const Blog = connection.define('ag_blog',{
     capa:{
         type:Sequelize.TEXT,
         allowNull:false
+    },
+    typeExibicao:{
+        type:Sequelize.INTEGER,
+        allowNull:false,
+        defaultValue:0
     }
 },
 {freezeTableName:true})

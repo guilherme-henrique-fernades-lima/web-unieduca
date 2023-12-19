@@ -44,6 +44,7 @@ app.use((req, res, next) => {
 
 const adminController = require("./controller/routes/adminController")
 const loginController = require("./controller/routes/loginController")
+const conteudoController = require("./controller/routes/conteudo/conteudoController")
 const apiController = require("./controller/api/apiController")
 
 const Sobre = require('./Database/cms/Sobre')
@@ -57,24 +58,28 @@ const Funcionario_Rede = require('./Database/cms/Funcionario_Rede')
 const { Op } = require('sequelize')
 const Empresa = require('./Database/Empresa')
 const Blog = require('./Database/Blog')
+const Banner = require('./Database/cms/Banner')
 
 app.use('/admin',adminController)
 app.use('/login',loginController)
 app.use('/api',apiController)
+app.use('/conteudo',conteudoController)
+
 
 //RENDERIZA
 app.get("/",async (req,res)=>{
     try {
         const whereSt = { status: true }
-        const [sobre, servicos, parceiros, video, testemunhas, duvidas,emp,bl] = await Promise.allSettled([
+        const [sobre, servicos, parceiros, video, testemunhas, duvidas,emp,bl,banner] = await Promise.allSettled([
             Sobre.findOne({ where: whereSt }),
-            Servico.findAll({ where: whereSt }),
+            Servico.findAll({ where: whereSt,limit:6 }),
             Parceiro.findAll({ where: whereSt }),
             Video.findOne({ where: whereSt }),
             Testemunha.findAll({ where: whereSt }),
             Duvida.findAll({ where: whereSt }),
             Empresa.findOne(),
-            Blog.findAll({where:whereSt})
+            Blog.findAll({where:whereSt}),
+            Banner.findOne()
         ])
         const cms = {
             sobre: sobre.status === 'fulfilled' ? sobre.value : undefined,
@@ -82,7 +87,8 @@ app.get("/",async (req,res)=>{
             parceiros: parceiros.status === 'fulfilled' ? parceiros.value : [],
             video: video.status === 'fulfilled' ? video.value : undefined,
             testemunhas: testemunhas.status === 'fulfilled' ? testemunhas.value : [],
-            duvidas: duvidas.status === 'fulfilled' ? duvidas.value : []
+            duvidas: duvidas.status === 'fulfilled' ? duvidas.value : [],
+            banner: banner.status === 'fulfilled'?banner.value:undefined
         }
         const empresa = emp.status === 'fulfilled'?emp.value:undefined
         const blog = bl.status === 'fulfilled'?bl.value:[]

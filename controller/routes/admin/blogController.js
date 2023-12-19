@@ -62,13 +62,13 @@ router.get('/:id',async(req,res)=>{
     }
 })
 
+//type: 0=todos, 1=Publico 2=colaboradores 3=especialista 4=empresa 5=Direcionados 
 router.post('/',upload.any(), async (req, res) => {
     try {
-        let { status, categoria,titulo, autor,html,blogId } = req.body
+        let { status, categoria,titulo, autor,html,blogId,typeExibicao } = req.body
         req.flash("body_blog",JSON.stringify(req.body))
         status = (status == true || status == 'true') ? true : false
         const files = req.files
-
         const blog = (blogId == '')?{id:0}:await Blog.findByPk(blogId)
         if (blogId != '' && blog ==  undefined) {
             req.flash("erro","Blog não identificado na base de dados!")
@@ -97,6 +97,7 @@ router.post('/',upload.any(), async (req, res) => {
         }
         
         if (blog.id == 0) {
+            typeExibicao = (isNaN(parseInt(typeExibicao)))?0:parseInt(typeExibicao)
             if (req.body.capa == undefined){
                 req.flash("erro","Necessário informar foto da 'capa'!")
                 return res.redirect('/admin/blog/adicionar')
@@ -108,9 +109,11 @@ router.post('/',upload.any(), async (req, res) => {
                 capa: req.body.capa,
                 autor:autor,
                 html:html,
-                autor_foto:req.body.autor_foto
+                autor_foto:req.body.autor_foto,
+                typeExibicao:typeExibicao
             })
         }else{
+            typeExibicao = (isNaN(parseInt(typeExibicao)))?blog.typeExibicao:parseInt(typeExibicao)
             req.body.capa = (req.body.capa == undefined)?blog.capa:req.body.capa
             req.body.autor_foto = (req.body.autor_foto == undefined)?blog.autor_foto:req.body.autor_foto
             await Blog.update({
@@ -120,7 +123,8 @@ router.post('/',upload.any(), async (req, res) => {
                 capa: req.body.capa,
                 autor:autor,
                 html:html,
-                autor_foto:req.body.autor_foto
+                autor_foto:req.body.autor_foto,
+                typeExibicao:typeExibicao
             },{where:{id:blog.id}})
         }
         

@@ -9,10 +9,22 @@ const Testemunhas = require('../../../Database/cms/Testemunha')
 const Duvida = require('../../../Database/cms/Duvida')
 const Empresa = require('../../../Database/Empresa')
 const moment = require('moment')
+const Banner = require('../../../Database/cms/Banner')
 
 router.use('/servicos',servicoController)
 
-// /admin/cms/sobre
+router.get('/banner',async(req,res)=>{
+    try {
+        const banner = await Banner.findOne()
+        console.log(banner)
+        res.render('admin/cms/banner',{banner:banner})
+    } catch (error) {
+        console.log(error)
+        req.flash('erro','Ocorreu um erro ao acessar, gentileza tente novamente! Caso o erro persista entre em contato com o suporte.')
+        res.redirect('/admin')
+    }
+})
+
 router.get('/sobre',async(req,res)=>{
     try {
         const sobre = await Sobre.findOne()

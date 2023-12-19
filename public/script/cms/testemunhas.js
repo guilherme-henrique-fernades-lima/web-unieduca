@@ -1,19 +1,4 @@
-async function remover(id) {
-    if (confirm("Deseja realmente remover cadastro do parceiro?")) {
-        try {
-            const request = await axios.delete(`/api/cms/parceiro/${id}`)
-            toastMsm(request.data.resp)
-            document.location.reload()
-        } catch (error) {
-            if (error.response != undefined && error.response.data.erro != undefined) {
-                console.log(error.response)
-                toastErro(error.response.data.erro)
-            } else {
-                toastErro('Ocorreu um erro durante o processamento de dados, verifique sua rede e tente novamente')
-            }
-        }
-    }
-}
+
 
 async function editar(id) {
     try {
@@ -22,19 +7,30 @@ async function editar(id) {
         const preimg = $('#preimg')
         const nome = $('#nome')
         const status = $('#status')
-        const parceiroId = $('#parceiroId')
+        const star = $('#star')
+        const testemunhaId = $('#testemunhaId')
+        const competencia = $('#competencia')
+        const comentario = $('#comentario')
 
         preimg[0].src = ''
         nome.val('')
+        star.val(5)
+        testemunhaId.val(null)
+        competencia.val('')
+        comentario.val('')
         status.val('true')
-        parceiroId.val('')
+
         if (id != undefined) {
-            const request = await axios.get(`/api/cms/parceiro/${id}`)
-            const parceiro = request.data.parceiro
-            nome.val(parceiro.nome)
-            status.val(`${parceiro.status}`)
-            preimg[0].src = parceiro.img
-            parceiroId.val(parceiro.id)
+            const request = await axios.get(`/api/cms/testemunha/${id}`)
+            const testemunha = request.data.testemunha
+
+            preimg[0].src = testemunha.img
+            nome.val(testemunha.nome)
+            star.val(testemunha.star)
+            testemunhaId.val(testemunha.id)
+            competencia.val(testemunha.competencia)
+            comentario.val(testemunha.comentario)
+            status.val(`${testemunha.status}`)
         }
 
     } catch (error) {
@@ -66,6 +62,9 @@ async function salvar() {
         if (nome == '') {
             return toastErro("Dados inválidos. Gentileza preencher nome")
         }
+        if (star > 5 || star < 1) {
+            return toastErro("Quantidade de estrelas deve ser entre 1 e 5")
+        }
         const formData = new FormData()
         formData.append('img', img)
         formData.append('nome', nome)
@@ -73,7 +72,7 @@ async function salvar() {
         formData.append('star', star)
         formData.append('competencia', competencia)
         formData.append('comentario', comentario)
-
+        
         if (testemunhaId != '' && testemunhaId != undefined) {
             formData.append('testemunhaId', testemunhaId)
         }
@@ -90,5 +89,22 @@ async function salvar() {
         }
     } finally {
         loadModal(false)
+    }
+}
+
+async function remover(id) {
+    if (confirm("Deseja realmente remover comentário?")) {
+        try {
+            const request = await axios.delete(`/api/cms/testemunha/${id}`)
+            toastMsm(request.data.resp)
+            document.location.reload()
+        } catch (error) {
+            if (error.response != undefined && error.response.data.erro != undefined) {
+                console.log(error.response)
+                toastErro(error.response.data.erro)
+            } else {
+                toastErro('Ocorreu um erro durante o processamento de dados, verifique sua rede e tente novamente')
+            }
+        }
     }
 }

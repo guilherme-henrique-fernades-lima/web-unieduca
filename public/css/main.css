@@ -11,17 +11,24 @@
 # Learn more about CSS variables at https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_custom_properties
 --------------------------------------------------------------*/
 /* Fonts */
+@font-face {
+  font-family: 'venturisad';
+  src: local('venturisad'), url('/font/VenturisADFTitlingNo2.ttf.woff') format('woff');
+  /* Adicione outros formatos de fonte e caminhos, se necessário */
+}
+
 :root {
   --font-default: "Open Sans", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-  --font-primary: "Montserrat", sans-serif;
+  /* --font-default: "venturisad", sans-serif; */
+  --font-primary: "venturisad", sans-serif;
   --font-secondary: "Poppins", sans-serif;
 }
 
 /* Colors */
 :root {
-  --color-default: #222222;
-  --color-primary: #2d43b9;
-  --color-secondary: #f85a40;
+  --color-default: #414141;
+  --color-primary: #1d1257;
+  --color-secondary: #f4b204;
 }
 
 /* Smooth scroll behavior */
@@ -1019,6 +1026,7 @@ section {
   position: relative;
   background: #fff;
   border-radius: 10px;
+  height: 300px;
 }
 
 .testimonials .testimonial-item .testimonial-img {

@@ -10,5 +10,6 @@ router.use('/usuarios',usuariosController)
 router.use('/cms',cmsController)
 router.use('/blog',blogController)
 router.use('/empresa',empresaController)
+router.use('/empresa',empresaController)
 
 module.exports = router
