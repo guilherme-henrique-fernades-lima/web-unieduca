@@ -1,0 +1,160 @@
+<div class="modal fade" id="modalCurso" aria-hidden="true" aria-labelledby="modalCursoLabel" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalCursoLabel">Editando Curso</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="loadModal">
+                    <div class="d-flex justify-content-center">
+                        <div class="spinner-border" role="status">
+                            <span class="visually-hidden">Loading...</span>
+                        </div>
+                    </div>
+                </div>
+                <section class="row g-3 py-2 bodyModal">
+                    <input type="hidden" name="cursoId" id="cursoId">
+                    <div class="col-md-6">
+                        <label for="nome" class="form-label">Insira o nome do Curso</label>
+                        <input type="text" class="form-control" id="nome">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="descricao" class="form-label">Descrição Simples</label>
+                        <input type="text" class="form-control" id="descricao">
+                    </div>
+                    <div class="col-12">
+                        <label for="img" class="form-label">Imagem</label>
+                        <div class="d-flex text-center py-2 my-2 justify-content-center">
+                            <img src="" id="preimg" class="img-fluid w-25" alt="" srcset="">
+                        </div>
+                        <input type="file" accept="image/*" onchange="previewImg($(this)[0].id,'preimg')"
+                            class="form-control" id="img">
+                    </div>
+                    <div class="col-12">
+                        <label for="objetivo" class="form-label">Objetivo do Curso</label>
+                        <textarea id="objetivo" class="form-control"></textarea>
+                    </div>
+                    <div class="col-6">
+                        <label for="contato" class="form-label">Insira o Número</label>
+                        <input type="text" placeholder="(99) 9 9999-9999" onkeyup="$(this).mask('(99) 9 9999-9999')"
+                            class="form-control" id="contato">
+                        <div class="form-check form-switch mt-2">
+                            <input class="form-check-input" type="checkbox" role="switch" id="isWhats">
+                            <label class="form-check-label" for="isWhats">É Whatsapp?</label>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <label for="status" class="form-label">Status</label>
+                        <select name="status" class="form-select" id="status">
+                            <option value="true">Ativo</option>
+                            <option value="false">Inativo</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="modalidade" class="form-label">Modalidade</label>
+                        <select name="modalidade" class="form-select" id="modalidade">
+                            <option value="">Selecione...</option>
+                            <option value="Presencial">Presencial</option>
+                            <option value="EAD">EAD</option>
+                            <option value="Semipresencial">Semipresencial</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="duracao" class="form-label">Insira a Duração do Curso</label>
+                        <input type="text" placeholder="24 Meses" class="form-control" id="duracao">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="carga_horaria" class="form-label">Carga Horária</label>
+                        <input type="text" class="form-control"
+                            placeholder="1860h, sendo 300h de estágio supervisionado" id="carga_horaria">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="encontros" class="form-label">Encontros</label>
+                        <input type="text" class="form-control" placeholder="Seg-Sex 08:00 - 19:00" id="encontros">
+                    </div>
+
+                    <div class="col-12">
+                        <label for="documentacao" class="form-label">Documentação Necessária</label>
+                        <input type="text" class="form-control" placeholder="2 FOTOS 3x4, RG, CPF..." id="documentacao">
+                    </div>
+
+                    <div class="col-12">
+                        <label for="instituicao" class="form-label">Instituição</label>
+                        <input type="text" class="form-control" placeholder="Instituto X"
+                            id="instituicao">
+                    </div>
+
+                    <div class="col-12">
+                        <label for="localizacao" class="form-label">Localização</label>
+                        <input type="text" class="form-control" placeholder="Rua X, Bairro Z, Cidade W"
+                            id="localizacao">
+                    </div>
+                </section>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                <button type="button" class="btn btn-success btnModal"  data-bs-toggle="modal" href="#modalMensalidade" onclick="salvar()">Salvar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modalMensalidade" aria-hidden="true" aria-labelledby="modalMensalidadeLabel" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalMensalidadeLabel">Editando Mensalidades</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="loadModal">
+                    <div class="d-flex justify-content-center">
+                        <div class="spinner-border" role="status">
+                            <span class="visually-hidden">Loading...</span>
+                        </div>
+                    </div>
+                </div>
+                <section class="row g-3 py-2 bodyModal">
+                    <div class="col-12">
+                        <ol class="list-group list-group-numbered" id="list_cursos_mensalidades">
+                          
+                        </ol>
+                    </div>
+
+                    <div class="col-md-6 my-3">
+                        <label for="titulo" class="form-label">Titulo</label>
+                        <input type="text" name="titulo" placeholder="Manhã" id="titulo" class="form-control" />
+                    </div>
+                    <div class="col-md-6 my-3">
+                        <label for="mensalidade" class="form-label">Mensalidade</label>
+                        <input type="number" onkeyup="$(this).mask('99999.99', {reverse: true})" id="mensalidade" class="form-control" placeholder="200,00" >
+                    </div>
+                    <div class="col-md-6 my-3">
+                        <label for="bolsa" class="form-label">Bolsa</label>
+                        <div class="input-group mb-3">
+                            <input type="number" id="bolsa" class="form-control" placeholder="50" >
+                            <span class="input-group-text">%</span>
+                        </div>
+                    </div>
+                    <div class="col-md-6 my-3">
+                        <label for="valor_desconto" class="form-label">Valor Desconto</label>
+                        <input type="text" onkeyup="$(this).mask('99999.99', {reverse: true})" id="valor_desconto" class="form-control" placeholder="500,00" >
+                    </div>
+                    <div class="col-md-6 my-3">
+                        <label for="valor_final" class="form-label">Valor Final</label>
+                        <input type="text" onkeyup="$(this).mask('99999.99', {reverse: true})" id="valor_final" class="form-control" placeholder="1000,00" >
+                    </div>
+
+                    <div class="col-12 my-3">
+                        <button type="button" class="btn btn-success btnModal" onclick="addMensalidade()">Adicionar</button>
+                    </div>
+                </section>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+
+            </div>
+        </div>
+    </div>
+</div>

@@ -8,6 +8,11 @@ const Parceiro = connection.define('ag_parceiro',{
         allowNull:false,
         defaultValue:true
     },
+    link:{
+        type:Sequelize.STRING,
+        allowNull:true,
+        defaultValue:'#'
+    },
     nome:{
         type:Sequelize.STRING,
         allowNull:false

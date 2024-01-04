@@ -23,11 +23,6 @@ const User = connection.define('ag_users',{
         type:Sequelize.STRING,
         allowNull:false
     },
-    nivel:{
-        type: Sequelize.INTEGER,
-        allowNull:false,
-        defaultValue:0
-    },
     isFirst:{
         type: Sequelize.BOOLEAN,
         allowNull:false,

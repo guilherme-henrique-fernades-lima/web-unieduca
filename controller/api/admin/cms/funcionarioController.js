@@ -21,7 +21,7 @@ const upload = multer({ storage: storage })
 router.get('/:id', async (req, res) => {
     try {
         const id = req.params.id
-        const funcionario = await Funcionario.findByPk(id)
+        const funcionario = await Funcionario.findByPk(id,{include:{model:Funcionario_Rede,as:'redes'}})
         if (funcionario == undefined) return res.status(500).json({ erro: 'Erro ao consultar. Funcionario informado não identificado na base de dados!' })
         res.json({ funcionario: funcionario })
     } catch (error) {
@@ -54,7 +54,9 @@ router.post('/',upload.single('img'),async (req, res) => {
         res.json({ resp: "Funcionario cadastrada com sucesso!", funcionario: newFuncionario })
     } catch (error) {
         res.status(500).json({ erro: 'Ocorreu um erro durante o processamento dos dados, gentileza tente novamente!' })
-        fs.unlink(req.file.path, (err) => {if (err) {console.error(err)}});
+        if (req.file) {
+            fs.unlink(req.file.path, (err) => {if (err) {console.error(err)}});
+        }
     }
 })
 
@@ -67,8 +69,8 @@ router.put('/',upload.single('img'), async (req, res) => {
         const funcionario = await Funcionario.findByPk(funcionarioId)
         if (funcionario == undefined) return res.status(500).json({ erro: 'Não foi possível identificar cadastro da funcionario na base de dados!' })
 
-        if (nome == '' || nome == undefined || competencia == undefined || competencia == '' || img == undefined || img == '') {
-            return res.status(500).json({ erro: 'Dados importantes como "nome", "imagem" ou "competencia" estão vazios, gentileza verifique e tente novamente!' })
+        if (nome == '' || nome == undefined || competencia == undefined || competencia == '' ) {
+            return res.status(500).json({ erro: 'Dados importantes como "nome", ou "competencia" estão vazios, gentileza verifique e tente novamente!' })
         }
 
         const exist = await Funcionario.findOne({ where: { nome: nome } })
@@ -88,8 +90,11 @@ router.put('/',upload.single('img'), async (req, res) => {
 
         res.json({ resp: "Cadasto da funcionario atualizada com sucesso!"})
     } catch (error) {
+        console.log(error)
         res.status(500).json({ erro: 'Ocorreu um erro durante o processamento dos dados, gentileza tente novamente!' })
-        fs.unlink(req.file.path, (err) => {if (err) {console.error(err)}});
+        if (req.file) {
+            fs.unlink(req.file.path, (err) => {if (err) {console.error(err)}});
+        }
     }
 })
 
@@ -106,11 +111,15 @@ router.delete('/:id', async (req, res) => {
     }
 })
 
-router.post('/rede',upload.single('logo'),async(req,res)=>{
+router.post('/rede',async(req,res)=>{
     try {
-        let {type,logo,link,funcionarioId} = req.body
-        const funcionario = await Funcionario.findByPk(funcionarioId)
+        let {type,link,funcionarioId} = req.body
+        let logo;
+        const funcionario = await Funcionario.findByPk(funcionarioId,{include:{model:Funcionario_Rede,as:'redes'}})
         if (funcionario == undefined) return res.status(500).json({ erro: 'Erro ao consultar, funcionario informado não identificado na base de dados!' })
+        if (funcionario.redes.length >=4) {
+            return res.status(500).json({ erro: 'Só é possível cadastrar 4 redes para o funcionário!' })
+        }
         if (isNaN(parseInt(type)) || (parseInt(type) != 99 && (parseInt(type) < 1 && parseInt(type) >= 5) ) ) {
             return res.status(500).json({ erro: 'Tipo de rede social escolhida não está de acordo com o esperado pelo sistema!' })
         }
@@ -133,10 +142,7 @@ router.post('/rede',upload.single('logo'),async(req,res)=>{
             case 99:
             default:
                 type = 99
-                const file = req.file
-                if(file == undefined) return res.status(500).json({ erro: 'Dados importantes como "imagem" estão vazios, gentileza verifique e tente novamente!' })
-                const img = `${file.path.replace('public','')}`
-                logo = `<img src="${img}" height="40px" width="40px" alt="">`
+                logo = `<i class="bi bi-globe"></i>`
                 break;
         }
 
@@ -155,12 +161,16 @@ router.post('/rede',upload.single('logo'),async(req,res)=>{
     }
 })
 
-router.delete('/rede/:id', async (req, res) => {
+router.delete('/:funcionarioId/rede/:id', async (req, res) => {
     try {
+        const funcionarioId = req.params.funcionarioId
         const id = req.params.id
-        const rede = await Funcionario_Rede.findByPk(id)
-        if (rede == undefined) return res.status(500).json({ erro: 'Erro ao consultar, rede social informada não identificado na base de dados!' })
-        await Funcionario_Rede.destroy({where:{id:rede.id}})
+
+        const funcionario = await Funcionario.findByPk(funcionarioId,{include:{required:true,model:Funcionario_Rede,as:'redes',where:{id:id}}})
+        if (!funcionario) {
+            res.status(500).json({ erro: 'Rede informada não encontrada na base de dados ou não vinculada ao funcionario informado!' })
+        }
+        await Funcionario_Rede.destroy({where:{id:id}})
         res.json({ resp: 'Rede social foi desvinculada com sucesso!' })
     } catch (error) {
         res.status(500).json({ erro: 'Ocorreu um erro durante o processamento dos dados, gentileza tente novamente!' })

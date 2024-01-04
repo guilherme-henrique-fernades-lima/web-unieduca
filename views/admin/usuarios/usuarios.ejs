@@ -6,8 +6,8 @@
     <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
         <section id="">
             <div class="container" data-aos="fade">
-                <div class="my-1 border-bottom">
-                    <h1>NOME DA ROTA</h1>
+                <div class="my-3 border-bottom">
+                    <h1>Usuários do sistema</h1>
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb">
                           <li class="breadcrumb-item"><a href="/admin">Admin</a></li>
@@ -15,10 +15,56 @@
                         </ol>
                     </nav>
                 </div>
-            <div>
+
+                <ul class="nav nav-pills">
+                    <li class="nav-item m-2">
+                      <button class="btn btn-success active" data-bs-toggle="modal" onclick="editar()" data-bs-target="#modalUsuario">Adicionar</button>
+                    </li>
+                    <li class="nav-item m-2">
+                        <%if(inativo){%>
+                            <a href="?inativo=false" class="btn btn-info active" >Ocultar Inativos</a>
+                        <%}else{%>
+                            <a href="?inativo=true" class="btn btn-danger active">Mostrar Inativos</a>
+                        <%}%>
+                    </li>
+                    
+                </ul>
+
+                <div class="table-responsive my-4">
+                    <table class="table my-3" id="table">
+                        <thead>
+                            <tr class="align-middle">
+                                <th class="text-center">#</th>
+                                <th class="text-center">Nome</th>
+                                <th class="text-center">E-mail</th>
+                                <th class="text-center">Status</th>
+                                <th class="text-center">Data Cri.</th>
+                                <th class="text-center">Ult. Acesso</th>
+                                <th class="text-center">Ação</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <%usuarios.forEach(usuario =>{%>
+                                <tr class="text-center align-middle">
+                                    <th class="text-center"><%=usuario.id%></th>
+                                    <td><%=usuario.nome%></td>
+                                    <td><%=usuario.email%></td>
+                                    <td><%=(usuario.status)?'Ativo':'Inativo'%></td>
+                                    <td><%=usuario.dataCri%></td>
+                                    <td><%=usuario.lastLog%></td>
+                                    <td><button class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#modalUsuario" onclick="editar(this.value)" value="<%=usuario.id%>">Editar</button></td>
+                                </tr>
+                            <%})%>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </section>
+        <%- include("./modal.ejs")%>
     </main>
     </div>
 </div>
+
 <%- include("../../partials/script.ejs")%>
+<script src="/script/admin/usuarios.js"></script>
 <%- include("../../partials/end.ejs")%>

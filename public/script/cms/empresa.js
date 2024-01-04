@@ -50,6 +50,8 @@ async function salvar() {
         const endereco = $('#endereco').val()
         const email = $('#email').val()
         const horario_abertura = $('#horario_abertura').val()
+        const inicio_dia_atendimento = $('#inicio_dia_atendimento').val()
+        const fim_dia_atendimento = $('#fim_dia_atendimento').val()
         const logo = $('#logo')[0].files[0]
         
         const formData = new FormData()
@@ -65,6 +67,8 @@ async function salvar() {
         formData.append('endereco', endereco)
         formData.append('email', email)
         formData.append('horario_abertura', horario_abertura)
+        formData.append('inicio_dia_atendimento', inicio_dia_atendimento)
+        formData.append('fim_dia_atendimento', fim_dia_atendimento)
         formData.append('logo', logo)
 
         const request = await axios.put('/api/empresa', formData)

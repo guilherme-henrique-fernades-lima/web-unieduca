@@ -1,0 +1,53 @@
+<%- include("../../partials/admin/head.ejs")%>
+<%- include("../../partials/admin/header.ejs")%>
+<div class="container-fluid">
+    <div class="row">
+    <%- include("../../partials/admin/nav.ejs")%>
+    <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+        <section id="">
+            <div class="container" data-aos="fade">
+                <div class="my-3 border-bottom">
+                    <h1>Contatos</h1>
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                          <li class="breadcrumb-item"><a href="/admin">Admin</a></li>
+                          <li class="breadcrumb-item active" aria-current="page">Contatos</li>
+                        </ol>
+                    </nav>
+                </div>
+                <div class="table-responsive my-4">
+                    <table class="table my-3" id="table">
+                        <thead>
+                            <tr class="align-middle">
+                                <th class="text-center">#</th>
+                                <th class="text-center">Nome</th>
+                                <th class="text-center">E-mail</th>
+                                <th class="text-center">Titulo</th>
+                                <th class="text-center">Data Cri.</th>
+                                <th class="text-center">Ação</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <%contatos.forEach(contato =>{%>
+                                <tr class="text-center align-middle">
+                                    <th class="text-center"><%=contato.id%></th>
+                                    <td><%=contato.name%></td>
+                                    <td><%=contato.email%></td>
+                                    <td><%=contato.subject%></td>
+                                    <td><%=contato.dataCri%></td>
+                                    <td><button class="btn btn-info btn-sm" data-bs-toggle="modal" data-bs-target="#modalMessage" onclick="visualizar(this.value)" value="<%=contato.id%>">Visualizar</button></td>
+                                </tr>
+                            <%})%>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+        <%- include("./modal.ejs")%>
+    </main>
+    </div>
+</div>
+
+<%- include("../../partials/script.ejs")%>
+<script src="/script/admin/contatos.js"></script>
+<%- include("../../partials/end.ejs")%>

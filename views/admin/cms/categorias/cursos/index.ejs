@@ -1,0 +1,314 @@
+<%- include("../../../../partials/admin/head.ejs")%>
+  <%- include("../../../../partials/admin/header.ejs")%>
+    <div class="container-fluid">
+      <div class="row">
+        <%- include("../../../../partials/admin/nav.ejs")%>
+          <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+            <section class="container" data-aos="fade">
+              <div class="my-1 border-bottom">
+                <h1>CMS - Cursos</h1>
+                <nav aria-label="breadcrumb">
+                  <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="/admin">Admin</a></li>
+                    <li class="breadcrumb-item"><a href="/admin/cms">CMS</a></li>
+                    <li class="breadcrumb-item"><a href="/admin/cms/categorias">Categorias</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Curso</li>
+                  </ol>
+                </nav>
+              </div>
+              <div class="d-flex justify-content-center">
+                <div class="card mb-3 col-12 d-flex">
+                  <div class="card-body">
+                    <h5 class="card-title">
+                      <%=categoria.nome%> - Cursos
+                    </h5>
+                    <input type="hidden" value="<%=categoria.id%>" id="categoriaId">
+                    <div class="row">
+                      <%categoria.cursos.forEach(curso=>{%>
+                        <div
+                          class="col-lg-4 m-2 col-md-6 border border-<%= curso.status?'success':'danger'%> rounded p-2 text-center">
+                          <h5>
+                            <%=curso.nome%>
+                          </h5>
+                          <p class="mb-0">Modalidade: <%=curso.modalidade%>
+                          </p>
+                          <p class="mb-0">Status: <%=curso.status ? 'Ativo' :'Inativo'%>
+                          </p>
+                          <div class="text-center my-4">
+                            <img src="<%=curso.img%>" class="img-thumbnail w-25 rounded">
+                          </div>
+                          <div class="btn-group" role="group" aria-label="Basic example">
+                            <button type="button" value="<%=curso.id%>" class="btn btn-sm btn-primary mx-1"
+                              onclick="editar(this.value)" data-bs-toggle="modal" href="#modalCurso">Editar <i
+                                class="bi bi-pencil-square" style="cursor:pointer"></i></button>
+                            <button type="button" value="<%=curso.id%>" onclick="remover(this.value)"
+                              class="btn btn-sm btn-danger mx-1">Remover <i class="bi bi-trash"
+                                style="cursor:pointer"></i></button>
+                          </div>
+                        </div>
+                        <%})%>
+                    </div>
+                  </div>
+                  <div class="card-footer text-center">
+                    <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" href="#modalCurso"
+                      onclick="editar()" role="button" title="Adicionar">Cadastrar <i class="bi bi-upload"></i></button>
+                  </div>
+                </div>
+              </div>
+              <%- include("./modal.ejs")%>
+            </section>
+          </main>
+      </div>
+    </div>
+    <%- include("../../../../partials/script.ejs")%>
+      <script>
+
+        async function editar(id) {
+          try {
+            //Ao iniciar a função ele da o loop no modal
+            loadModal(true)
+            const categoriaId = $('#categoriaId').val()
+
+            const preimg = $('#preimg')
+            const nome = $('#nome')
+            const descricao = $('#descricao')
+            const cursoId = $('#cursoId')
+            const status = $('#status')
+            const objetivo = $('#objetivo')
+            const contato = $('#contato')
+            const isWhats = $('#isWhats')
+            const modalidade = $('#modalidade')
+            const duracao = $('#duracao')
+            const carga_horaria = $('#carga_horaria')
+            const encontros = $('#encontros')
+            const documentacao = $('#documentacao')
+            const localizacao = $('#localizacao')
+            const instituicao = $('#instituicao')
+
+            nome.val('')
+            descricao.val('')
+            status.val('true')
+            cursoId.val('')
+            preimg[0].src = ''
+
+            objetivo.val('')
+            contato.val('')
+            modalidade.val('')
+            carga_horaria.val('')
+            encontros.val('')
+            documentacao.val('')
+            localizacao.val('')
+            instituicao.val('')
+            isWhats[0].checked = false
+
+            const list_cursos_mensalidades = $('#list_cursos_mensalidades')
+            list_cursos_mensalidades.html('')
+            if (id != undefined) {
+              const request = await axios.get(`/api/cms/categoria/${categoriaId}/cursos/${id}`)
+              const curso = request.data.curso
+              nome.val(curso.nome)
+              descricao.val(curso.descricao)
+              status.val(`${curso.status}`)
+              cursoId.val(curso.id)
+              preimg[0].src = curso.img
+
+              objetivo.val(curso.objetivo)
+              contato.val(curso.contato)
+              modalidade.val(curso.modalidade)
+              carga_horaria.val(curso.carga_horaria)
+              encontros.val(curso.encontros)
+              documentacao.val(curso.documentacao)
+              localizacao.val(curso.localizacao)
+              instituicao.val(curso.instituicao)
+              duracao.val(curso.duracao)
+              isWhats[0].checked = curso.isWhats
+
+              let inner = ``
+
+              for (const mensalidade of curso.mensalidades) {
+                inner += `
+                    <li class="list-group-item d-flex justify-content-between align-items-start">
+                        <div class="ms-2 me-auto">
+                          <div class="fw-bold">${mensalidade.titulo}</div>
+                          <ul>
+                            ${mensalidade.bolsa ? `<li>Bolsa: ${mensalidade.bolsa}%</li>` : ''}
+                            ${mensalidade.valor_desconto ? `<li>Desconto: ${mensalidade.valor_desconto}</li>` : ''}
+                            <li>Valor Final: ${mensalidade.valor_final}</li>
+                          </ul>
+                        </div>
+                        <button class="btn btn-danger btn-sm" value="${mensalidade.id}" onclick="removeMensalidade(this.value)"><i class="bi bi-trash"></i></button>
+                    </li>
+                  `
+              }
+
+              list_cursos_mensalidades.html(inner)
+            }
+
+          } catch (error) {
+            console.log(error)
+            if (error.response != undefined && error.response.data.erro != undefined) {
+              console.log(error.response)
+              toastErro(error.response.data.erro)
+            } else {
+              toastErro('Ocorreu um erro durante o processamento de dados, verifique sua rede e tente novamente')
+            }
+          } finally {
+            loadModal(false)
+          }
+        }
+
+        async function salvar() {
+          try {
+            loadModal(true)
+
+            const categoriaId = $('#categoriaId').val()
+            const nome = $('#nome').val()
+            const descricao = $('#descricao').val()
+            const cursoId = $('#cursoId').val()
+            const status = $('#status').val()
+            const objetivo = $('#objetivo').val()
+            const contato = $('#contato').val()
+            const isWhats = $('#isWhats')[0].checked
+            const modalidade = $('#modalidade').val()
+            const duracao = $('#duracao').val()
+            const carga_horaria = $('#carga_horaria').val()
+            const encontros = $('#encontros').val()
+            const documentacao = $('#documentacao').val()
+            const localizacao = $('#localizacao').val()
+            const instituicao = $('#instituicao').val()
+
+            const img = $('#img')[0].files[0]
+
+            const formData = new FormData()
+            formData.append('img', img)
+            formData.append('nome', nome)
+            formData.append('descricao', descricao)
+            formData.append('status', status)
+            formData.append('objetivo', objetivo)
+            formData.append('contato', contato)
+            formData.append('isWhats', isWhats)
+            formData.append('modalidade', modalidade)
+            formData.append('duracao', duracao)
+            formData.append('carga_horaria', carga_horaria)
+            formData.append('documentacao', documentacao)
+            formData.append('localizacao', localizacao)
+            formData.append('instituicao', instituicao)
+            formData.append('encontros', encontros)
+
+            if (cursoId) {
+              formData.append('cursoId', cursoId)
+            }
+
+            const request = (cursoId == '' || cursoId == undefined) ? await axios.post(`/api/cms/categoria/${categoriaId}/cursos`, formData) : await axios.put(`/api/cms/categoria/${categoriaId}/cursos`, formData)
+            toastMsm(request.data.resp)
+            // document.location.reload()
+
+          } catch (error) {
+            console.log(error)
+            if (error.response != undefined && error.response.data.erro != undefined) {
+              console.log(error.response)
+              toastErro(error.response.data.erro)
+            } else {
+              toastErro('Ocorreu um erro durante o processamento de dados, verifique sua rede e tente novamente')
+            }
+          } finally {
+            loadModal(false)
+          }
+        }
+
+        async function remover(id) {
+          const categoriaId = $('#categoriaId').val()
+          if (confirm("Deseja realmente remover cadastro do curso?")) {
+            try {
+              const request = await axios.delete(`/api/cms/categoria/${categoriaId}/cursos/${id}`)
+              toastMsm(request.data.resp)
+              document.location.reload()
+            } catch (error) {
+              if (error.response != undefined && error.response.data.erro != undefined) {
+                console.log(error.response)
+                toastErro(error.response.data.erro)
+              } else {
+                toastErro('Ocorreu um erro durante o processamento de dados, verifique sua rede e tente novamente')
+              }
+            }
+          }
+        }
+
+        async function addMensalidade() {
+          try {
+            //Ao iniciar a função ele da o loop no modal
+            loadModal(true)
+            const cursoId = $('#cursoId').val()
+            const categoriaId = $('#categoriaId').val()
+            const titulo = $('#titulo').val()
+            const bolsa = $('#bolsa').val()
+            const valor_desconto = $('#valor_desconto').val()
+            const valor_final = $('#valor_final').val()
+            const mensalidade = $('#mensalidade').val()
+
+            if (!cursoId) {
+              return toastErro("Dados inválidos. Recarreue a página e tente novamente!")
+            }
+
+            if (!titulo || !valor_final || !mensalidade) {
+              return toastErro("Dados inválidos. Necessário informar mensalidade e valor final do curso!")
+            }
+
+            const request = await axios.post(`/api/cms/categoria/${categoriaId}/cursos/${cursoId}/mensalidade`, { titulo, bolsa, valor_desconto, valor_final,mensalidade })
+            toastMsm(request.data.resp)
+
+            editar(cursoId)
+
+            $('#titulo').val()
+            $('#bolsa').val()
+            $('#valor_desconto').val()
+            $('#valor_final').val()
+          } catch (error) {
+            console.log(error)
+            if (error.response != undefined && error.response.data.erro != undefined) {
+              console.log(error.response)
+              toastErro(error.response.data.erro)
+
+            } else {
+              toastErro('Ocorreu um erro durante o processamento de dados, verifique sua rede e tente novamente')
+            }
+          } finally {
+            loadModal(false)
+          }
+        }
+
+        async function removeMensalidade(id) {
+          try {
+            //Ao iniciar a função ele da o loop no modal
+            loadModal(true)
+            const cursoId = $('#cursoId').val()
+            const categoriaId = $('#categoriaId').val()
+
+            if (!cursoId || !categoriaId) {
+              return toastErro("Dados inválidos. Recarreue a página e tente novamente!")
+            }
+
+            const request = await axios.delete(`/api/cms/categoria/${categoriaId}/cursos/${cursoId}/mensalidade/${id}`)
+            toastMsm(request.data.resp)
+
+            editar(cursoId)
+
+            $('#titulo').val()
+            $('#bolsa').val()
+            $('#valor_desconto').val()
+            $('#valor_final').val()
+          } catch (error) {
+            console.log(error)
+            if (error.response != undefined && error.response.data.erro != undefined) {
+              console.log(error.response)
+              toastErro(error.response.data.erro)
+
+            } else {
+              toastErro('Ocorreu um erro durante o processamento de dados, verifique sua rede e tente novamente')
+            }
+          } finally {
+            loadModal(false)
+          }
+        }
+      </script>
+      <%- include("../../../../partials/end.ejs")%>

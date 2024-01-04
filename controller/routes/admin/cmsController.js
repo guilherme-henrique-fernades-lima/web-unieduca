@@ -10,14 +10,43 @@ const Duvida = require('../../../Database/cms/Duvida')
 const Empresa = require('../../../Database/Empresa')
 const moment = require('moment')
 const Banner = require('../../../Database/cms/Banner')
+const Funcionario_Rede = require('../../../Database/cms/Funcionario_Rede')
+const Categoria = require('../../../Database/cms/Categoria')
+const Curso = require('../../../Database/cms/Curso')
 
 router.use('/servicos',servicoController)
 
 router.get('/banner',async(req,res)=>{
     try {
         const banner = await Banner.findOne()
-        console.log(banner)
         res.render('admin/cms/banner',{banner:banner})
+    } catch (error) {
+        console.log(error)
+        req.flash('erro','Ocorreu um erro ao acessar, gentileza tente novamente! Caso o erro persista entre em contato com o suporte.')
+        res.redirect('/admin')
+    }
+})
+
+router.get('/categorias',async(req,res)=>{
+    try {
+        const categorias = await Categoria.findAll({include:{required:false,model:Curso,as:'cursos',where:{status:true},attributes:['id']}})
+        res.render('admin/cms/categorias',{categorias:categorias})
+    } catch (error) {
+        console.log(error)
+        req.flash('erro','Ocorreu um erro ao acessar, gentileza tente novamente! Caso o erro persista entre em contato com o suporte.')
+        res.redirect('/admin')
+    }
+})
+router.get('/categorias/:id/cursos',async(req,res)=>{
+    try {
+        const id = req.params.id
+        const categoria = await Categoria.findByPk(id,{include:{required:false,model:Curso,as:"cursos"}})
+        console.log(categoria)
+        if (!categoria) {
+            req.flash('erro','Não foi possível acessar categoria selecionada')
+            return res.redirect('/admin/cms/categorias')
+        }
+        res.render('admin/cms/categorias/cursos',{categoria:categoria})
     } catch (error) {
         console.log(error)
         req.flash('erro','Ocorreu um erro ao acessar, gentileza tente novamente! Caso o erro persista entre em contato com o suporte.')
@@ -72,8 +101,8 @@ router.get('/video',async(req,res)=>{
 
 router.get('/funcionario',async(req,res)=>{
     try {
-        const funcionario = await Funcionario.findAll()
-        res.render('admin/cms/funcionario',{funcionario:funcionario})
+        const funcionarios = await Funcionario.findAll()
+        res.render('admin/cms/funcionario',{funcionarios:funcionarios})
     } catch (error) {
         console.log(error)
         req.flash('erro','Ocorreu um erro ao acessar, gentileza tente novamente! Caso o erro persista entre em contato com o suporte.')

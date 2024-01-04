@@ -1,0 +1,61 @@
+<div class="modal fade" id="modalCurso" aria-hidden="true" aria-labelledby="modalCursoLabel" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="modalCursoLabel">Curso</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="loadModal">
+                    <div class="d-flex justify-content-center">
+                        <div class="spinner-border" role="status">
+                            <span class="visually-hidden">Loading...</span>
+                        </div>
+                    </div>
+                </div>
+                <section class="row bodyModal pt-0">
+                    <div class="col-12 text-center mb-4">
+                        <img src="" id="modalimg" class="rounded" width="270px" alt="">
+                    </div>
+                    <div class="col-md-6 border-end my-3" id="div_informacoes_curso">
+                        <h5 class="ms-1">Informações do Curso</h5>
+                        <ul class="list-group" id="modalListDetails">
+                        </ul>
+                        <div id="div_documentacao" class="my-3 ms-1">
+                            <p class="mb-1 fw-bolder">Documentação Necessária:</p>
+                            <p style="text-align: justify;" id="modalPDocumentacoa"></p>
+                        </div>
+                    </div>
+                    <div class="col-md-6 border-end my-3"  id="div_mensalidades_curso">
+                        <div id="div_mensalidades">
+                            <h5 class="ms-1">Mensalidades</h5>
+                            <div class="table-responsive">
+                                <table class="table table-borderless ">
+                                    <thead>
+                                        <tr>
+                                            <th class="text-center">Turno</th>
+                                            <th class="text-center">Mensalidade</th>
+                                            <th class="text-center">Bolsa</th>
+                                            <th class="text-center">Desconto(R$)</th>
+                                            <th class="text-center">Valor Final</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="modalTbodyMensalidades"></tbody>
+                                </table>
+                            </div>
+                        </div>
+                        
+                        <div id="div_objetivo" class="my-3 ms-1">
+                            <h5 class="ms-1 mt-3">Objetivo do Curso:</h5>
+                            <p style="text-align: justify;" id="modalPObjetivo"></p>
+                        </div>
+                    </div>
+                </section>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                <a id="btnRedirectModal" target="_blank" href="#" class="btn btn-success btnModal" >Entre em Contato <i class="bi bi-whatsapp"></i></a>
+            </div>
+        </div>
+    </div>
+</div>

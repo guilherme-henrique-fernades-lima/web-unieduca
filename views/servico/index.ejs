@@ -1,0 +1,40 @@
+<%- include("../partials/head.ejs")%>
+<script charset="utf-8" src="//cdn.iframe.ly/embed.js?api_key=1691b4e6f82e4569c951f7"></script>
+<%#- include("../partials/topbar.ejs")%>
+<%- include("../partials/header.ejs")%>
+<main>
+  <div class="container-fluid" id="">
+    <section class="recent-posts mt-5 pt-5">
+      <div class="container" data-aos="fade-down">
+
+        <div class="section-header my-4">
+          <h2><%=servico.nome%></h2>
+          <p><%=servico.descricao%></p>
+          <div class="my-3">
+            <img src="<%=servico.img%>" class="img-fluid w-50" alt="">
+          </div>
+        </div>
+        <div class="container my-2">
+            <%-servico.html%>
+        </div>
+        <hr>
+        <div class="container text-center">
+         
+          <h3 class="text-equi text-center">Gostou do nosso serviço?🥰 Saíba mais clicando no link abaixo:</h3>
+          <a href="#">Clique aqui e saíba mais!</a>
+
+          <div class="my-3">
+            <a href="/" class="btn btn-success">Voltar para a página inicial</a>
+          </div>
+        </div>
+  </section>
+</main>
+
+<%- include("../partials/footer.ejs")%>
+<%- include("../partials/script.ejs")%>
+<script>
+    document.querySelectorAll( 'oembed[url]' ).forEach( element => {
+        iframely.load( element, element.attributes.url.value );
+    });
+ </script>
+<%- include("../partials/end.ejs")%>

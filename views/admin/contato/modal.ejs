@@ -1,0 +1,43 @@
+<div class="modal fade" id="modalMessage" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="modalMessageLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="modalMessageLabel">Visualizar Mensagem</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" id="btnCloseAdUser" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="loadModal">
+            <div class="d-flex justify-content-center">
+              <div class="spinner-border" role="status">
+                <span class="visually-hidden">Loading...</span>
+              </div>
+            </div>
+          </div>
+          <div class="bodyModal">
+            <div class="row justify-content-center">
+              <input type="hidden" name="userId" id="userId">
+              <div class="col-md-6 my-2">
+                <label for="name" class="form-label">Nome informado</label>
+                <input type="text" disabled name="name"  id="name" class="form-control bg-white">
+              </div>
+              <div class="col-md-6 my-2">
+                <label for="email" class="form-label">E-mail informado</label>
+                <input type="email" disabled name="email" id="email" class="form-control bg-white">
+              </div>
+              <div class="col-12 my-2">
+                <label for="subject" class="form-label">Titulo</label>
+                <input type="text" disabled name="subject" id="subject" class="form-control bg-white">
+              </div>
+              <div class="col-12 my-2">
+                <label for="message" class="form-label">Mensagem</label>
+                <textarea name="message" id="message" cols="30" rows="10" class="form-control bg-white" disabled ></textarea>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+        </div>
+      </div>
+    </div>
+  </div>

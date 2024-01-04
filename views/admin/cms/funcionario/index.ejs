@@ -3,79 +3,49 @@
 <div class="container-fluid">
     <div class="row">
     <%- include("../../../partials/admin/nav.ejs")%>
-    <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
-        <section id="">
-            <div class="container" data-aos="fade">
-                <div class="my-1 border-bottom">
-                    <h1>CMS - FUNCIONÁRIOS </h1>
-                    <nav aria-label="breadcrumb">
-                        <ol class="breadcrumb">
-                          <li class="breadcrumb-item"><a href="/admin">Admin</a></li>
-                          <li class="breadcrumb-item"><a href="/admin/cms">CMS</a></li>
-                          <li class="breadcrumb-item active" aria-current="page">Funcionário</li>
-                        </ol>
-                    </nav>
-                </div>
-                <div class="container">
-                    <button type="button" class="btn btn-outline-primary" title="Cadastrar"  data-bs-toggle="modal" onclick="editar()" href="#modaFuncionario" role="button">Cadastrar <i class="bi bi-plus-circle"></i></button>
-                    <div class="row">
-                        <div class="col-6">
-                            <div class="card text-center">
-                                <div class="card-body">
-                                    <i class="bi bi-broadcast"></i>
-                                    <h5 class="card-title">Nome</h5>
-                                    <h6 class="card-title">Competência</h6>
-                                    <a href="#" class="card-link">Foto</a>
-                                    
-                                    <div class="d-flex justify-content-center mt-3">
-                                        <div class="btn-group btn-group-sm" role="group" aria-label="...">
-                                            <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" href="#exampleModalToggle" onclick="loadModal(false)"  role="button" title="Editar">Editar<i class="bi bi-pencil-square"></i></button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+      <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+        <section class="container" data-aos="fade">
+          <div class="my-1 border-bottom">
+            <h1>CMS - Funcionários</h1>
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                  <li class="breadcrumb-item"><a href="/admin">Admin</a></li>
+                  <li class="breadcrumb-item"><a href="/admin/cms">CMS</a></li>
+                  <li class="breadcrumb-item active" aria-current="page">Funcionários</li>
+                </ol>
+            </nav>
+          </div>
+          <div class="d-flex justify-content-center">
+            <div class="card mb-3 col-12 d-flex">
+              <div class="card-body">
+                <h5 class="card-title">Funcionários</h5>
+                <div class="row">
+                  <%funcionarios.forEach(funcionario =>{%>
+                    <div class="col-lg-4 my-2 col-md-6 border border-<%= funcionario.status?'success':'danger'%> p-2 text-center">
+                      <h5><%=funcionario.nome%></h5>
+                      <p class="mb-0">Competência: <%=funcionario.competencia%></p>
+                      <p class="mb-0">Status: <%=funcionario.status ? 'Ativo':'Inativo'%></p>
+                      <div class="text-center my-4">
+                        <img src="<%=funcionario.img%>" class="img-thumbnail w-25 rounded-pill">
+                      </div>
+                      <div class="btn-group" role="group" aria-label="Basic example">
+                        <button type="button" value="<%=funcionario.id%>" class="btn btn-sm btn-primary mx-1" onclick="editar(this.value)" data-bs-toggle="modal" href="#modaFuncionario">Editar <i class="bi bi-pencil-square" style="cursor:pointer"></i></button>
+                        <button type="button" value="<%=funcionario.id%>" onclick="remover(this.value)" class="btn btn-sm btn-danger mx-1">Remover <i class="bi bi-trash" style="cursor:pointer"></i></button>
+                      </div>
                     </div>
-                </div>
+                  <%})%>
+                </div>   
+              </div>
+              <div class="card-footer text-center">
+                  <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" href="#modaFuncionario" onclick="editar()"  role="button" title="Adicionar">Cadastrar <i class="bi bi-upload"></i></button>
+              </div>
             </div>
-        <%- include("./modal.ejs")%>
+          </div>
+          <%- include("./modal.ejs")%>
         </section>
-    </main>
+      </main>
     </div>
 </div>
 <%- include("../../../partials/script.ejs")%>
-<script>
-    async function salvar() {
-    try {
-        //Ao iniciar a função ele da o loop no modal
-        loadModal(true)
-        const nome = $('#nome').val()
-        const competencia = $('#competencia').val()
-        const foto = $('#foto').val()
-        const status = $('#status').val()
-
-
-        const formData = new FormData()
-        formData.append('nome', nome)
-        formData.append('competencia', competencia)
-        formData.append('foto', foto)
-        formData.append('status', status)
-
-
-        const request = await axios.put('/api/cms/funcionario', formData)
-        toastMsm(request.data.resp)
-
-    } catch (error) {
-        console.log(error)
-        if (error.response != undefined && error.response.data.erro != undefined) {
-            console.log(error.response)
-            toastErro(error.response.data.erro)
-        } else {
-            toastErro('Ocorreu um erro durante o processamento de dados, verifique sua rede e tente novamente')
-        }
-    } finally {
-        loadModal(false)
-    }
-}
-</script>
+<script src="/script/cms/funcionario.js"></script>
 <%- include("../../../partials/end.ejs")%>

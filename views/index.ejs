@@ -6,7 +6,7 @@
   <%- include("./partials/header.ejs")%>
 
   <!-- ======= Hero Section ======= -->
-  <section id="hero" class="hero mt-0">
+  <section id="home" class="hero mt-0">
     <div class="container position-relative">
       <div class="row gy-5 pb-5" data-aos="fade-in">
         <div class="col-lg-6 order-2 order-lg-1 d-flex flex-column justify-content-center text-center text-lg-start">
@@ -20,15 +20,15 @@
           </div>
         </div>
         <div class="col-lg-6 order-1 order-lg-2 text-center">
-          <img src="<%=cms.banner?cms.banner.img:'/img/hero-img.svg'%>" class="img-fluid w-50" alt="" data-aos="zoom-out" data-aos-delay="100">
+          <img src="<%=cms.banner?cms.banner.img:'/img/hero-img.svg'%>" class="img-fluid w-50 rounded" alt="" data-aos="zoom-out" data-aos-delay="100">
         </div>
       </div>
     </div>
-    <%if(cms.servicos.length > 0){%>
+    <%if(servicos.length > 0){%>
     <div class="icon-boxes position-relative">
       <div class="container position-relative">
         <div class="row justify-content-center gy-4 mt-5">
-            <%cms.servicos.forEach((servico,index)=>{%>
+            <%servicos.forEach((servico,index)=>{%>
               <%if(index < 4){%>
                 <div class="col-xl-3 col-md-6" data-aos="fade-up" data-aos-delay="100">
                   <div class="icon-box" <%-`style="background-color: ${servico.cor};"`%>>
@@ -84,10 +84,18 @@
     <%if(cms.parceiros.length > 0){%>
     <section id="clients" class="clients">
       <div class="container" data-aos="zoom-out">
+        <div class="section-header">
+          <h2>Nossos Parceiros</h2>
+          <p>Conheça nossos parceiros que contribuem para a formação de nossos alunos</p>
+        </div>
         <div class="clients-slider swiper">
           <div class="swiper-wrapper align-items-center">
             <%cms.parceiros.forEach(parceiro =>{%>
-            <div class="swiper-slide"><img src="<%=parceiro.img%>" class="img-fluid w-75" alt=""></div>
+            <div class="swiper-slide align-middle text-center">
+              <a target="_blank" href="<%=parceiro.link?parceiro.link:'#'%>">
+                <img src="<%=parceiro.img%>" class="img-fluid" width="60px" alt="">
+              </a>
+            </div>
             <%})%>
           </div>
         </div>
@@ -108,9 +116,38 @@
     </section><!-- End Call To Action Section -->
     <%}%>
 
-    <%if(cms.servicos.length > 0){%>
+    <%if(cms.categorias.length > 0){%>
+      <!-- ======= Our Services Section ======= -->
+        <section id="categorys" class="services sections-bg">
+          <div class="container" data-aos="fade-up">
+  
+            <div class="section-header">
+              <h2>Nossos Cursos</h2>
+              <p>Chegou a hora de mudar de vida com a nossa GRADUAÇÃO.</p>
+            </div>
+  
+            <div class="row gy-4" data-aos="fade-up" data-aos-delay="100">
+              <%cms.categorias.forEach(categoria =>{%>
+                <div class="col-lg-4 col-md-6">
+                  <div class="service-item  position-relative">
+                    <div class="my-3">
+                      <img src="<%=categoria.img%>" height="60px" width="60px" alt="">
+                    </div>
+                    <h3><%=categoria.nome%></h3>
+                    <p><%=categoria.descricao%></p>
+                    <a href="/categorias/<%=categoria.id%>" class="readmore stretched-link">Saiba Mais <i class="bi bi-arrow-right"></i></a>
+                  </div>
+                </div><!-- End Service Item -->
+              <%})%>
+            </div>
+  
+          </div>
+        </section><!-- End Our Services Section -->
+      <%}%>
+
+    <%if(servicos.length > 0){%>
     <!-- ======= Our Services Section ======= -->
-      <section id="services" class="services sections-bg">
+      <section id="services" class="services">
         <div class="container" data-aos="fade-up">
 
           <div class="section-header">
@@ -119,7 +156,7 @@
           </div>
 
           <div class="row gy-4" data-aos="fade-up" data-aos-delay="100">
-            <%cms.servicos.forEach(servico =>{%>
+            <%servicos.forEach(servico =>{%>
               <div class="col-lg-4 col-md-6">
                 <div class="service-item  position-relative">
                   <div class="my-3">
@@ -141,7 +178,7 @@
     <!-- ======= Testimonials Section ======= -->
     <%if(cms.testemunhas?.length > 0){%>
 
-      <section id="testimonials" class="testimonials">
+      <section id="testimonials" class="testimonials sections-bg">
         <div class="container" data-aos="fade-up">
   
           <div class="section-header">
@@ -188,262 +225,118 @@
     <%}%>
     
     <!-- ======= Our Team Section ======= -->
-    <section id="team" class="team">
-      <div class="container" data-aos="fade-up">
-
-        <div class="section-header">
-          <h2>Our Team</h2>
-          <p>Nulla dolorum nulla nesciunt rerum facere sed ut inventore quam porro nihil id ratione ea sunt quis dolorem dolore earum</p>
+    <%if(cms.funcionarios?.length > 0){%>
+      <section id="team" class="team">
+        <div class="container" data-aos="fade-up">
+  
+          <div class="section-header">
+            <h2>Nosso Time</h2>
+            <p>Conheça o nosso time, pessoas responsáveis por todo o processo de crescimento e gestão de nossa instituição</p>
+          </div>
+  
+          <div class="row gy-4">
+            <%cms.funcionarios.forEach(funcionario =>{%>
+              <div class="col-xl-3 col-md-6 d-flex" data-aos="fade-up" data-aos-delay="100">
+                <div class="member">
+                  <img src="<%=funcionario.img%>" class="img-fluid" alt="">
+                  <h4><%=funcionario.nome%></h4>
+                  <span><%=funcionario.competencia%></span>
+                  <div class="social">
+                    <%funcionario.redes.forEach(rede =>{%>
+                      <a target="_blank" href="<%=rede.link%>"><%- rede.logo%></a>
+                    <%})%>
+                  </div>
+                </div>
+              </div><!-- End Team Member -->
+            <%})%>
+          </div>
+  
         </div>
-
-        <div class="row gy-4">
-
-          <div class="col-xl-3 col-md-6 d-flex" data-aos="fade-up" data-aos-delay="100">
-            <div class="member">
-              <img src="/img/team/team-1.jpg" class="img-fluid" alt="">
-              <h4>Walter White</h4>
-              <span>Web Development</span>
-              <div class="social">
-                <a href=""><i class="bi bi-twitter"></i></a>
-                <a href=""><i class="bi bi-facebook"></i></a>
-                <a href=""><i class="bi bi-instagram"></i></a>
-                <a href=""><i class="bi bi-linkedin"></i></a>
-              </div>
-            </div>
-          </div><!-- End Team Member -->
-
-          <div class="col-xl-3 col-md-6 d-flex" data-aos="fade-up" data-aos-delay="200">
-            <div class="member">
-              <img src="/img/team/team-2.jpg" class="img-fluid" alt="">
-              <h4>Sarah Jhinson</h4>
-              <span>Marketing</span>
-              <div class="social">
-                <a href=""><i class="bi bi-twitter"></i></a>
-                <a href=""><i class="bi bi-facebook"></i></a>
-                <a href=""><i class="bi bi-instagram"></i></a>
-                <a href=""><i class="bi bi-linkedin"></i></a>
-              </div>
-            </div>
-          </div><!-- End Team Member -->
-
-          <div class="col-xl-3 col-md-6 d-flex" data-aos="fade-up" data-aos-delay="300">
-            <div class="member">
-              <img src="/img/team/team-3.jpg" class="img-fluid" alt="">
-              <h4>William Anderson</h4>
-              <span>Content</span>
-              <div class="social">
-                <a href=""><i class="bi bi-twitter"></i></a>
-                <a href=""><i class="bi bi-facebook"></i></a>
-                <a href=""><i class="bi bi-instagram"></i></a>
-                <a href=""><i class="bi bi-linkedin"></i></a>
-              </div>
-            </div>
-          </div><!-- End Team Member -->
-
-          <div class="col-xl-3 col-md-6 d-flex" data-aos="fade-up" data-aos-delay="400">
-            <div class="member">
-              <img src="/img/team/team-4.jpg" class="img-fluid" alt="">
-              <h4>Amanda Jepson</h4>
-              <span>Accountant</span>
-              <div class="social">
-                <a href=""><i class="bi bi-twitter"></i></a>
-                <a href=""><i class="bi bi-facebook"></i></a>
-                <a href=""><i class="bi bi-instagram"></i></a>
-                <a href=""><i class="bi bi-linkedin"></i></a>
-              </div>
-            </div>
-          </div><!-- End Team Member -->
-
-        </div>
-
-      </div>
-    </section><!-- End Our Team Section -->
+      </section><!-- End Our Team Section -->
+    <%}%>
 
     <!-- ======= Frequently Asked Questions Section ======= -->
-    <section id="faq" class="faq">
-      <div class="container" data-aos="fade-up">
-
-        <div class="row gy-4">
-
-          <div class="col-lg-4">
-            <div class="content px-xl-5">
-              <h3>Frequently Asked <strong>Questions</strong></h3>
-              <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Duis aute irure dolor in reprehenderit
-              </p>
+    <%if(cms.duvidas?.length > 0){%>
+      <section id="faq" class="faq">
+        <div class="container" data-aos="fade-up">
+  
+          <div class="row gy-4">
+  
+            <div class="col-lg-4">
+              <div class="content px-xl-5">
+                <h3><strong>Dúvidas</strong> Frequentes</h3>
+                <p>
+                  Caso tenha alguma dúvida se sinta a vontade em entrar em contato com nossa equipe. Estamos dispostos a atendê-los e retirar todas as dúvidas, segue abaixo lista de perguntas frequentes para lhe ajudar!
+                </p>
+              </div>
+            </div>
+  
+            <div class="col-lg-8">
+  
+              <div class="accordion accordion-flush" id="faqlist" data-aos="fade-up" data-aos-delay="100">
+                <%cms.duvidas.forEach((pergunta,index) =>{%>
+                  <div class="accordion-item">
+                    <h3 class="accordion-header">
+                      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq-content-<%=pergunta.id%>">
+                        <span class="num"><%=index + 1%></span>
+                        <%=pergunta.duvida%>
+                      </button>
+                    </h3>
+                    <div id="faq-content-<%=pergunta.id%>" class="accordion-collapse collapse" data-bs-parent="#faqlist">
+                      <div class="accordion-body">
+                        <%=pergunta.resposta%>
+                      </div>
+                    </div>
+                  </div><!-- # Faq item-->
+                <%})%>
+              </div>
+  
             </div>
           </div>
-
-          <div class="col-lg-8">
-
-            <div class="accordion accordion-flush" id="faqlist" data-aos="fade-up" data-aos-delay="100">
-
-              <div class="accordion-item">
-                <h3 class="accordion-header">
-                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq-content-1">
-                    <span class="num">1.</span>
-                    Non consectetur a erat nam at lectus urna duis?
-                  </button>
-                </h3>
-                <div id="faq-content-1" class="accordion-collapse collapse" data-bs-parent="#faqlist">
-                  <div class="accordion-body">
-                    Feugiat pretium nibh ipsum consequat. Tempus iaculis urna id volutpat lacus laoreet non curabitur gravida. Venenatis lectus magna fringilla urna porttitor rhoncus dolor purus non.
-                  </div>
-                </div>
-              </div><!-- # Faq item-->
-
-              <div class="accordion-item">
-                <h3 class="accordion-header">
-                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq-content-2">
-                    <span class="num">2.</span>
-                    Feugiat scelerisque varius morbi enim nunc faucibus a pellentesque?
-                  </button>
-                </h3>
-                <div id="faq-content-2" class="accordion-collapse collapse" data-bs-parent="#faqlist">
-                  <div class="accordion-body">
-                    Dolor sit amet consectetur adipiscing elit pellentesque habitant morbi. Id interdum velit laoreet id donec ultrices. Fringilla phasellus faucibus scelerisque eleifend donec pretium. Est pellentesque elit ullamcorper dignissim. Mauris ultrices eros in cursus turpis massa tincidunt dui.
-                  </div>
-                </div>
-              </div><!-- # Faq item-->
-
-              <div class="accordion-item">
-                <h3 class="accordion-header">
-                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq-content-3">
-                    <span class="num">3.</span>
-                    Dolor sit amet consectetur adipiscing elit pellentesque habitant morbi?
-                  </button>
-                </h3>
-                <div id="faq-content-3" class="accordion-collapse collapse" data-bs-parent="#faqlist">
-                  <div class="accordion-body">
-                    Eleifend mi in nulla posuere sollicitudin aliquam ultrices sagittis orci. Faucibus pulvinar elementum integer enim. Sem nulla pharetra diam sit amet nisl suscipit. Rutrum tellus pellentesque eu tincidunt. Lectus urna duis convallis convallis tellus. Urna molestie at elementum eu facilisis sed odio morbi quis
-                  </div>
-                </div>
-              </div><!-- # Faq item-->
-
-              <div class="accordion-item">
-                <h3 class="accordion-header">
-                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq-content-4">
-                    <span class="num">4.</span>
-                    Ac odio tempor orci dapibus. Aliquam eleifend mi in nulla?
-                  </button>
-                </h3>
-                <div id="faq-content-4" class="accordion-collapse collapse" data-bs-parent="#faqlist">
-                  <div class="accordion-body">
-                    Dolor sit amet consectetur adipiscing elit pellentesque habitant morbi. Id interdum velit laoreet id donec ultrices. Fringilla phasellus faucibus scelerisque eleifend donec pretium. Est pellentesque elit ullamcorper dignissim. Mauris ultrices eros in cursus turpis massa tincidunt dui.
-                  </div>
-                </div>
-              </div><!-- # Faq item-->
-
-              <div class="accordion-item">
-                <h3 class="accordion-header">
-                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq-content-5">
-                    <span class="num">5.</span>
-                    Tempus quam pellentesque nec nam aliquam sem et tortor consequat?
-                  </button>
-                </h3>
-                <div id="faq-content-5" class="accordion-collapse collapse" data-bs-parent="#faqlist">
-                  <div class="accordion-body">
-                    Molestie a iaculis at erat pellentesque adipiscing commodo. Dignissim suspendisse in est ante in. Nunc vel risus commodo viverra maecenas accumsan. Sit amet nisl suscipit adipiscing bibendum est. Purus gravida quis blandit turpis cursus in
-                  </div>
-                </div>
-              </div><!-- # Faq item-->
-
-            </div>
-
-          </div>
+  
         </div>
+      </section><!-- End Frequently Asked Questions Section -->
+    <%}%>
 
-      </div>
-    </section><!-- End Frequently Asked Questions Section -->
+  
 
     <!-- ======= Recent Blog Posts Section ======= -->
     <section id="recent-posts" class="recent-posts sections-bg">
       <div class="container" data-aos="fade-up">
 
         <div class="section-header">
-          <h2>Recent Blog Posts</h2>
-          <p>Consequatur libero assumenda est voluptatem est quidem illum et officia imilique qui vel architecto accusamus fugit aut qui distinctio</p>
+          <h2>Nossas Postagens</h2>
+          <p>Estamos dedicados a oferecer conhecimento de verdade, acompanhe nossas postagens abaixo:</p>
         </div>
 
         <div class="row gy-4">
-
-          <div class="col-xl-4 col-md-6">
-            <article>
-
-              <div class="post-img">
-                <img src="/img/blog/blog-1.jpg" alt="" class="img-fluid">
-              </div>
-
-              <p class="post-category">Politics</p>
-
-              <h2 class="title">
-                <a href="blog-details.html">Dolorum optio tempore voluptas dignissimos</a>
-              </h2>
-
-              <div class="d-flex align-items-center">
-                <img src="/img/blog/blog-author.jpg" alt="" class="img-fluid post-author-img flex-shrink-0">
-                <div class="post-meta">
-                  <p class="post-author">Maria Doe</p>
-                  <p class="post-date">
-                    <time datetime="2022-01-01">Jan 1, 2022</time>
-                  </p>
+          <%blogs.forEach(blog =>{%>
+            <div class="col-xl-4 col-md-6">
+              <article>
+  
+                <div class="post-img">
+                  <img src="<%=blog.capa%>" alt="" class="img-fluid">
                 </div>
-              </div>
-
-            </article>
-          </div><!-- End post list item -->
-
-          <div class="col-xl-4 col-md-6">
-            <article>
-
-              <div class="post-img">
-                <img src="/img/blog/blog-2.jpg" alt="" class="img-fluid">
-              </div>
-
-              <p class="post-category">Sports</p>
-
-              <h2 class="title">
-                <a href="blog-details.html">Nisi magni odit consequatur autem nulla dolorem</a>
-              </h2>
-
-              <div class="d-flex align-items-center">
-                <img src="/img/blog/blog-author-2.jpg" alt="" class="img-fluid post-author-img flex-shrink-0">
-                <div class="post-meta">
-                  <p class="post-author">Allisa Mayer</p>
-                  <p class="post-date">
-                    <time datetime="2022-01-01">Jun 5, 2022</time>
-                  </p>
+  
+                <p class="post-category"><%=blog.categoria%></p>
+  
+                <h2 class="title">
+                  <a href="/conteudo/<%=blog.id%>?slug=<%=blog.titulo.replace(/ /g,'-')%>"><%=blog.titulo%></a>
+                </h2>
+  
+                <div class="d-flex align-items-center">
+                  <img src="<%=blog.autor_foto%>" alt="<%=blog.autor%>" class="img-fluid post-author-img flex-shrink-0">
+                  <div class="post-meta">
+                    <p class="post-author"><%=blog.autor%></p>
+                    <p class="post-date">
+                      <time datetime="<%=blog.createdAt%>"><%=blog.dataCri%></time>
+                    </p>
+                  </div>
                 </div>
-              </div>
-
-            </article>
-          </div><!-- End post list item -->
-
-          <div class="col-xl-4 col-md-6">
-            <article>
-
-              <div class="post-img">
-                <img src="/img/blog/blog-3.jpg" alt="" class="img-fluid">
-              </div>
-
-              <p class="post-category">Entertainment</p>
-
-              <h2 class="title">
-                <a href="blog-details.html">Possimus soluta ut id suscipit ea ut in quo quia et soluta</a>
-              </h2>
-
-              <div class="d-flex align-items-center">
-                <img src="/img/blog/blog-author-3.jpg" alt="" class="img-fluid post-author-img flex-shrink-0">
-                <div class="post-meta">
-                  <p class="post-author">Mark Dower</p>
-                  <p class="post-date">
-                    <time datetime="2022-01-01">Jun 22, 2022</time>
-                  </p>
-                </div>
-              </div>
-
-            </article>
-          </div><!-- End post list item -->
+  
+              </article>
+            </div><!-- End post list item -->
+          <%})%>
 
         </div><!-- End recent posts list -->
 
@@ -454,9 +347,9 @@
     <section id="contact" class="contact">
       <div class="container" data-aos="fade-up">
 
-        <div class="section-header">
-          <h2>Contact</h2>
-          <p>Nulla dolorum nulla nesciunt rerum facere sed ut inventore quam porro nihil id ratione ea sunt quis dolorem dolore earum</p>
+        <div class="section-header pb-3">
+          <h2>Contato</h2>
+          <p>Entre em contato conosco!</p>
         </div>
 
         <div class="row gx-lg-0 gy-4">
@@ -467,8 +360,8 @@
               <div class="info-item d-flex">
                 <i class="bi bi-geo-alt flex-shrink-0"></i>
                 <div>
-                  <h4>Location:</h4>
-                  <p>A108 Adam Street, New York, NY 535022</p>
+                  <h4>Localização:</h4>
+                  <p><%=empresa.endereco%></p>
                 </div>
               </div><!-- End Info Item -->
 
@@ -476,23 +369,23 @@
                 <i class="bi bi-envelope flex-shrink-0"></i>
                 <div>
                   <h4>Email:</h4>
-                  <p>info@example.com</p>
+                  <p><%=empresa.email%></p>
                 </div>
               </div><!-- End Info Item -->
 
               <div class="info-item d-flex">
                 <i class="bi bi-phone flex-shrink-0"></i>
                 <div>
-                  <h4>Call:</h4>
-                  <p>+869848484</p>
+                  <h4>Telefone:</h4>
+                  <p><%=empresa.telefone%></p>
                 </div>
               </div><!-- End Info Item -->
 
               <div class="info-item d-flex">
                 <i class="bi bi-clock flex-shrink-0"></i>
                 <div>
-                  <h4>Open Hours:</h4>
-                  <p>Mon-Sat: 11AM - 23PM</p>
+                  <h4>Horário de atendimento:</h4>
+                  <p><%=empresa.atendimento%></p>
                 </div>
               </div><!-- End Info Item -->
             </div>
@@ -500,28 +393,32 @@
           </div>
 
           <div class="col-lg-8">
-            <form action="forms/contact.php" method="post" role="form" class="php-email-form">
+
+            <div id="form-contat-load" class="mt-5  d-none">
+              <div class="d-flex justify-content-center text-equi mt-5">
+                <div class="spinner-border" style="width: 3rem; height: 3rem;" role="status">
+                  <span class="visually-hidden">Loading...</span>
+                </div>
+              </div>
+            </div>
+            
+            <div  id="form-contact" class="email-form">
               <div class="row">
                 <div class="col-md-6 form-group">
-                  <input type="text" name="name" class="form-control" id="name" placeholder="Your Name" required>
+                  <input type="text" name="name" class="form-control" id="name" placeholder="Insira seu nome" required>
                 </div>
                 <div class="col-md-6 form-group mt-3 mt-md-0">
-                  <input type="email" class="form-control" name="email" id="email" placeholder="Your Email" required>
+                  <input type="email" class="form-control" name="email" id="email" placeholder="Insira seu E-mail" required>
                 </div>
               </div>
               <div class="form-group mt-3">
-                <input type="text" class="form-control" name="subject" id="subject" placeholder="Subject" required>
+                <input type="text" class="form-control" name="subject" id="subject" placeholder="Titulo da mensagem" required>
               </div>
               <div class="form-group mt-3">
-                <textarea class="form-control" name="message" rows="7" placeholder="Message" required></textarea>
+                <textarea class="form-control" name="message" id="message" rows="7" placeholder="Mensagem" required></textarea>
               </div>
-              <div class="my-3">
-                <div class="loading">Loading</div>
-                <div class="error-message"></div>
-                <div class="sent-message">Your message has been sent. Thank you!</div>
-              </div>
-              <div class="text-center"><button type="submit">Send Message</button></div>
-            </form>
+              <div class="text-center"><button class="btn btn-success btn-lg" onclick="handleSubmitMensagem()">Enviar Mensagem</button></div>
+            </div>
           </div><!-- End Contact Form -->
 
         </div>
@@ -534,6 +431,54 @@
 
   <div id="preloader"></div>
   <%- include("./partials/script.ejs")%>
+  <script>
+    function loadForm(params) {
+      if (params) {
+        $('#form-contact').addClass('d-none')
+        $('#form-contat-load').removeClass('d-none')
+      }else{
+        $('#form-contact').removeClass('d-none')
+        $('#form-contat-load').addClass('d-none')
+      }
+    }
+    async function handleSubmitMensagem() {
+      try {
+        loadForm(true)
+        const name = $('#name').val()
+        const email = $('#email').val()
+        const subject = $('#subject').val()
+        const message = $('#message').val()
+
+        if (!name) {
+         return toastErro('Necessário informar seu nome')
+        }
+        if (!email) {
+         return toastErro('Necessário informar seu e-mail')
+        }
+        if (!subject) {
+         return toastErro('Necessário informar o titulo de sua mensagem')
+        }
+        if (!message) {
+         return toastErro('Necessário informar mensagem')
+        }
+
+        const request = await axios.post('/api/sendmessage',{name,email,subject,message})
+        toastMsm('Parabéns, sua mensagem foi enviada com sucesso! Muito obrigado, logo iremos lhe da um retorno😊')
+        $('#name').val('')
+        $('#email').val('')
+        $('#subject').val('')
+        $('#message').val('')
+
+      } catch (error) {
+        toastErro('Ocorreu um erro durante o envio da mensagem')
+      }finally{
+        loadForm(false)
+      }
+      
+
+    }
+    
+  </script>
 
   <%- include("./partials/end.ejs")%>
 

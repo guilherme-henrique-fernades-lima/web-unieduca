@@ -131,3 +131,10 @@ public/upload/empresa/*
 public/upload/banner/*
 !public/upload/banner/.gitkeep
 
+public/upload/cms/cursos/*
+!public/upload/cms/cursos/.gitkeep
+
+public/upload/cms/categorias/*
+!public/upload/cms/categorias/.gitkeep
+
+public/html/*.html

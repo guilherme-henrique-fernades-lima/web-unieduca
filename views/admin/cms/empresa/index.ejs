@@ -21,18 +21,18 @@
                 <div class="row justify-content-center my-3">
                     <input type="hidden" name="empresaId" id="empresaId" value="<%=empresa == undefined?'':empresa.id%>">
                     <div class="my-3 col-12">
-                      <img src="<%= empresa == undefined || empresa.logo == undefined?'':empresa.logo%>" id="imgPre1" class="img-fluid my-3 <%=empresa == undefined?'d-none':''%> w-25" alt="">
+                      <img src="<%=!empresa || !empresa.logo ?'':empresa.logo%>" id="imgPre1" class="img-fluid my-3 <%=empresa == undefined?'d-none':''%> w-25" alt="">
                       <br>
                       <label for="capa" class="form-label">Logo da empresa</label>
                       <input type="file" accept="image/*" name="logo" id="logo" onchange="previewImg(this.id,'imgPre1')" class="form-control">
                     </div>
                     <div class="my-3 col-6">
                         <label for="capa" class="form-label">Nome da empresa</label>
-                        <input type="text" id="nome" value="<%= empresa == undefined || empresa.nome == undefined?'':empresa.nome%>" class="form-control">
+                        <input type="text" id="nome" value="<%=!empresa || !empresa.nome ?'':empresa.nome%>" class="form-control">
                     </div>
                     <div class="my-3 col-6">
                         <label for="capa" class="form-label">Descrição</label>
-                        <input type="text" id="descricao" value="<%= empresa == undefined || empresa.descricao == undefined?'':empresa.descricao%>" class="form-control">
+                        <input type="text" id="descricao" value="<%=!empresa || !empresa.descricao ?'':empresa.descricao%>" class="form-control">
                     </div>
 
                     <div class="my-3 col-4">
@@ -41,7 +41,7 @@
                     </div>
                     <div class="my-3 col-4">
                         <label for="capa" class="form-label">Facebook</label>
-                        <input type="text" id="facebook" value="<%= empresa == undefined || empresa.facebook == undefined?'':empresa.facebook%>" class="form-control">
+                        <input type="text" id="facebook" value="<%=!empresa || !empresa.facebook ?'':empresa.facebook%>" class="form-control">
                     </div>
                     <div class="my-3 col-4">
                         <label for="capa" class="form-label">Instagram</label>
@@ -49,26 +49,49 @@
                     </div>
                     <div class="my-3 col-4">
                         <label for="capa" class="form-label">Whatsapp</label>
-                        <input type="text" class="form-control" id="whatsapp" value="<%= empresa == undefined || empresa.whatsapp == undefined?'':empresa.whatsapp%>" name="whatsapp" maxlength="15" pattern="\(\d{2}\)\s*\d{5}-\d{4}" required>
+                        <input type="text" class="form-control" id="whatsapp" value="<%=!empresa || !empresa.whatsapp ?'':empresa.whatsapp%>" name="whatsapp" maxlength="15" pattern="\(\d{2}\)\s*\d{5}-\d{4}" required>
                     </div>
                     <div class="my-3 col-4">
                         <label for="capa" class="form-label">Telefone</label>
-                        <input type="text" class="form-control" id="telefone" value="<%= empresa == undefined || empresa.telefone == undefined?'':empresa.telefone%>" name="telefone" maxlength="15" pattern="\(\d{2}\)\s*\d{5}-\d{4}" required>
+                        <input type="text" class="form-control" id="telefone" value="<%=!empresa || !empresa.telefone ?'':empresa.telefone%>" name="telefone" maxlength="15" pattern="\(\d{2}\)\s*\d{5}-\d{4}" required>
                     </div>
                     <div class="my-3 col-4">
                         <label for="capa" class="form-label">Twitter</label>
-                        <input type="text" class="form-control" id="twitter"  value="<%= empresa == undefined || empresa.twitter == undefined?'':empresa.twitter%>" name="twitter" required>
+                        <input type="text" class="form-control" id="twitter"  value="<%=!empresa || !empresa.twitter ?'':empresa.twitter%>" name="twitter" required>
                     </div>
                     <div class="my-3 col-6">
                         <label for="capa" class="form-label">Email</label>
-                        <input type="mail" class="form-control" id="email"  value="<%= empresa == undefined || empresa.email == undefined?'':empresa.email%>" name="email" required>
+                        <input type="mail" class="form-control" id="email"  value="<%=!empresa || !empresa.email ?'':empresa.email%>" name="email" required>
                     </div>
                     <div class="my-3 col-6">
                         <label for="capa" class="form-label">Horário de abertura</label>
-                        <input type="text" class="form-control" id="horario_abertura" value="<%= empresa == undefined || empresa.horario_abertura == undefined?'':empresa.horario_abertura%>" name="horario_abertura" required>
+                        <input type="text" class="form-control" id="horario_abertura" value="<%=!empresa || !empresa.horario_abertura ?'':empresa.horario_abertura%>" name="horario_abertura" required>
                     </div>
                     
-                    
+                    <div class="my-3 col-6">
+                        <label for="inicio_dia_atendimento" class="form-label">Dia inicial atendimento</label>
+                        <select name="inicio_dia_atendimento" id="inicio_dia_atendimento" class="form-select">
+                            <option value="1" <%= (empresa && empresa.inicio_dia_atendimento == 1) || !empresa ? 'selected':''%> >Segunda</option>
+                            <option value="2" <%= empresa && empresa.inicio_dia_atendimento == 2 ? 'selected':''%> >Terça</option>
+                            <option value="3" <%= empresa && empresa.inicio_dia_atendimento == 3 ? 'selected':''%> >Quarta</option>
+                            <option value="4" <%= empresa && empresa.inicio_dia_atendimento == 4 ? 'selected':''%> >Quinta</option>
+                            <option value="5" <%= empresa && empresa.inicio_dia_atendimento == 5 ? 'selected':''%> >Sexta</option>
+                            <option value="6" <%= empresa && empresa.inicio_dia_atendimento == 6 ? 'selected':''%> >Sabado</option>
+                            <option value="7" <%= empresa && empresa.inicio_dia_atendimento == 7 ? 'selected':''%> >Domingo</option>
+                        </select>
+                    </div>
+                    <div class="my-3 col-6">
+                        <label for="fim_dia_atendimento" class="form-label">Dia final atendimento</label>
+                        <select name="fim_dia_atendimento" id="fim_dia_atendimento" class="form-select">
+                            <option value="1" <%= empresa && empresa.fim_dia_atendimento == 1 ? 'selected':''%> >Segunda</option>
+                            <option value="2" <%= empresa && empresa.fim_dia_atendimento == 2 ? 'selected':''%> >Terça</option>
+                            <option value="3" <%= empresa && empresa.fim_dia_atendimento == 3 ? 'selected':''%> >Quarta</option>
+                            <option value="4" <%= empresa && empresa.fim_dia_atendimento == 4 ? 'selected':''%> >Quinta</option>
+                            <option value="5" <%= (empresa && empresa.fim_dia_atendimento == 5) || !empresa ? 'selected':''%> >Sexta</option>
+                            <option value="6" <%= empresa && empresa.fim_dia_atendimento == 6 ? 'selected':''%> >Sabado</option>
+                            <option value="7" <%= empresa && empresa.fim_dia_atendimento == 7 ? 'selected':''%> >Domingo</option>
+                        </select>
+                    </div>
                   
                  
 

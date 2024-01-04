@@ -1,12 +1,12 @@
 const User = require("../Database/login/User")
 const retorno = require('../functions/retorno')
 
-async function auth_administrador(req,res,next) {
+async function auth(req,res,next) {
     try {
-        req.session.user_admin = 1
-        const user = req.session.user_admin
+        req.session.user = 1
+        const user = req.session.user
         if (user != undefined) {
-            const adm = await Administrador.findOne({where:{id:user,status:true},attributes:['id']})
+            const adm = await User.findOne({where:{id:user,status:true},attributes:['id']})
             if (adm != undefined) {
                 next()
             } else {
@@ -20,4 +20,4 @@ async function auth_administrador(req,res,next) {
     }
 }
 
-module.exports = auth_administrador
+module.exports = auth

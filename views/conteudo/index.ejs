@@ -25,45 +25,39 @@
         </div>
         <hr>
         <div class="container">
-            <h3 class="text-equi text-center">Gostou do nosso conteúdo? Deixe seu comentário aqui abaixo🥰</h3>
+            <div class="text-center my-3">
+                <a href="/" class="btn btn-success">Voltar para a página inicial</a>
+            </div>
+            <h3 class="text-equi">Gostou do nosso conteúdo? Veja também:</h3>
 
             <div class="row my-4">
-                <div class="col-6 my-3">
-                    <label for="" class="form-label">Avaliação: </label>
-                    <div class="d-flex">
-                        <input type="hidden" id="estrela_valor" value="5" name="">
-                        <img class="estrela-conteudo" src="/img/estrela_preencida.png" onmouseleave="pre_view_estrelas($('#estrela_valor').val())" onclick="click_estrelas(this.dataset.value)" data-value="1" onmouseenter="pre_view_estrelas(this.dataset.value)" alt="" srcset="">
-                        <img class="estrela-conteudo" src="/img/estrela_preencida.png" onmouseleave="pre_view_estrelas($('#estrela_valor').val())" onclick="click_estrelas(this.dataset.value)" data-value="2" onmouseenter="pre_view_estrelas(this.dataset.value)" alt="" srcset="">
-                        <img class="estrela-conteudo" src="/img/estrela_preencida.png" onmouseleave="pre_view_estrelas($('#estrela_valor').val())" onclick="click_estrelas(this.dataset.value)" data-value="3" onmouseenter="pre_view_estrelas(this.dataset.value)" alt="" srcset="">
-                        <img class="estrela-conteudo" src="/img/estrela_preencida.png" onmouseleave="pre_view_estrelas($('#estrela_valor').val())" onclick="click_estrelas(this.dataset.value)" data-value="4" onmouseenter="pre_view_estrelas(this.dataset.value)" alt="" srcset="">
-                        <img class="estrela-conteudo" src="/img/estrela_preencida.png" onmouseleave="pre_view_estrelas($('#estrela_valor').val())" onclick="click_estrelas(this.dataset.value)" data-value="5" onmouseenter="pre_view_estrelas(this.dataset.value)" alt="" srcset="">
-                    </div>
-                </div>
-                <div class="col-12">
-                    <label for="" class="form-label">Comentário</label>
-                    <textarea name="" class="form-control" id="" ></textarea>
-                    <div class="text-end">
-                        <button class="btn btn-success my-3" onclick="$('#textotext').removeClass('d-none')">Comentar</button>
-                    </div>
-                </div>
-            </div>
-            <div class="col-12">
-                <div class="row g-0 d-none" id="textotext">
-                    <div class="col-md-1 col-4">
-                        <img class="img-thumbnail" src="/img/user.png"  height="80px" width="80px" alt="">
-                    </div>
-                    <div class="col-md-11 col-8">
-                        <p class="fw-bolder my-0">Davi Reis</p>
-                        <div class="d-flex">
-                            <img style="width: 27px; height: 27px;" src="/img/estrela_preencida.png" alt="" srcset="">
-                            <img style="width: 27px; height: 27px;" src="/img/estrela_preencida.png" alt="" srcset="">
-                            <img style="width: 27px; height: 27px;" src="/img/estrela_preencida.png" alt="" srcset="">
-                            <img style="width: 27px; height: 27px;" src="/img/estrela_preencida.png" alt="" srcset="">
-                            <img style="width: 27px; height: 27px;" src="/img/estrela_preencida.png" alt="" srcset="">
+                <%blogs.forEach(blog =>{%>
+                    <div class="col-xl-4 col-md-6">
+                      <article>
+          
+                        <div class="post-img">
+                          <img src="<%=blog.capa%>" alt="" class="img-fluid">
                         </div>
-                        <p class="my-0">Muito bom o conteúdo eu amei!</p>
-                    </div>
-                </div>
+          
+                        <p class="post-category"><%=blog.categoria%></p>
+          
+                        <h2 class="title">
+                          <a href="/conteudo/<%=blog.id%>?slug=<%=blog.titulo.replace(/ /g,'-')%>"><%=blog.titulo%></a>
+                        </h2>
+          
+                        <div class="d-flex align-items-center">
+                          <img src="<%=blog.autor_foto%>" alt="<%=blog.autor%>" class="img-fluid post-author-img flex-shrink-0">
+                          <div class="post-meta">
+                            <p class="post-author"><%=blog.autor%></p>
+                            <p class="post-date">
+                              <time datetime="<%=blog.createdAt%>"><%=blog.dataCri%></time>
+                            </p>
+                          </div>
+                        </div>
+          
+                      </article>
+                    </div><!-- End post list item -->
+                  <%})%>
             </div>
         </div>
   </section>
@@ -72,28 +66,6 @@
 <%- include("../partials/footer.ejs")%>
 <%- include("../partials/script.ejs")%>
 <script>
-    function pre_view_estrelas(estrela) {
-        const estrelas = $('img.estrela-conteudo')
-        estrelas.each((i,e)=>{
-            if ((i+1) > parseInt(estrela)) {
-                e.src = '/img/estrela.png'
-            }else{
-                e.src = '/img/estrela_preencida.png'
-            }
-        })
-    }
-    function click_estrelas(estrela) {
-        const estrelas = $('img.estrela-conteudo')
-        estrelas.each((i,e)=>{
-            if ((i+1) > parseInt(estrela)) {
-                e.src = '/img/estrela.png'
-            }else{
-                e.src = '/img/estrela_preencida.png'
-            }
-        })
-        $('#estrela_valor').val(estrela)
-    }
-    
     document.querySelectorAll( 'oembed[url]' ).forEach( element => {
         iframely.load( element, element.attributes.url.value );
     });

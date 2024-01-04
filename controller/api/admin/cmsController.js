@@ -9,6 +9,7 @@ const testemunhaController = require('./cms/testemunhaController')
 const funcionarioController = require('./cms/funcionarioController')
 const duvidaController = require('./cms/duvidaController')
 const bannerController = require('./cms/bannerController')
+const categoriaController = require('./cms/categoriaController')
 
 router.use('/sobre',sobreController)
 router.use('/parceiro',parceiroController)
@@ -18,5 +19,7 @@ router.use('/testemunha',testemunhaController)
 router.use('/funcionario',funcionarioController)
 router.use('/duvida',duvidaController)
 router.use('/banner',bannerController)
+router.use('/categoria', categoriaController)
+
 
 module.exports = router

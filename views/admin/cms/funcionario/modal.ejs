@@ -1,9 +1,8 @@
-<div class="modal fade" id="modaFuncionario" aria-hidden="true" aria-labelledby="modaFuncionarioLabel"
-    tabindex="-1">
+<div class="modal fade" id="modaFuncionario" aria-hidden="true" aria-labelledby="modaFuncionarioLabel" tabindex="-1">
     <div class="modal-dialog modal-dialog-centered modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="modaFuncionarioLabel">Editando Funcionario</h5>
+                <h5 class="modal-title" id="modaFuncionarioLabel">Editando Funcionário</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -14,31 +13,92 @@
                         </div>
                     </div>
                 </div>
-                <div class="row g-3 bodyModal">
+                <section class="row g-3 py-2 bodyModal">
+                    <input type="hidden" name="funcionarioId" id="funcionarioId">
                     <div class="col-md-6">
-                        <label for="nome" class="form-label">Nome</label>
+                        <label for="nome" class="form-label">Insira o nome do Funcionário</label>
                         <input type="text" class="form-control" id="nome">
                     </div>
                     <div class="col-md-6">
-                        <label for="competencia" class="form-label">Competência</label>
+                        <label for="competencia" class="form-label">Insira a competencia do Funcionário</label>
                         <input type="text" class="form-control" id="competencia">
                     </div>
-                    <div class="col-md-6">
-                        <label for="foto" class="form-label">Foto</label>
-                        <input type="file" accept="image/*" class="form-control" id="foto">
+                    <div class="col-12">
+                        <label for="img" class="form-label">Imagem</label>
+                        <div class="d-flex text-center py-2 my-2 justify-content-center">
+                            <img src="" id="preimg" class="img-fluid w-25" alt="" srcset="">
+                        </div>
+                        <input type="file" accept="image/*" onchange="previewImg($(this)[0].id,'preimg')"
+                            class="form-control" id="img">
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-6">
                         <label for="status" class="form-label">Status</label>
-                        <select id="status" class="form-select">
-                            <option selected>Habilitar</option>
-                            <option>Desabilitar</option>
+                        <select name="status" class="form-select" id="status">
+                            <option value="true">Ativo</option>
+                            <option value="false">Inativo</option>
                         </select>
                     </div>
-                </div>
+                </section>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
-                <button type="button" class="btn btn-success btnModal" onclick="salvar()">Salvar</button>
+                <button type="button" class="btn btn-success btnModal"  data-bs-toggle="modal" href="#modaFuncionarioRedes" onclick="salvar()">Salvar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modaFuncionarioRedes" aria-hidden="true" aria-labelledby="modaFuncionarioRedesLabel" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modaFuncionarioRedesLabel">Editando Redes do Funcionário</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="loadModal">
+                    <div class="d-flex justify-content-center">
+                        <div class="spinner-border" role="status">
+                            <span class="visually-hidden">Loading...</span>
+                        </div>
+                    </div>
+                </div>
+                <section class="row g-3 py-2 bodyModal">
+                    <div class="col-12">
+                        <ol class="list-group list-group-numbered" id="list_redes_funcionarios">
+                            <li class="list-group-item d-flex justify-content-between align-items-start">
+                              <div class="ms-2 me-auto">
+                                <div class="fw-bold">Facebook <i class="bi bi-twitter"></i></div>
+                                Link
+                              </div>
+                                <button class="btn btn-danger btn-sm" onclick="alert()"><i class="bi bi-trash"></i></button>
+                            </li>
+                          </ol>
+                    </div>
+                    <div class="col-md-6 my-3">
+                        <label for="type_rede" class="form-label">Tipo de Rede</label>
+                        <select name="type_rede" id="type_rede" onchange="handleChangeTypeOutros(this.value)" class="form-select">
+                            <option value="">Selecione o tipo de rede</option>
+                            <option value="1">Twitter</option>
+                            <option value="2">Facebook</option>
+                            <option value="3">Instagram</option>
+                            <option value="4">Linkedin</option>
+                            <option value="99">Outros</option>
+                        </select>
+                    </div>
+                   
+                    <div class="col-md-6 my-3">
+                        <label for="link_rede" class="form-label">URL</label>
+                        <input type="text" name="link_rede" placeholder="ex: https://facebook..." id="link_rede" class="form-control"/>
+                    </div>
+                    <div class="col-12 my-3">
+                        <button type="button" class="btn btn-success btnModal" onclick="addRede()">Adicionar</button>
+                    </div>
+                </section>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+              
             </div>
         </div>
     </div>

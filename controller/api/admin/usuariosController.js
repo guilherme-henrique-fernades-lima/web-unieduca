@@ -6,9 +6,6 @@ const bcrypt = require('bcrypt');
 const { Op } = require("sequelize");
 const User = require('../../../Database/login/User');
 
-
-//Rota de captura de usuario
-
 router.get('/:id',async (req,res)=>{
     try {
         const id = req.params.id
@@ -27,8 +24,6 @@ router.get('/:id',async (req,res)=>{
     }
 })
 
-//Rota para inserir novo usuario
-
 router.post('/', async (req, res) => {
     try {
         let { nome, status, email } = req.body
@@ -44,19 +39,17 @@ router.post('/', async (req, res) => {
                 return res.status(403).json({ erro: 'Já existe um usuário ativo com os dados informados' })
             }
 
-            const senha = `aguia` + moment().format('DDHHMMmm')
+            const senha = `equi` + moment().format('DDHHMMmm')
             const salt = bcrypt.genSaltSync(10);
             const hash = bcrypt.hashSync(senha, salt);
-
-            const existUser = await User.findOne({where:{status:true}})
-            status = (existUser == undefined)?true:status
 
             const adm = await User.create({
                 nome: nome,
                 status: status,
                 email: email,
-                senha: hash,
+                senha: hash
             })
+            console.log(senha)
             res.json({ resp: 'Ok', senha: senha })
         } else {
             return res.status(400).json({ erro: 'Dados inválidos, gentileza preencher todos os campos necessários' })
@@ -67,14 +60,11 @@ router.post('/', async (req, res) => {
     }
 })
 
-//Rota para atualizar cadastro usuario
-
-
 router.put('/', async (req, res) => {
     try {
         let { nome, email, senha_atual, senha_nova, senha_confirm } = req.body
         if (nome != undefined && nome != '' && email != undefined != '') {
-            const user = await User.findByPk(req.session.user)
+            const user = await User.findByPk(req.session.user_admin)
             if (user == undefined) {
                 return res.status(500).json({ erro: 'Não foi possivél identificar cadastro de usuário na base de dados!' })
             }
@@ -131,9 +121,6 @@ router.put('/', async (req, res) => {
     }
 })
 
-//Rota para atualizar status do usuario
-
-
 router.put('/status',async(req,res)=>{
     try {
         let { status, id,reset } = req.body
@@ -149,7 +136,7 @@ router.put('/status',async(req,res)=>{
             status = (status == true || status == 'true') ? true : false
             reset = (reset == true || reset == 'true') ? true : false
             let senha = user.senha
-            const newSenha = `aguia` + moment().format('DDHHMMmm')
+            const newSenha = `equi` + moment().format('DDHHMMmm')
             if (reset) {
                 const salt = bcrypt.genSaltSync(10);
                 senha = bcrypt.hashSync(newSenha, salt);
@@ -173,6 +160,45 @@ router.put('/status',async(req,res)=>{
         console.log(error)
         return res.status(500).json({ erro: 'Ocorreu um erro durante o processamento dos dados, gentileza tente novamente!' })
     }
+})
+
+router.put("/senha/", async (req, res) => {
+    try {
+        const { senha, confirm } = req.body;
+        const email = req.session.email;
+        if (email == undefined) {
+            return res.status(400).json({ erro: 'Dados inválidos, gentileza recarregue a página e tente realizar o processo novamente!' })
+        }
+        if (senha == confirm && senha != "") {
+            const user = await User.findOne({ where: { email: email, status: true } });
+            if (user != undefined) {
+                const recuperaSenha = await RecuperaSenha.findOne({
+                    where: { userId: user.id,type:'adm', aprovado: true },
+                });
+                if (recuperaSenha != undefined) {
+                    const salt = bcrypt.genSaltSync(10);
+                    const hash = bcrypt.hashSync(senha, salt);
+                    await User.update(
+                        {
+                            senha: hash,
+                        },
+                        { where: { id: user.id } }
+                    )
+                } else {
+                    return res.status(400).json({ erro: 'Sem autorização para alterar sua senha, gentileza recarregue a página e tente novamente!' })
+                }
+            } else {
+                return res.status(400).json({ erro: 'Dados inválidos, não foi possível identificar seu usuário na base de dados!' })
+            }
+        } else {
+            return res.status(400).json({ erro: 'Dados inválidos, gentileza verifique os dados informados e tente novamente!' })
+        }
+
+    } catch (error) {
+        console.log(error)
+        return res.status(500).json({ erro: 'Ocorreu um erro durante o processamento dos dados, gentileza tente novamente!' })
+    }
+
 })
 
 module.exports = router

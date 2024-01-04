@@ -19,8 +19,13 @@ const Funcionario_Rede = connection.define('ag_funcionario_rede',{
 {freezeTableName:true})
 
 Funcionario_Rede.belongsTo(Funcionario, {
-    foreignKey: 'funcionarioId'
+    foreignKey: 'funcionarioId',
+    as:'funcionario'
 });
+Funcionario.hasMany(Funcionario_Rede,{
+    foreignKey: 'funcionarioId',
+    as:'redes'
+})
 
 Funcionario_Rede.sync({alter: true}).then(()=>{
     console.log("Tabela Funcionario_Rede criada")

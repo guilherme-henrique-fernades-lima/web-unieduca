@@ -22,12 +22,14 @@ async function editar(id) {
         const preimg = $('#preimg')
         const nome = $('#nome')
         const status = $('#status')
+        const link = $('#link')
         const parceiroId = $('#parceiroId')
 
         preimg[0].src = ''
         nome.val('')
         status.val('true')
         parceiroId.val('')
+        link.val('')
         if (id != undefined) {
             const request = await axios.get(`/api/cms/parceiro/${id}`)
             const parceiro = request.data.parceiro
@@ -35,6 +37,7 @@ async function editar(id) {
             status.val(`${parceiro.status}`)
             preimg[0].src = parceiro.img
             parceiroId.val(parceiro.id)
+            link.val(parceiro.link)
         }
 
     } catch (error) {
@@ -58,6 +61,7 @@ async function salvar() {
         const nome = $('#nome').val()
         const status = $('#status').val()
         const parceiroId = $('#parceiroId').val()
+        const link = $('#link').val()
 
         if (nome == '') {
             return toastErro("Dados inválidos. Gentileza preencher nome")
@@ -66,6 +70,7 @@ async function salvar() {
         formData.append('img', img)
         formData.append('nome', nome)
         formData.append('status', status)
+        formData.append('link', link)
         if (parceiroId != '') {
             formData.append('parceiroId', parceiroId)
         }

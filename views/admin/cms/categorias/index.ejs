@@ -1,0 +1,131 @@
+<%- include("../../../partials/admin/head.ejs")%>
+<%- include("../../../partials/admin/header.ejs")%>
+<div class="container-fluid">
+    <div class="row">
+    <%- include("../../../partials/admin/nav.ejs")%>
+    <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+        <section id="">
+          <div class="container" data-aos="fade">
+            <div class="my-1 border-bottom">
+                <h1>CMS - Categorias </h1>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                      <li class="breadcrumb-item"><a href="/admin">Admin</a></li>
+                      <li class="breadcrumb-item"><a href="/admin/cms">CMS</a></li>
+                      <li class="breadcrumb-item active" aria-current="page">Categorias</li>
+                    </ol>
+                </nav>
+            </div>
+            <div class="table-responsive my-3">
+              <button class="btn btn-outline-primary" data-bs-toggle="modal" onclick="editar()" href="#modalCategoria"><i class="bi bi-plus-circle"></i> Cadastrar</button>
+              <table class="table table-data" id="table">
+                <thead>
+                  <tr>
+                    <th class="text-center">#</th>
+                    <th class="text-center">Categoria</th>
+                    <th class="text-center">Status</th>
+                    <th class="text-center">Qtd. Cursos</th>
+                    <th class="text-center">Ação</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <%categorias.forEach(categoria =>{%>
+                    <tr class="text-center">
+                      <th><%=categoria.id%></th>
+                      <th><%=categoria.nome%></th>
+                      <th><%=(categoria.status)?'Ativo':'Inativo'%></th>
+                      <th><%=categoria.cursos.length%></th>
+                      <th>
+                        <button class="btn btn-sm btn-info" value="<%=categoria.id%>" data-bs-toggle="modal" href="#modalCategoria" onclick="editar(this.value)">Editar</button>
+                        <a class="btn btn-sm btn-primary" href="/admin/cms/categorias/<%=categoria.id%>/cursos">Cursos</a>
+                      </th>
+                    </tr>
+                  <%})%>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        <%- include("./modal.ejs")%>
+        </section>
+    </main>
+    </div>
+</div>
+<script>
+  
+async function editar(id) {
+    try {
+        //Ao iniciar a função ele da o loop no modal
+        loadModal(true)
+        const preimg = $('#preimg')
+        const nome = $('#nome')
+        const descricao = $('#descricao')
+        const categoriaId = $('#categoriaId')
+        const status = $('#status')
+
+        nome.val('')
+        descricao.val('')
+        status.val('true')
+        preimg[0].src = ''
+        categoriaId.val('')
+        if (id != undefined) {
+            const request = await axios.get(`/api/cms/categoria/${id}`)
+            const categoria = request.data.categoria
+            nome.val(categoria.nome)
+            descricao.val(categoria.descricao)
+            status.val(`${categoria.status}`)
+            categoriaId.val(categoria.id)
+            preimg[0].src =  categoria.img
+        }
+
+    } catch (error) {
+        console.log(error)
+        if (error.response != undefined && error.response.data.erro != undefined) {
+            console.log(error.response)
+            toastErro(error.response.data.erro)
+        } else {
+            toastErro('Ocorreu um erro durante o processamento de dados, verifique sua rede e tente novamente')
+        }
+    } finally {
+        loadModal(false)
+    }
+}
+
+async function salvar() {
+    try {
+        loadModal(true)
+        const img = $('#img')[0].files[0]
+        const nome = $('#nome').val()
+        const categoriaId = $('#categoriaId').val()
+        const descricao = $('#descricao').val()
+        const status = $('#status').val()
+
+        if (nome == '') {
+            return toastErro("Dados inválidos. Gentileza preencher nome da categoria")
+        }
+        const formData = new FormData()
+        formData.append('img', img)
+        formData.append('nome', nome)
+        formData.append('descricao', descricao)
+        formData.append('status', status)
+        if (categoriaId) {
+          formData.append('categoriaId', categoriaId)
+        }
+
+        const request = (categoriaId == '' || categoriaId == undefined) ? await axios.post('/api/cms/categoria', formData) : await axios.put('/api/cms/categoria', formData)
+        toastMsm(request.data.resp)
+        document.location.reload()
+    } catch (error) {
+        console.log(error)
+        if (error.response != undefined && error.response.data.erro != undefined) {
+            console.log(error.response)
+            toastErro(error.response.data.erro)
+        } else {
+            toastErro('Ocorreu um erro durante o processamento de dados, verifique sua rede e tente novamente')
+        }
+    } finally {
+        loadModal(false)
+    }
+}
+</script>
+<%- include("../../../partials/script.ejs")%>
+<%- include("../../../partials/end.ejs")%>

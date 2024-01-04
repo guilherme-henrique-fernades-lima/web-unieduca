@@ -29,6 +29,13 @@ router.get('/', async (req, res) => {
 
 router.put('/', upload.single('logo'), async (req, res) => {
     try {
+        let {inicio_dia_atendimento,fim_dia_atendimento} = req.body
+        inicio_dia_atendimento = (!inicio_dia_atendimento || isNaN(parseInt(inicio_dia_atendimento)) || inicio_dia_atendimento < 1 || inicio_dia_atendimento > 7 )?1:parseInt(inicio_dia_atendimento)
+        fim_dia_atendimento = (!fim_dia_atendimento || isNaN(parseInt(fim_dia_atendimento)) || fim_dia_atendimento < 1 || fim_dia_atendimento > 7 )?5:parseInt(fim_dia_atendimento)
+
+        req.body.inicio_dia_atendimento = inicio_dia_atendimento
+        req.body.fim_dia_atendimento = fim_dia_atendimento
+
         const file = req.file
         const exist = await Empresa.findOne()
         if (exist != undefined) {

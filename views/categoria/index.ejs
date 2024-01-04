@@ -1,0 +1,215 @@
+<%- include("../partials/head.ejs")%>
+  <script charset="utf-8" src="//cdn.iframe.ly/embed.js?api_key=1691b4e6f82e4569c951f7"></script>
+  <%#- include("../partials/topbar.ejs")%>
+    <%- include("../partials/header.ejs")%>
+      <main>
+        <div class="container-fluid" id="">
+          <section class="recent-posts mt-5 pt-5">
+            <div class="container-fluid" data-aos="fade-down">
+
+              <div class="section-header my-4">
+                <h2>
+                  <%=categoria.nome%>
+                </h2>
+                <p>
+                  <%=categoria.descricao%>
+                </p>
+                <div class="my-3">
+                  <img src="<%=categoria.img%>" class="img-fluid w-50" alt="">
+                </div>
+              </div>
+              <div class="container-fluid my-2">
+                <section id="categorys" class="services sections-bg">
+                  <div class="container-fluid" data-aos="fade-up">
+                    <div class="row gy-4" data-aos="fade-up" data-aos-delay="100">
+                      <%categoria.cursos.forEach(curso=>{%>
+                        <div class="col-lg-4 col-md-6  text-center">
+                          <div class="service-item  position-relative">
+                            <div class="my-3">
+                              <img src="<%=curso.img%>" class="img-fluid" width="270px" alt="">
+                            </div>
+                            <h3>
+                              <%=curso.nome%>
+                            </h3>
+                            <p>
+                              <%=curso.descricao%>
+                            </p>
+                            <div class="mt-4">
+                              <button value="<%=curso.id%>" onclick="handleOpenModal(this.value)" data-bs-toggle="modal" href="#modalCurso" class="btn btn-outline-success">Saiba Mais <i
+                                class="bi bi-arrow-right"></i></button>
+                            </div>
+                          </div>
+                        </div><!-- End Service Item -->
+                        <%})%>
+                    </div>
+
+                  </div>
+                </section><!-- End Our Services Section -->
+              </div>
+              <hr>
+              <div class="container text-center">
+                <div class="my-3">
+                  <a href="/" class="btn btn-success">Voltar para a página inicial</a>
+                </div>
+              </div>
+          </section>
+      <%- include("./modal.ejs")%>
+      </main>
+
+      <%- include("../partials/footer.ejs")%>
+        <%- include("../partials/script.ejs")%>
+          <script>
+            document.querySelectorAll('oembed[url]').forEach(element => {
+              iframely.load(element, element.attributes.url.value);
+            });
+
+            async function handleOpenModal (id){
+              loadModal(true)
+              const modalCursoLabel = $('#modalCursoLabel')
+              const btnRedirectModal = $('#btnRedirectModal')
+              const modalimg = $('#modalimg')[0]
+              const modalListDetails = $('#modalListDetails')
+              const div_documentacao = $('#div_documentacao')
+              const modalPDocumentacoa = $('#modalPDocumentacoa')
+              const modalTbodyMensalidades = $('#modalTbodyMensalidades')
+              const modalPObjetivo = $('#modalPObjetivo')
+
+              const divMensalidades= $('#div_mensalidades')
+              const divObjetivo= $('#div_objetivo')
+
+              divMensalidades.addClass('d-none')
+              divObjetivo.addClass('d-none')
+              div_documentacao.addClass('d-none')
+              modalListDetails.html('')
+              modalTbodyMensalidades.html('')
+              modalPDocumentacoa.html('')
+              modalimg.src = ''
+              btnRedirectModal[0].href = '#'
+              modalCursoLabel.text('Carregando dados do curso')
+              if (id) {
+                try {
+                  const request = await axios.get(`/api/curso/${id}`)
+                  const curso = request.data.curso
+
+                  console.log(curso)
+                  modalimg.src = curso.img
+                  modalCursoLabel.text(curso.nome)
+                  if (curso.isWhats) {
+                    btnRedirectModal.removeClass('d-none')
+                    btnRedirectModal[0].href = `https://api.whatsapp.com/send?phone=+550${curso.contato.replace(/\D/g, '')}&text=Me%20interessei%20pelo%20curso%20${curso.nome.replace(/ /g,'%20')}!`
+                  }else{
+                    btnRedirectModal.addClass('d-none')
+                  }
+
+                  let inner = `<li class="list-group-item align-items-start">
+                          <div class="me-auto">
+                            <div class="fw-bold">Contato</div>
+                            <span>${curso.contato}</span>
+                          </div>
+                        </li>
+                        
+                        <li class="list-group-item align-items-start">
+                          <div class="me-auto">
+                            <div class="fw-bold">Modalidade</div>
+                            <span>${curso.modalidade}</span>
+                          </div>
+                        </li>`
+
+
+                  if (curso.duracao) {
+                    inner += `<li class="list-group-item align-items-start">
+                          <div class="me-auto">
+                            <div class="fw-bold">Duração</div>
+                            <span>${curso.duracao}</span>
+                          </div>
+                        </li>`
+                  }
+                  if (curso.carga_horaria) {
+                    inner += `<li class="list-group-item align-items-start">
+                          <div class="me-auto">
+                            <div class="fw-bold">Carga Horária</div>
+                            <span>${curso.carga_horaria}</span>
+                          </div>
+                        </li>`
+                  }
+
+                  if (curso.encontros) {
+                    inner += `<li class="list-group-item align-items-start">
+                          <div class="me-auto">
+                            <div class="fw-bold">Encontros</div>
+                            <span>${curso.encontros}</span>
+                          </div>
+                        </li>`
+                  }
+
+                  if (curso.localizacao) {
+                    inner += `<li class="list-group-item align-items-start">
+                          <div class="me-auto">
+                            <div class="fw-bold">Localização</div>
+                            <span>
+                                <a target="_blank" href="https://www.google.com/maps/place/${curso.localizacao.replace(/ /g,'+')}">
+                                  ${curso.localizacao}
+                                </a>
+                              </span>
+                          </div>
+                        </li>`
+                  }
+
+                  if (curso.instituicao) {
+                    inner += `<li class="list-group-item align-items-start">
+                          <div class="me-auto">
+                            <div class="fw-bold">Instituição</div>
+                            <span>${curso.instituicao}</span>
+                          </div>
+                        </li>`
+                  }
+
+                modalListDetails.html(inner)
+
+                if (curso.documentacao) {
+                  div_documentacao.removeClass('d-none')
+                  modalPDocumentacoa.text(curso.documentacao)
+                }
+
+                if (curso.mensalidades?.length > 0) {
+                  let innermensalidade = ``
+                  for (const mensalidade of curso.mensalidades) {
+                    innermensalidade+=`
+                      <tr class="text-center">
+                        <td>${mensalidade.titulo}</td>
+                        <td class="${mensalidade.valor_desconto?'text-danger':''}">${mensalidade.valor_desconto?`<s>R$ ${parseFloat(mensalidade.mensalidade).toFixed(2)}</s>`:`R$ ${parseFloat(mensalidade.mensalidade).toFixed(2)}`}</td>
+                        <td>${mensalidade.bolsa}%</td>
+                        <td class="text-success">R$ ${parseFloat(mensalidade.valor_desconto).toFixed(2)}</td>
+                        <td>R$ ${parseFloat(mensalidade.valor_final).toFixed(2)}</td>
+                      </tr>
+                    `
+                  }
+                  modalTbodyMensalidades.html(innermensalidade)
+                  divMensalidades.removeClass('d-none')
+                }
+
+                if (curso.objetivo) {
+                  modalPObjetivo.text(curso.objetivo)
+                  divObjetivo.removeClass('d-none')
+                }
+
+                if (!curso.objetivo && curso.mensalidades.length == 0) {
+                  $('#div_informacoes_curso').removeClass('col-md-6')
+                  $('#div_informacoes_curso').addClass('col-12')
+                  $('#div_mensalidades_curso').addClass('d-none')
+                }else{
+                  $('#div_informacoes_curso').addClass('col-md-6')
+                  $('#div_informacoes_curso').removeClass('col-12')
+                  $('#div_mensalidades_curso').removeClass('d-none')
+                }
+
+               
+
+                  loadModal(false)
+                } catch (error) {
+                 toastErro('Ocorreu um erro durante o processamento de dados, verifique sua rede e tente novamente!') 
+                }
+              }
+            }
+          </script>
+          <%- include("../partials/end.ejs")%>

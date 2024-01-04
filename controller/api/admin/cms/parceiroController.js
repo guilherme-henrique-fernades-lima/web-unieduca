@@ -30,10 +30,14 @@ router.get('/:id', async (req, res) => {
 
 router.post('/',upload.single('img'), async (req, res) => {
     try {
-        let { status, nome } = req.body
+        let { status, nome,link } = req.body
         status = (status == true || status == 'true') ? true : false
         if (nome == '' || nome == undefined ) {
             return res.status(500).json({ erro: 'Dados importantes como "nome" estão vazios, gentileza verifique e tente novamente!' })
+        }
+
+        if (!link && !link.toString().includes('http')) {
+            return res.status(500).json({ erro: 'Link informado é inválido' })
         }
 
         const exist = await Parceiro.findOne({ where: { nome: nome } })
@@ -46,7 +50,8 @@ router.post('/',upload.single('img'), async (req, res) => {
         const newParceiro = await Parceiro.create({
             status: status,
             nome: nome,
-            img, img
+            img, img,
+            link:link?link:'#'
         })
         res.json({ resp: "Parceiro cadastrado com sucesso!", parceiro: newParceiro })
     } catch (error) {
@@ -58,7 +63,7 @@ router.post('/',upload.single('img'), async (req, res) => {
 
 router.put('/',upload.single('img'), async (req, res) => {
     try {
-        let { status, nome, parceiroId } = req.body
+        let { status, nome, parceiroId, link } = req.body
         const file = req.file
         status = (status == true || status == 'true') ? true : false
         const parceiro = await Parceiro.findByPk(parceiroId)
@@ -74,10 +79,15 @@ router.put('/',upload.single('img'), async (req, res) => {
             img = `${file.path.replace('public','')}`
         }
 
+        if (!link && !link.toString().includes('http')) {
+            return res.status(500).json({ erro: 'Link informado é inválido' })
+        }
+
         await Parceiro.update({
             status: status,
             nome: nome,
-            img, img
+            img, img,
+            link:link?link:parceiro.link
         }, { where: { id: parceiro.id } })
 
         res.json({ resp: "Cadastro do Parceiro atualizado com sucesso!" })

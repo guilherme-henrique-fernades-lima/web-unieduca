@@ -7,6 +7,11 @@ const Empresa = connection.define('ag_empresa',{
         type:Sequelize.TEXT,
         allowNull:false
     },
+    nome:{
+        type:Sequelize.STRING,
+        allowNull:false,
+        defaultValue:'Empresa'
+    },
     descricao:{
         type:Sequelize.TEXT,
         allowNull:false
@@ -50,7 +55,17 @@ const Empresa = connection.define('ag_empresa',{
     horario_abertura:{
         type:Sequelize.STRING,
         allowNull:false
-    }
+    },
+    inicio_dia_atendimento:{
+        type:Sequelize.INTEGER,
+        allowNull:false,
+        defaultValue:1
+    },
+    fim_dia_atendimento:{
+        type:Sequelize.INTEGER,
+        allowNull:false,
+        defaultValue:5
+    },
 },
 {freezeTableName:true})
 

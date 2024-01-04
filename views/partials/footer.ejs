@@ -5,48 +5,57 @@
     <div class="container">
       <div class="row gy-4">
         <div class="col-lg-5 col-md-12 footer-info">
-          <a href="index.html" class="logo d-flex align-items-center">
-            <span>Impact</span>
+          <a href="/" class="logo d-flex align-items-center">
+            <span><%=empresa?.nome%></span>
           </a>
-          <p>Cras fermentum odio eu feugiat lide par naso tierra. Justo eget nada terra videa magna derita valies darta donna mare fermentum iaculis eu non diam phasellus.</p>
+          <p><%=empresa?.descricao%></p>
           <div class="social-links d-flex mt-4">
-            <a href="#" class="twitter"><i class="bi bi-twitter"></i></a>
-            <a href="#" class="facebook"><i class="bi bi-facebook"></i></a>
-            <a href="#" class="instagram"><i class="bi bi-instagram"></i></a>
-            <a href="#" class="linkedin"><i class="bi bi-linkedin"></i></a>
+            <%if(empresa?.twitter){%>
+              <a href="<%=empresa?.twitter%>" class="twitter"><i class="bi bi-twitter"></i></a>
+            <%}%>
+            <%if(empresa?.facebook){%>
+              <a href="<%=empresa?.facebook%>" class="facebook"><i class="bi bi-facebook"></i></a>
+            <%}%>
+            <%if(empresa?.instagram){%>
+              <a href="<%=empresa?.instagram%>" class="instagram"><i class="bi bi-instagram"></i></a>
+            <%}%>
+            <%if(empresa?.likedin){%>
+              <a href="<%=empresa?.likedin%>" class="linkedin"><i class="bi bi-linkedin"></i></a>
+            <%}%>
           </div>
         </div>
 
         <div class="col-lg-2 col-6 footer-links">
-          <h4>Useful Links</h4>
+          <h4>Acessos</h4>
           <ul>
-            <li><a href="#">Home</a></li>
-            <li><a href="#">About us</a></li>
-            <li><a href="#">Services</a></li>
+            <li><a href="#home">Home</a></li>
+            <li><a href="#about">Sobre nós</a></li>
+            <li><a href="#services">Serviços</a></li>
+            <li><a href="#recent-posts">Blog</a></li>
             <li><a href="#">Terms of service</a></li>
             <li><a href="#">Privacy policy</a></li>
           </ul>
         </div>
 
         <div class="col-lg-2 col-6 footer-links">
-          <h4>Our Services</h4>
-          <ul>
-            <li><a href="#">Web Design</a></li>
-            <li><a href="#">Web Development</a></li>
-            <li><a href="#">Product Management</a></li>
-            <li><a href="#">Marketing</a></li>
-            <li><a href="#">Graphic Design</a></li>
-          </ul>
+          <%if(servicos.length > 0){%>
+            <h4>Nossos Serviços</h4>
+            <ul>
+              <%servicos.forEach((servico,index)=>{%>
+                <%if(index < 6){%>
+                  <li><a href="/servico/<%=servico.id%>"><%=servico.nome%></a></li>
+                <%}%>
+              <%})%>
+            </ul>
+          <%}%>
         </div>
 
         <div class="col-lg-3 col-md-12 footer-contact text-center text-md-start">
-          <h4>Contact Us</h4>
+          <h4>Nossos contatos</h4>
           <p>
-            A108 Adam Street <br>
-            New York, NY 535022<br>
-            United States <br><br>
-            <strong>Phone:</strong> +1 5589 55488 55<br>
-            <strong>Email:</strong> info@example.com<br>
+           <%=empresa?.endereco%>
+            <strong>Telefone:</strong> <%=empresa?.telefone%><br>
+            <strong>Email:</strong> <%=empresa?.email%><br>
           </p>
 
         </div>
@@ -56,13 +65,15 @@
 
     <div class="container mt-4">
       <div class="copyright">
-        &copy; Copyright <strong><span>Editora Aguia</span></strong>. Todos os direitos reservados
+        &copy; Copyright <strong><span><%=empresa?.nome%></span></strong>. Todos os direitos reservados
       </div>
       <div class="credits">
-        Criado por <a href="https://revonmidias.com/">Revon Mídias</a>
+        Criado por <a target="_blank" href="https://api.whatsapp.com/send?phone=+5508694190580&text=Olá,%20gostaria%20de%20obter%20um%20site%20para%20minha%20empresa!">Gtech Servicos</a>
       </div>
     </div>
 
   </footer><!-- End Footer -->
   <!-- End Footer -->
-  <a href="#" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+  <%if(empresa?.whatsapp){%>
+    <a target="_blank" href="https://api.whatsapp.com/send?phone=+550<%=empresa.whatsapp.replace(/\D/g, '')%>&text=Olá,%20Tenho%20uma%20duvida!" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-whatsapp"></i></a>
+  <%}%>
